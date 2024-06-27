@@ -3,6 +3,7 @@ import "./globals.css";
 import { dark } from "@clerk/themes";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { Metadata } from "next";
+import ThemeProvider from "@/context/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Fit Flow",
@@ -26,16 +27,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-      }}
-    >
-      <html lang="en">
-        <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+    <ThemeProvider>
+      <ClerkProvider
+        appearance={{
+          baseTheme: dark,
+        }}
+      >
+        <html lang="en">
+          <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+            {children}
+          </body>
+        </html>
+      </ClerkProvider>
+    </ThemeProvider>
   );
 }
