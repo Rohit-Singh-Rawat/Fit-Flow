@@ -2,9 +2,10 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 type Props = { children: React.ReactNode };
-enum Mode {
+export enum Mode {
   "Light" = "light",
   "Dark" = "dark",
+  "System" = "system",
 }
 type ThemeProviderType = {
   mode: Mode;
@@ -16,14 +17,22 @@ const ThemeProvider = ({ children }: Props) => {
   const [mode, setMode] = useState<Mode>(Mode.Light);
 
   const handleThemeChange = () => {
-    if (mode === "dark") {
-      setMode(Mode.Light);
-    } else {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
       setMode(Mode.Dark);
+       
+      document.documentElement.classList.add("dark");
+    } else {
+      setMode(Mode.Light);
+      document.documentElement.classList.remove("dark");
     }
   };
   useEffect(() => {
     handleThemeChange();
+    console.log('object')
   }, [mode]);
   return (
     <ThemeContext.Provider value={{ mode, setMode }}>
@@ -39,4 +48,5 @@ export function useTheme() {
   if (context == undefined) {
     throw new Error("useTheme must be used within a ThemeProvider");
   }
+  return context;
 }

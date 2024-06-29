@@ -5,7 +5,7 @@ const page = (props: Props) => {
   return (
     <div>
       {" "}hi
-      <UserButton />
+      
       
     </div>
   );
