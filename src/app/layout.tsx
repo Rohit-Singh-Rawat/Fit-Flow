@@ -8,6 +8,7 @@ import ThemeProvider from "@/context/ThemeProvider";
 export const metadata: Metadata = {
   title: "Fit Flow",
   description: "Stackoverflow for Gym Rats",
+  
 };
 
 const inter = Inter({
