@@ -22,7 +22,9 @@
   .background-light800_darkgradient {
     @apply dark:dark-gradient bg-light-800;
   }
-
+  .background-light_dark_gradient {
+    @apply dark:dark-gradient light-gradient;
+  }
   .background-light800_dark400 {
     @apply bg-light-800 dark:bg-dark-400 !important;
   }
@@ -195,18 +197,29 @@
     @apply shadow-light-100 dark:shadow-none;
   }
 
-  .primary-gradient {
-    background: linear-gradient(135deg, #2C2C2C, #1A1A1A);
+  .primary-dark-gradient {
+    background: linear-gradient(90deg, rgb(44, 44, 44), transparent);
+  }
+  .primary-light-gradient {
+    background: linear-gradient(90deg, rgb(223, 249, 222), transparent);
   }
 
- .dark-gradient {
+  .dark-gradient {
     background: linear-gradient(
       232deg,
-      rgba(23, 23, 23, 0.6) 0%,    
-      rgba(19, 19, 19, 0.7) 25%,  
-      rgba(16, 16, 16, 0.8) 50%,   
-      rgba(14, 14, 14, 0.9) 100%  
+      rgba(23, 23, 23, 0.6) 0%,
+      rgba(19, 19, 19, 0.7) 25%,
+      rgba(16, 16, 16, 0.8) 50%,
+      rgba(14, 14, 14, 0.9) 100%
     );
-}
-
+  }
+  .light-gradient {
+    background: linear-gradient(
+      232deg,
+      rgba(255, 255, 255, 0.9) 3%,
+      rgba(255, 255, 255, 0.7) 5%,
+      rgba(255, 255, 255, 0.6) 20%,
+      rgba(63, 207, 142, 0.3) 100%
+    );
+  }
 }

@@ -1,31 +1,30 @@
-
 import AskQuestionIcon from "@/components/Icons/AskQuestionIcon";
 import CommunitiesIcon from "@/components/Icons/CommunitiesLogo";
 import HomeIcon from "@/components/Icons/Homelogo";
 import MoonIcon from "@/components/Icons/MoonIcon";
 import ProfileIcon from "@/components/Icons/ProfileIcon";
 import SystemIcon from "@/components/Icons/SystemIcon";
+import TagIcon from "@/components/Icons/TagIcon";
 import { Mode } from "@/context/ThemeProvider";
 import { SidebarLink, Theme } from "@/types";
-import { Star, Sun, Tag } from "lucide-react"
-export const themes:Theme[] = [
+import { Star, Sun } from "lucide-react";
+export const themes: Theme[] = [
   {
     value: Mode.Light,
     label: "Light",
-    icon:Sun
+    icon: Sun,
   },
   {
     value: Mode.Dark,
     label: "Dark",
-    icon: MoonIcon
+    icon: MoonIcon,
   },
   {
     value: Mode.System,
     label: "System",
-    icon: SystemIcon
+    icon: SystemIcon,
   },
 ];
-
 
 export const sidebarLinks: SidebarLink[] = [
   {
@@ -44,7 +43,7 @@ export const sidebarLinks: SidebarLink[] = [
     label: "Collections",
   },
   {
-    icon: Tag,
+    icon: TagIcon,
     route: "/tags",
     label: "Tags",
   },
@@ -54,7 +53,7 @@ export const sidebarLinks: SidebarLink[] = [
     label: "Profile",
   },
   {
-    icon:AskQuestionIcon,
+    icon: AskQuestionIcon,
     route: "/ask-question",
     label: "Ask a question",
   },
