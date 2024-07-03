@@ -1,7 +1,7 @@
 import { BADGE_CRITERIA } from "@/constants";
 
 export interface SidebarLink {
-  imgURL: string;
+  icon: ReactNode;
   route: string;
   label: string;
 }
@@ -46,3 +46,8 @@ export interface BadgeCounts {
 }
 
 export type BadgeCriteriaType = keyof typeof BADGE_CRITERIA;
+export interface Theme {
+  value: Mode;
+  label: string;
+  icon: ReactNode;
+}

@@ -1,57 +1,60 @@
-import { Mode } from "@/context/ThemeProvider";
-import { SidebarLink } from "@/types";
 
-export const themes = [
+import AskQuestionIcon from "@/components/Icons/AskQuestionIcon";
+import CommunitiesIcon from "@/components/Icons/CommunitiesLogo";
+import HomeIcon from "@/components/Icons/Homelogo";
+import MoonIcon from "@/components/Icons/MoonIcon";
+import ProfileIcon from "@/components/Icons/ProfileIcon";
+import SystemIcon from "@/components/Icons/SystemIcon";
+import { Mode } from "@/context/ThemeProvider";
+import { SidebarLink, Theme } from "@/types";
+import { Star, Sun, Tag } from "lucide-react"
+export const themes:Theme[] = [
   {
     value: Mode.Light,
     label: "Light",
-    icon: "/assets/icons/sun.svg",
+    icon:Sun
   },
   {
     value: Mode.Dark,
     label: "Dark",
-    icon: "/assets/icons/moon.svg",
+    icon: MoonIcon
   },
   {
     value: Mode.System,
     label: "System",
-    icon: "/assets/icons/computer.svg",
+    icon: SystemIcon
   },
 ];
 
+
 export const sidebarLinks: SidebarLink[] = [
   {
-    imgURL: "/assets/icons/home.svg",
+    icon: HomeIcon,
     route: "/",
     label: "Home",
   },
   {
-    imgURL: "/assets/icons/users.svg",
+    icon: CommunitiesIcon,
     route: "/community",
     label: "Community",
   },
   {
-    imgURL: "/assets/icons/star.svg",
+    icon: Star,
     route: "/collection",
     label: "Collections",
   },
   {
-    imgURL: "/assets/icons/suitcase.svg",
-    route: "/jobs",
-    label: "Find Jobs",
-  },
-  {
-    imgURL: "/assets/icons/tag.svg",
+    icon: Tag,
     route: "/tags",
     label: "Tags",
   },
   {
-    imgURL: "/assets/icons/user.svg",
+    icon: ProfileIcon,
     route: "/profile",
     label: "Profile",
   },
   {
-    imgURL: "/assets/icons/question.svg",
+    icon:AskQuestionIcon,
     route: "/ask-question",
     label: "Ask a question",
   },

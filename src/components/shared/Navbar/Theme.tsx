@@ -1,4 +1,5 @@
 "use client";
+import MoonIcon from "@/components/Icons/MoonIcon";
 import {
   Menubar,
   MenubarContent,
@@ -8,6 +9,7 @@ import {
 } from "@/components/ui/menubar";
 import { themes } from "@/constants";
 import { Mode, useTheme } from "@/context/ThemeProvider";
+import { Sun } from "lucide-react"
 import Image from "next/image";
 type Props = {};
 const Theme = (props: Props) => {
@@ -17,21 +19,9 @@ const Theme = (props: Props) => {
       <MenubarMenu>
         <MenubarTrigger className="size-10 rounded hover:bg-slate-100/50 focus:bg-light-900 active:bg-slate-100/50 data-[state='open']:bg-light-900 dark:hover:bg-slate-900/50 dark:focus:bg-dark-200 dark:data-[state='open']:bg-dark-200">
           {mode == "light" ? (
-            <Image
-              src={"/assets/icons/sun.svg"}
-              alt="light mode"
-              width={20}
-              height={20}
-              className="active-theme"
-            />
+            <Sun className="size-7"/>
           ) : (
-            <Image
-              src={"/assets/icons/moon.svg"}
-              alt="light mode"
-              width={20}
-              height={20}
-              className="active-theme"
-            />
+            <MoonIcon className="fill-white "/>
           )}
         </MenubarTrigger>
 
@@ -49,13 +39,10 @@ const Theme = (props: Props) => {
                   }
                 }}
               >
-                <Image
-                  src={theme.icon}
-                  alt={theme.value}
-                  height={20}
-                  width={20}
-                  className={`${mode == theme.value && "active-theme"}`}
+                <theme.icon
+                  className={`size-4 dark:stroke-white dark:fill-white stroke-none ${mode == theme.value && "active-theme"}`}
                 />
+
                 <p
                   className={`body-semibold text-light-500 ${mode == theme.value ? "text-primary-500" : "text-dark100_light900"}`}
                 >

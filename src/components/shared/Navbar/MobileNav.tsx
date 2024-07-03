@@ -12,12 +12,15 @@ import { SignedOut } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { sidebarLinks } from "@/constants";
 import { usePathname } from "next/navigation";
+import HamburgerIcon from "@/components/Icons/Hamburger";
+import Logo from "@/components/Icons/Logo";
+import MainIcon from "@/components/Icons/MainIcon";
 
 const NavContent = () => {
   const pathname = usePathname();
 
   return (
-    <section className="flex h-full flex-col gap-6 pt-16">
+    <section className="flex flex-col gap-6 ">
       {sidebarLinks.map((item) => {
         const isActive =
           (pathname.includes(item.route) && item.route.length > 1) ||
@@ -27,24 +30,21 @@ const NavContent = () => {
 
         return (
           <SheetClose asChild key={item.route}>
-            <Link
-              href={item.route}
-              className={`${
-                isActive
-                  ? "primary-gradient rounded-lg text-light-900"
-                  : "text-dark300_light900"
-              } flex items-center justify-start gap-4 bg-transparent p-4`}
-            >
-              <Image
-                src={item.imgURL}
-                alt={item.label}
-                width={20}
-                height={20}
-                className={`${isActive ? "" : "invert-colors"}`}
-              />
-              <p className={`${isActive ? "base-bold" : "base-medium"}`}>
-                {item.label}
-              </p>
+            <Link href={item.route}>
+              <div
+                className={`${
+                  isActive
+                    ? "primary-gradient rounded-lg  text-white"
+                    : "text-dark300_light900"
+                } flex items-center justify-start gap-4 p-4`}
+              >
+                <item.icon
+                  className={`${isActive ? "fill-white" : "fill-black dark:fill-white"}`}
+                />
+                <p className={`${isActive ? "font-bold" : "font-medium"}`}>
+                  {item.label}
+                </p>
+              </div>
             </Link>
           </SheetClose>
         );
@@ -57,29 +57,17 @@ const MobileNav = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Image
-          src="/assets/icons/hamburger.svg"
-          width={36}
-          height={36}
-          alt="Menu"
-          className="invert-colors sm:hidden"
-        />
+        <div>
+          <HamburgerIcon className="dark:fill-white sm:hidden" />
+        </div>
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="background-light900_dark200 border-none"
+        className="background-light900_dark200 border-none flex flex-col justify-between h-screen p-2"
       >
-        <Link href="/" className="flex items-center gap-1">
-          <Image
-            src="/assets/images/site-logo.svg"
-            width={23}
-            height={23}
-            alt="FitFlow"
-          />
-
-          <p className="h2-bold text-dark100_light900 font-spaceGrotesk">
-            Fit <span className="text-primary-500">flow</span>
-          </p>
+        <Link href="/" >
+          <MainIcon className="max-sm:block"/>
+          
         </Link>
         <div>
           <SheetClose asChild>
