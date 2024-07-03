@@ -17,7 +17,7 @@ const Theme = (props: Props) => {
   return (
     <Menubar className="border-none bg-transparent shadow-none">
       <MenubarMenu>
-        <MenubarTrigger className="size-10 rounded hover:bg-slate-100/50 focus:bg-light-900 active:bg-slate-100/50 data-[state='open']:bg-light-900 dark:hover:bg-slate-900/50 dark:focus:bg-dark-200 dark:data-[state='open']:bg-dark-200">
+        <MenubarTrigger className="size-10 rounded hover:bg-light-800 focus:bg-light-900 active:bg-light-850 data-[state='open']:bg-light-900 dark:hover:bg-dark-500 dark:focus:bg-dark-200 dark:data-[state='open']:bg-dark-200">
           {mode == "light" ? (
             <Sun className="size-7"/>
           ) : (
@@ -25,11 +25,11 @@ const Theme = (props: Props) => {
           )}
         </MenubarTrigger>
 
-        <MenubarContent className="absolute mt-3 min-w-[120px] rounded border py-2 dark:border-dark-400 dark:bg-dark-300">
+        <MenubarContent className="absolute mt-3 min-w-[120px] rounded-md border py-2 dark:border-dark-400 dark:bg-dark-300">
           {themes.map((theme) => {
             return (
               <MenubarItem
-                className="flex items-center justify-start gap-2"
+                className="flex items-center justify-start gap-2 rounded-md hover:bg-light-800 dark:hover:bg-dark-500"
                 onClick={() => {
                   setMode(theme.value);
                   if (theme.value !== Mode.System) {
@@ -40,7 +40,7 @@ const Theme = (props: Props) => {
                 }}
               >
                 <theme.icon
-                  className={`size-4 dark:stroke-white dark:fill-white stroke-none ${mode == theme.value && "active-theme"}`}
+                  className={`size-4 stroke-black dark:fill-white dark:stroke-white`}
                 />
 
                 <p

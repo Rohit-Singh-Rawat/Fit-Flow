@@ -14,7 +14,7 @@ type ThemeProviderType = {
 const ThemeContext = createContext<ThemeProviderType | undefined>(undefined);
 
 const ThemeProvider = ({ children }: Props) => {
-  const [mode, setMode] = useState<Mode>(localStorage.theme ?? Mode.Light);
+  const [mode, setMode] = useState<Mode>(Mode.Light);
 
   const handleThemeChange = () => {
     if (

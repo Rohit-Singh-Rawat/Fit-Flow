@@ -20,7 +20,7 @@ const NavContent = () => {
   const pathname = usePathname();
 
   return (
-    <section className="flex flex-col gap-6 ">
+    <section className="flex flex-col gap-6">
       {sidebarLinks.map((item) => {
         const isActive =
           (pathname.includes(item.route) && item.route.length > 1) ||
@@ -34,14 +34,15 @@ const NavContent = () => {
               <div
                 className={`${
                   isActive
-                    ? "primary-gradient rounded-lg  text-white"
+                    ? "dark:primary-dark-gradient primary-light-gradient rounded-lg dark:text-white"
                     : "text-dark300_light900"
                 } flex items-center justify-start gap-4 p-4`}
               >
                 <item.icon
-                  className={`${isActive ? "fill-white" : "fill-black dark:fill-white"}`}
+                  className={`size-6 ${isActive ? "dark:fill-white" : "fill-black dark:fill-white"}`}
                 />
-                <p className={`${isActive ? "font-bold" : "font-medium"}`}>
+                <p className={`${isActive ? "font-bold" : "font-medium"} `}>
+                  {" "}
                   {item.label}
                 </p>
               </div>
@@ -63,41 +64,38 @@ const MobileNav = () => {
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="background-light900_dark200 border-none flex flex-col justify-between h-screen p-2"
+        className="background-light900_dark200 flex h-screen flex-col justify-between border-none p-5"
       >
-        <Link href="/" >
-          <MainIcon className="max-sm:block"/>
-          
+        <Link href="/">
+          <MainIcon className="max-sm:block" />
         </Link>
         <div>
           <SheetClose asChild>
             <NavContent />
           </SheetClose>
-
-          <SignedOut>
-            <div className="flex flex-col gap-3">
-              <SheetClose asChild>
-                <Link href="/sign-in">
-                  <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-                    <span className="primary-text-gradient">Log In</span>
-                  </Button>
-                </Link>
-              </SheetClose>
-
-              <SheetClose asChild>
-                <Link href="/sign-up">
-                  <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none">
-                    Sign Up
-                  </Button>
-                </Link>
-              </SheetClose>
-            </div>
-          </SignedOut>
         </div>
+        <SignedOut>
+          <div className="flex flex-col gap-3">
+            <SheetClose asChild>
+              <Link href="/sign-in">
+                <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+                  <span className="primary-text-gradient">Log In</span>
+                </Button>
+              </Link>
+            </SheetClose>
+
+            <SheetClose asChild>
+              <Link href="/sign-up">
+                <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none">
+                  Sign Up
+                </Button>
+              </Link>
+            </SheetClose>
+          </div>
+        </SignedOut>
       </SheetContent>
     </Sheet>
   );
 };
 
 export default MobileNav;
- 

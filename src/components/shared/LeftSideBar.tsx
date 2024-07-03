@@ -13,8 +13,8 @@ type Props = {};
 const LeftSideBar = (props: Props) => {
   const pathname = usePathname();
   return (
-    <div className="sticky right-0 top-0 m-5 flex pt-[80px]">
-      <section className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex flex-col justify-between overflow-y-auto rounded-2xl border-r p-6 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
+    <section className="sticky right-0 top-0 m-5 flex pt-[80px]">
+      <div className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex flex-col justify-between overflow-y-auto rounded-2xl border-r p-6 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
         <div className="flex flex-col gap-6">
           {sidebarLinks.map((item) => {
             const isActive =
@@ -29,12 +29,12 @@ const LeftSideBar = (props: Props) => {
                   <div
                     className={`${
                       isActive
-                        ? "primary-gradient rounded-lg text-white"
+                        ? "dark:primary-dark-gradient primary-light-gradient rounded-lg  dark:text-white"
                         : "text-dark300_light900"
                     } flex items-center justify-center lg:justify-start gap-4 p-4`}
                   >
                     <item.icon
-                      className={`size-6 ${isActive ? "fill-white" : "fill-black dark:fill-white"}`}
+                      className={`size-6 ${isActive ? "dark:fill-white" : "fill-black dark:fill-white"}`}
                     />
                     <p
                       className={`${isActive ? "font-bold" : "font-medium"} max-lg:hidden`}
@@ -59,7 +59,7 @@ const LeftSideBar = (props: Props) => {
             </Link>
 
             <Link href="/sign-up">
-              <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none ">
+              <Button className="small-medium light-border-2 btn-tertiary text-dark400_light400 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none ">
                 <SignUpIcon className="md:hidden " />
                 <span className="primary-text-gradient max-md:hidden">
                   Sign Up
@@ -68,8 +68,8 @@ const LeftSideBar = (props: Props) => {
             </Link>
           </div>
         </SignedOut>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 export default LeftSideBar;
