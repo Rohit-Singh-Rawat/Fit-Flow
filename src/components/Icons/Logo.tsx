@@ -1,6 +1,6 @@
+"use client";
 type Props = {};
 const Logo = (props: Props) => {
-  
   return (
     <>
       <svg
@@ -13,7 +13,7 @@ const Logo = (props: Props) => {
         viewBox="148.88600673675538 78.7194341659546 42.227624130249026 92.56113166809082"
         preserveAspectRatio="xMidYMid meet"
         color-interpolation-filters="sRGB"
-        className="hidden size-14 dark:block sm:hidden"
+        className=" size-[50px] sm:hidden dark:max-sm:flex"
       >
         <g>
           <defs>
@@ -187,7 +187,7 @@ const Logo = (props: Props) => {
         viewBox="148.88600673675538 78.7194341659546 42.227624130249026 92.56113166809082"
         preserveAspectRatio="xMidYMid meet"
         color-interpolation-filters="sRGB"
-        className="hidden size-14 dark:hidden sm:hidden"
+        className="size-[50px] sm:hidden dark:max-sm:hidden"
       >
         <g>
           <defs>

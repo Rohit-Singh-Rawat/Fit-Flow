@@ -23,10 +23,10 @@ module.exports = {
         },
         dark: {
           100: "#000000",
-          200: "#0F1117",
-          300: "#151821",
-          400: "#212734",
-          500: "#101012",
+          200: "#0a0a0a",
+          300: "#141414",
+          400: "#1e1e1e",
+          500: "#282828",
         },
         light: {
           900: "#FFFFFF",
@@ -49,6 +49,8 @@ module.exports = {
         "light-300": "-10px 10px 20px 0px rgba(218, 213, 213, 0.10)",
         "dark-100": "0px 2px 10px 0px rgba(46, 52, 56, 0.10)",
         "dark-200": "2px 0px 20px 0px rgba(39, 36, 36, 0.04)",
+        "inner-custom":
+          "inset 0 1px 2px rgba(0, 0, 0, 0.6), inset 0 -1px 1px rgba(255, 255, 255, 0.1)",
       },
       backgroundImage: {
         "auth-dark": "url('/assets/images/auth-dark.png')",

@@ -10,10 +10,10 @@ import Logo from "@/components/Icons/Logo";
 type Props = {};
 const Navbar = (props: Props) => {
   return (
-    <nav className="flex-between background-light900_dark200 fixed z-50 w-full  gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
+    <nav className="flex-between background-light900_dark200 fixed z-50 w-full gap-5 p-2 shadow-light-300 dark:shadow-none sm:px-12">
       <Link href={"/"} className="flex items-center gap-1">
-        <MainIcon/>
-       <Logo/>
+        <MainIcon />
+        <Logo />
       </Link>
       <GlobalSearch />
       <div className="flex-between gap-5">
