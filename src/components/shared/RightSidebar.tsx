@@ -35,7 +35,7 @@ const RightSidebar = async () => {
 
   return (
     <section className="sticky right-0 top-0 m-5 flex pt-[80px]">
-      <div className="sticky right-0 top-0 flex flex-col justify-between max-xl:hidden lg:w-[330px] gap-7">
+      <div className="sticky right-0 top-0 flex flex-col justify-between gap-7 max-xl:hidden lg:w-[330px]">
         <div className="background-light900_dark200 light-border custom-scrollbar overflow-y-auto rounded-2xl border-l p-6 shadow-light-300 dark:shadow-none">
           <h3 className="h3-bold text-dark200_light900">Top Questions</h3>
           <div className="mt-7 flex w-full flex-col gap-[30px]">

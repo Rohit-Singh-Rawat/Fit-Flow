@@ -87,27 +87,18 @@ body {
 .custom-scrollbar::-webkit-scrollbar {
   width: 3px;
   height: 3px;
+  left: -100px;
   border-radius: 2px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-  margin-block: 1.3em;
-  margin-right: 1.3em;
-}
-.custom-scrollbar:hover {
-  &::-webkit-scrollbar-track {
-    background-color: #ffffff;
-    margin-right: 1.3em;
-  }
-}
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: transparent;
   border-radius: 50px;
 }
-.custom__scrollbar:hover {
+.custom-scrollbar:hover {
   &::-webkit-scrollbar-thumb {
-    background-color: #888;
+    background-color: #ffffff;
     border-radius: 50px;
   }
 }

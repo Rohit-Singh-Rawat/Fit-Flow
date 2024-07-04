@@ -39,9 +39,9 @@ const NavContent = () => {
                 } flex items-center justify-start gap-4 p-4`}
               >
                 <item.icon
-                  className={`size-6 ${isActive ? "dark:fill-white" : "fill-black dark:fill-white"}`}
+                  className={`size-6 ${isActive ? "dark:fill-light-500" : "fill-black dark:fill-white"}`}
                 />
-                <p className={`${isActive ? "font-bold" : "font-medium"} `}>
+                <p className={`${isActive ? "font-bold dark:text-light-500" : "font-medium"} `}>
                   {" "}
                   {item.label}
                 </p>
@@ -58,7 +58,7 @@ const MobileNav = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div>
+        <div className="mx-2 ">
           <HamburgerIcon className="dark:fill-white sm:hidden" />
         </div>
       </SheetTrigger>

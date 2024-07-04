@@ -14,7 +14,7 @@ const LeftSideBar = (props: Props) => {
   const pathname = usePathname();
   return (
     <section className="sticky right-0 top-0 m-5 flex pt-[80px]">
-      <div className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex flex-col justify-between overflow-y-auto rounded-2xl border-r p-6 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
+      <div className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex flex-col justify-between overflow-y-auto rounded-2xl border-r p-3 lg:p-6 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
         <div className="flex flex-col gap-6">
           {sidebarLinks.map((item) => {
             const isActive =
@@ -29,15 +29,15 @@ const LeftSideBar = (props: Props) => {
                   <div
                     className={`${
                       isActive
-                        ? "dark:primary-dark-gradient primary-light-gradient rounded-lg  dark:text-white"
+                        ? "dark:primary-dark-gradient primary-light-gradient rounded-lg dark:text-white"
                         : "text-dark300_light900"
-                    } flex items-center justify-center lg:justify-start gap-4 p-4`}
+                    } flex items-center justify-center gap-4 p-4 lg:justify-start`}
                   >
                     <item.icon
-                      className={`size-6 ${isActive ? "dark:fill-white" : "fill-black dark:fill-white"}`}
+                      className={`size-6 ${isActive ? "dark:fill-light-500" : "fill-black dark:fill-white"}`}
                     />
                     <p
-                      className={`${isActive ? "font-bold" : "font-medium"} max-lg:hidden`}
+                      className={`${isActive ? "font-bold dark:text-light-500" : "font-medium"} max-lg:hidden`}
                     >
                       {item.label}
                     </p>
