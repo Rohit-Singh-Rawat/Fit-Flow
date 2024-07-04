@@ -12,7 +12,9 @@ body {
   .flex-center {
     @apply flex items-center justify-center;
   }
-
+  .card-gradient {
+    background: linear-gradient(to bottom right, #070707, #0d0d0d, black);
+  }
   .flex-between {
     @apply flex items-center justify-between;
   }
@@ -22,7 +24,7 @@ body {
   }
 
   .card-wrapper {
-    @apply dark:dark-gradient bg-light-900 shadow-light-100 dark:shadow-dark-100;
+    @apply dark:card-gradient bg-light-900 shadow-light-100 dark:shadow-dark-100;
   }
 
   .btn {
@@ -90,7 +92,6 @@ body {
   left: -100px;
   border-radius: 2px;
 }
-
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: transparent;

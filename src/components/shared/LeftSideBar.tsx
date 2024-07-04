@@ -29,7 +29,7 @@ const LeftSideBar = (props: Props) => {
                   <div
                     className={`${
                       isActive
-                        ? "dark:primary-dark-gradient primary-light-gradient rounded-lg dark:text-white"
+                        ? "dark:primary-dark-gradient primary-light-gradient rounded-lg dark:text-white dark:hover:bg-dark-300/50"
                         : "text-dark300_light900"
                     } flex items-center justify-center gap-4 p-4 lg:justify-start`}
                   >

@@ -15,171 +15,28 @@ const questions = [
       { _id: 1, name: "redis" },
       { _id: 2, name: "caching" },
     ],
-    author: { _id: "1", name: "John Doe", picture: "john_doe.jpg" },
+    author: {
+      _id: "1",
+      name: "John Doe",
+      picture: "/assets/images/rohit.jpg",
+    },
     upvotes: 25,
     views: 500,
     answers: [
       {
         _id: "1",
-        author: { _id: "2", name: "Jane Smith", picture: "jane_smith.jpg" },
+        author: {
+          _id: "2",
+          name: "Jane Smith",
+          picture: "rohit.png",
+        },
         text: "You can implement caching in Redis by...",
         createdAt: "2022-01-01T12:00:00.000Z",
       },
     ],
     createdAt: "2022-01-01T10:00:00.000Z",
   },
-  {
-    id: 2,
-    title: "What are the new features in Python 3.9?",
-    tags: [
-      { _id: 3, name: "python" },
-      { _id: 4, name: "features" },
-    ],
-    author: { _id: "2", name: "Jane Smith", picture: "jane_smith.jpg" },
-    upvotes: 30,
-    views: 600,
-    answers: [
-      {
-        _id: "2",
-        author: {
-          _id: "3",
-          name: "Alice Johnson",
-          picture: "alice_johnson.jpg",
-        },
-        text: "Python 3.9 introduces several new features...",
-        createdAt: "2022-01-02T12:00:00.000Z",
-      },
-    ],
-    createdAt: "2022-01-02T10:00:00.000Z",
-  },
-  {
-    id: 3,
-    title: "How to use the useEffect hook in React?",
-    tags: [
-      { _id: 5, name: "react" },
-      { _id: 6, name: "hooks" },
-    ],
-    author: { _id: "3", name: "Alice Johnson", picture: "alice_johnson.jpg" },
-    upvotes: 20,
-    views: 400,
-    answers: [
-      {
-        _id: "3",
-        author: { _id: "1", name: "John Doe", picture: "john_doe.jpg" },
-        text: "The useEffect hook allows you to perform side effects...",
-        createdAt: "2022-01-03T12:00:00.000Z",
-      },
-    ],
-    createdAt: "2022-01-03T10:00:00.000Z",
-  },
-  {
-    id: 4,
-    title: "What is the difference between SQL and NoSQL databases?",
-    tags: [
-      { _id: 7, name: "sql" },
-      { _id: 8, name: "nosql" },
-    ],
-    author: { _id: "4", name: "Bob Brown", picture: "bob_brown.jpg" },
-    upvotes: 40,
-    views: 800,
-    answers: [
-      {
-        _id: "4",
-        author: { _id: "2", name: "Jane Smith", picture: "jane_smith.jpg" },
-        text: "The main difference between SQL and NoSQL databases is...",
-        createdAt: "2022-01-04T12:00:00.000Z",
-      },
-    ],
-    createdAt: "2022-01-04T10:00:00.000Z",
-  },
-  {
-    id: 5,
-    title: "How to create a REST API with Node.js?",
-    tags: [
-      { _id: 9, name: "node.js" },
-      { _id: 10, name: "rest api" },
-    ],
-    author: { _id: "5", name: "Charlie Green", picture: "charlie_green.jpg" },
-    upvotes: 50,
-    views: 1000,
-    answers: [
-      {
-        _id: "5",
-        author: {
-          _id: "3",
-          name: "Alice Johnson",
-          picture: "alice_johnson.jpg",
-        },
-        text: "To create a REST API with Node.js, you need to...",
-        createdAt: "2022-01-05T12:00:00.000Z",
-      },
-    ],
-    createdAt: "2022-01-05T10:00:00.000Z",
-  },
-  {
-    id: 6,
-    title: "What is the best way to learn TypeScript?",
-    tags: [
-      { _id: 11, name: "typescript" },
-      { _id: 12, name: "learning" },
-    ],
-    author: { _id: "6", name: "David White", picture: "david_white.jpg" },
-    upvotes: 15,
-    views: 300,
-    answers: [
-      {
-        _id: "6",
-        author: { _id: "1", name: "John Doe", picture: "john_doe.jpg" },
-        text: "The best way to learn TypeScript is by...",
-        createdAt: "2022-01-06T12:00:00.000Z",
-      },
-    ],
-    createdAt: "2022-01-06T10:00:00.000Z",
-  },
-  {
-    id: 7,
-    title: "How to manage state in a React application?",
-    tags: [
-      { _id: 5, name: "react" },
-      { _id: 13, name: "state management" },
-    ],
-    author: { _id: "7", name: "Emma Black", picture: "emma_black.jpg" },
-    upvotes: 35,
-    views: 700,
-    answers: [
-      {
-        _id: "7",
-        author: { _id: "4", name: "Bob Brown", picture: "bob_brown.jpg" },
-        text: "State management in React can be done using...",
-        createdAt: "2022-01-07T12:00:00.000Z",
-      },
-    ],
-    createdAt: "2022-01-07T10:00:00.000Z",
-  },
-  {
-    id: 8,
-    title: "What is the difference between var, let, and const in JavaScript?",
-    tags: [
-      { _id: 14, name: "javascript" },
-      { _id: 15, name: "variables" },
-    ],
-    author: { _id: "8", name: "Frank Brown", picture: "frank_brown.jpg" },
-    upvotes: 45,
-    views: 900,
-    answers: [
-      {
-        _id: "8",
-        author: {
-          _id: "5",
-          name: "Charlie Green",
-          picture: "charlie_green.jpg",
-        },
-        text: "The difference between var, let, and const is...",
-        createdAt: "2022-01-08T12:00:00.000Z",
-      },
-    ],
-    createdAt: "2022-01-08T10:00:00.000Z",
-  },
+
   {
     id: 9,
     title: "How to create a responsive design with Tailwind CSS?",
@@ -187,9 +44,13 @@ const questions = [
       { _id: 16, name: "tailwind css" },
       { _id: 17, name: "responsive design" },
     ],
-    author: { _id: "9", name: "Grace Miller", picture: "grace_miller.jpg" },
+    author: {
+      _id: "9",
+      name: "Grace Miller",
+      picture: "/assets/images/rohit.jpg",
+    },
     upvotes: 50,
-    views: 1000,
+    views: 122200,
     answers: [
       {
         _id: "9",
@@ -198,7 +59,7 @@ const questions = [
         createdAt: "2022-01-09T12:00:00.000Z",
       },
     ],
-    createdAt: "2022-01-09T10:00:00.000Z",
+    createdAt: "2024-07-04T10:00:00.000Z",
   },
 ];
 type Props = {};
