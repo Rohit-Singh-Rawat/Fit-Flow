@@ -51,7 +51,7 @@ module.exports = {
         "dark-200": "2px 0px 20px 0px rgba(39, 36, 36, 0.04)",
         "inner-custom":
           "inset 0 1px 2px rgba(0, 0, 0, 0.6), inset 0 -1px 1px rgba(255, 255, 255, 0.1)",
-      },
+       },
       backgroundImage: {
         "auth-dark": "url('/assets/images/auth-dark.png')",
         "auth-light": "url('/assets/images/auth-light.png')",
