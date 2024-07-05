@@ -34,10 +34,10 @@ const LeftSideBar = (props: Props) => {
                     } flex items-center justify-center gap-4 p-4 lg:justify-start`}
                   >
                     <item.icon
-                      className={`size-6 ${isActive ? "dark:fill-light-500" : "fill-black dark:fill-white"}`}
+                      className={`size-6 ${isActive ? "dark:fill-light-500  " : " dark:fill-white"}`}
                     />
                     <p
-                      className={`${isActive ? "font-bold dark:text-light-500" : "font-medium"} max-lg:hidden`}
+                      className={`${isActive ? "font-semibold dark:text-light-500" : "font-medium text-["} max-lg:hidden`}
                     >
                       {item.label}
                     </p>

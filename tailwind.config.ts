@@ -18,8 +18,8 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          "500": "#3fcf8e",
-          "100": "#e0f7ef",
+          "500": "#309B9C",
+          "100": "#ADD8DD",
         },
         dark: {
           "100": "#000000",
@@ -29,12 +29,12 @@ module.exports = {
           "500": "#282828",
         },
         light: {
-          "900": "#F2F2F2",
-          "850": "#E6E6E6",
-          "800": "#D9F2E6",
-          "700": "#CCF2E0",
+          "900": "#FFFFFF",
+          "850": "#f6f7f9",
+          "800": "#F4F6F8",
+          "700": "#DCE3F1",
           "500": "#B3FFCC",
-          "400": "#E6F7FF",
+          "400": "#F3F8FF",
         },
         "accent-blue": "#1DA1F2",
       },
@@ -51,10 +51,15 @@ module.exports = {
         "dark-200": "2px 0px 20px 0px rgba(39, 36, 36, 0.04)",
         "inner-custom":
           "inset 0 1px 2px rgba(0, 0, 0, 0.6), inset 0 -1px 1px rgba(255, 255, 255, 0.1)",
-       },
+      },
       backgroundImage: {
         "auth-dark": "url('/assets/images/auth-dark.png')",
         "auth-light": "url('/assets/images/auth-light.png')",
+
+        "dark-gradient":
+          "linear-gradient(110deg,#000103,45%,#282626,55%,#000103)",
+        "light-gradient":
+          "linear-gradient(110deg, #007BFF, 45%, #5A9BFF, 55%, #007BFF)",
       },
       screens: {
         xs: "420px",
@@ -68,10 +73,19 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        shimmer: {
+          from: {
+            backgroundPosition: "0 0",
+          },
+          to: {
+            backgroundPosition: "-200% 0",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        shimmer: "shimmer 4s linear infinite",
       },
     },
   },

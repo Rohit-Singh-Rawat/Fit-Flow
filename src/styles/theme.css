@@ -19,11 +19,14 @@
     @apply bg-light-900 dark:bg-dark-300;
   }
 
-  .background-light800_darkgradient {
+  .background-light800_dark_gradient {
     @apply dark:dark-gradient bg-light-800;
   }
+  .background-light900_dark_gradient {
+    @apply dark:dark-gradient bg-light-900;
+  }
   .background-light_dark_gradient {
-    @apply dark:dark-gradient light-gradient;
+    @apply dark:dark-gradient bg-[#F4F5FB];
   }
   .background-light800_dark400 {
     @apply bg-light-800 dark:bg-dark-400 !important;
@@ -35,7 +38,10 @@
 
   .background-light700_dark300 {
     @apply bg-light-700 dark:bg-dark-300;
+  } .background-light400_dark300 {
+    @apply bg-light-400 dark:bg-dark-300;
   }
+
 
   .background-light800_dark400 {
     @apply bg-light-800 dark:bg-dark-400;
@@ -83,7 +89,10 @@
 
   .text-light400_light500 {
     @apply text-light-400 dark:text-light-500 !important;
+  }.text-blue_light500 {
+    @apply text-[#3757c9]  dark:text-light-500 !important;
   }
+
 
   .text-dark400_light500 {
     @apply text-dark-400 dark:text-light-500;
@@ -182,7 +191,7 @@
   }
 
   .placeholder {
-    @apply placeholder:text-light-400 dark:placeholder:text-light-500;
+    @apply placeholder:text-dark-200 dark:placeholder:text-light-700;
   }
 
   .invert-colors {
@@ -198,12 +207,48 @@
   }
 
   .primary-dark-gradient {
+    background: rgb(44, 44, 44);
     background: linear-gradient(90deg, rgb(44, 44, 44), transparent);
-  }
-  .primary-light-gradient {
-    background: linear-gradient(90deg, rgb(134, 249, 130), transparent);
+    border: none;
   }
 
+  .primary-light-gradient {
+    background: #f4f5fb;
+    background:
+      linear-gradient(90deg, #f4f5fb 80%, #ffffff) padding-box,
+      linear-gradient(to right, #7edbd0 10%, transparent) border-box;
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }
+
+  .primary-light-gradient:hover {
+    background: #f4f5fb;
+    background:
+      linear-gradient(90deg, #f1f2fc 80%, #f4f5fb) padding-box,
+      linear-gradient(to right, #57a299 0%, transparent) border-box;
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }
+
+  @supports not (
+    background: linear-gradient(90deg, #f4f5fb 80%, #ffffff) padding-box
+  ) {
+    .primary-dark-gradient {
+      background: rgb(44, 44, 44);
+    }
+
+    .primary-light-gradient {
+      background: #f4f5fb;
+      border-radius: 8px;
+      border: 1px solid rgb(173, 216, 221);
+    }
+
+    .primary-light-gradient:hover {
+      background: #f4f5fb;
+      border-radius: 8px;
+      border: 1px solid rgb(173, 216, 221);
+    }
+  }
   .dark-gradient {
     background: linear-gradient(
       232deg,
@@ -222,5 +267,4 @@
       rgba(63, 207, 142, 0.3) 100%
     );
   }
-  
 }

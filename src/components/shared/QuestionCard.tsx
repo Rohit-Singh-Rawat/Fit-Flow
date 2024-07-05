@@ -38,7 +38,7 @@ const QuestionCard = ({
   createdAt,
 }: QuestionProps) => {
   return (
-    <div className="card-wrapper rounded-[15px] border p-9 dark:border-[#282626] sm:px-11">
+    <div className="card-wrapper rounded-[15px] border border-[#e4e6ed] p-9 dark:border-[#282626] sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
         {" "}
         <div>
@@ -65,31 +65,39 @@ const QuestionCard = ({
             id={author._id}
           />
           <div className="flex items-center justify-center">
-            <span className="small-medium text-[#676F75]">{author.name}</span>
-            <Dot className="stroke-white max-sm:hidden" />
-            <span className="small-medium line-clamp-1 text-[#676F75] max-sm:hidden">
+            <span className="small-medium text-black dark:text-[#676F75]">
+              {author.name}
+            </span>
+            <Dot className="stroke-black dark:stroke-white max-sm:hidden" />
+            <span className="small-medium line-clamp-1 text-black dark:text-[#676F75] max-sm:hidden">
               asked {getTime(createdAt)}
             </span>
           </div>
         </div>
         <div className="flex justify-between gap-4">
           <Metric
-            icon={<ThumbsUp className="size-4 stroke-[#676F75]" />}
+            icon={
+              <ThumbsUp className="size-4 stroke-black dark:stroke-[#676F75]" />
+            }
             title="votes"
             value={getCompactNumber(upvotes)}
-            textStyles="small-medium  text-[#676F75]"
+            textStyles="small-medium  text-black  dark:text-[#676F75]"
           />
           <Metric
-            icon={<View className="size-4 stroke-[#676F75]" />}
+            icon={
+              <View className="size-4 stroke-black dark:stroke-[#676F75]" />
+            }
             title="Views"
             value={getCompactNumber(views)}
-            textStyles="small-medium  text-[#676F75]"
+            textStyles="small-medium text-black  dark:text-[#676F75]"
           />
           <Metric
-            icon={<MessageCircleMore className="size-4 stroke-[#676F75]" />}
+            icon={
+              <MessageCircleMore className="size-4 stroke-black dark:stroke-[#676F75]" />
+            }
             title="Answers"
             value={getCompactNumber(answers.length)}
-            textStyles="small-medium  text-[#676F75]"
+            textStyles="small-medium   text-black  dark:text-[#676F75]"
           />
         </div>
       </div>
