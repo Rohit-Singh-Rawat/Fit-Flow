@@ -17,7 +17,7 @@ const Avatar: React.FC<Props> = ({
   id,
 }) => {
   const avatarClass = cn(
-    "border-2 border-[#3A3D3E] size-7 rounded-full ",
+    "border-2 dark:border-[#3A3D3E] border-black   size-7 rounded-full ",
     size,
   );
 

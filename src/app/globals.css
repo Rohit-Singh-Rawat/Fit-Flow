@@ -15,6 +15,9 @@ body {
   .card-gradient {
     background: linear-gradient(to bottom right, #070707, #0d0d0d, black);
   }
+  .card-gradient-light {
+    background: linear-gradient(to bottom right, #ffffff, #e7f4f5 ,70%, #ffffff);
+  }
   .flex-between {
     @apply flex items-center justify-between;
   }
@@ -24,7 +27,7 @@ body {
   }
 
   .card-wrapper {
-    @apply dark:card-gradient bg-light-900 shadow-light-100 dark:shadow-dark-100;
+    @apply dark:card-gradient card-gradient-light shadow-light-100 dark:shadow-dark-100;
   }
 
   .btn {
@@ -98,6 +101,12 @@ body {
   border-radius: 50px;
 }
 .custom-scrollbar:hover {
+  &::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 50px;
+  }
+}
+.dark .custom-scrollbar:hover {
   &::-webkit-scrollbar-thumb {
     background-color: #ffffff;
     border-radius: 50px;

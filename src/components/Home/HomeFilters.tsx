@@ -15,8 +15,8 @@ const HomeFilters = (props: Props) => {
           className={cn(
             "body-medium rounded-lg px-6 py-3 capitalize shadow-none",
             active === item.value
-              ? "bg-primary-500/80 text-dark-100"
-              : "hover:bg-light600 bg-light-800 text-light-500 dark:bg-dark-300 dark:text-light-900 dark:hover:bg-dark-500",
+              ? "border-[#d1a1fa] border bg-[#e0c2fa] text-white dark:border-[#1a4334] dark:bg-[#1621204d]"
+              : "hover:bg-light600 bg-light-700/30 text-accent-blue dark:bg-dark-300 dark:text-light-900 dark:hover:bg-dark-500",
           )}
         >
           {item.name}

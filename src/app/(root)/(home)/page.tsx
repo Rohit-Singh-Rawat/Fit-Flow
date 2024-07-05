@@ -72,9 +72,10 @@ const page = (props: Props) => {
           href={"/questions/ask"}
           className="justify-end max-sm:w-full sm:flex"
         >
-          <Button className="primary-light-gradient dark:primary-dark-gradient px=4 min-h-[46px] py-3 !text-light-900 dark:hover:bg-dark-200">
+          <Button className="animate-shimmer bg-light-gradient dark:bg-dark-gradient inline-flex h-12 min-h-[46px] items-center justify-center rounded-lg border border-blue-600  bg-[length:200%_100%] px-6 py-3 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 dark:border-[#282626] dark:text-light-900 dark:hover:bg-dark-200">
+            {" "}
             Ask a question
-          </Button>
+          </Button>{" "}
         </Link>
       </div>
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
