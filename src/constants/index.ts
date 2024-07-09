@@ -54,7 +54,7 @@ export const sidebarLinks: SidebarLink[] = [
   },
   {
     icon: AskQuestionIcon,
-    route: "/ask-question",
+    route: "/questions/ask",
     label: "Ask a question",
   },
 ];

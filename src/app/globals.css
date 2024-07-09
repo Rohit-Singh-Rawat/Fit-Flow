@@ -16,7 +16,13 @@ body {
     background: linear-gradient(to bottom right, #070707, #0d0d0d, black);
   }
   .card-gradient-light {
-    background: linear-gradient(to bottom right, #ffffff, #e7f4f5 ,70%, #ffffff);
+    background: linear-gradient(
+      to bottom right,
+      #ffffff,
+      #e7f4f5,
+      70%,
+      #ffffff
+    );
   }
   .flex-between {
     @apply flex items-center justify-between;

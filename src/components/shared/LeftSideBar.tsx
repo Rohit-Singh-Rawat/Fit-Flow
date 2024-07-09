@@ -13,8 +13,8 @@ type Props = {};
 const LeftSideBar = (props: Props) => {
   const pathname = usePathname();
   return (
-    <section className="sticky right-0 top-0 m-5 flex pt-[80px]">
-      <div className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex flex-col justify-between overflow-y-auto rounded-2xl border-r p-3 lg:p-6 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
+    <section className="sticky right-0 top-0 p-5  flex h-screen pt-[100px]">
+      <div className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex flex-col justify-between overflow-y-auto rounded-2xl border-r p-3 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px] lg:p-6">
         <div className="flex flex-col gap-6">
           {sidebarLinks.map((item) => {
             const isActive =
@@ -34,10 +34,10 @@ const LeftSideBar = (props: Props) => {
                     } flex items-center justify-center gap-4 p-4 lg:justify-start`}
                   >
                     <item.icon
-                      className={`size-6 ${isActive ? "dark:fill-light-500  " : " dark:fill-white"}`}
+                      className={`size-6 ${isActive ? "dark:fill-light-500" : "dark:fill-white"}`}
                     />
                     <p
-                      className={`${isActive ? "font-semibold dark:text-light-500" : "font-medium text-["} max-lg:hidden`}
+                      className={`${isActive ? "font-semibold dark:text-light-500" : "text-[ font-medium"} max-lg:hidden`}
                     >
                       {item.label}
                     </p>
@@ -59,8 +59,8 @@ const LeftSideBar = (props: Props) => {
             </Link>
 
             <Link href="/sign-up">
-              <Button className="small-medium light-border-2 btn-tertiary text-dark400_light400 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none ">
-                <SignUpIcon className="md:hidden " />
+              <Button className="small-medium light-border-2 btn-tertiary text-dark400_light400 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none">
+                <SignUpIcon className="md:hidden" />
                 <span className="primary-text-gradient max-md:hidden">
                   Sign Up
                 </span>

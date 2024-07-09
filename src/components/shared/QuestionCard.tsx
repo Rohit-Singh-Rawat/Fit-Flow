@@ -38,7 +38,7 @@ const QuestionCard = ({
   createdAt,
 }: QuestionProps) => {
   return (
-    <div className="card-wrapper rounded-[15px] border border-[#e4e6ed] p-9 dark:border-[#282626] sm:px-11">
+    <div className="card-wrapper rounded-[15px] border border-[#e2e5ee] p-9 dark:border-[#282626] sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
         {" "}
         <div>
