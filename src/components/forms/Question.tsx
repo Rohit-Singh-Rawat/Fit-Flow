@@ -18,9 +18,16 @@ import { Input } from "@/components/ui/input";
 import { QuestionsSchema } from "@/lib/validations";
 import { Files, Loader, X } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { resolve } from "path";
+import { createQuestion } from "@/lib/actions/question.action";
+import { usePathname, useRouter } from "next/navigation";
 
-type Props = {};
-const Question = (props: Props) => {
+type Props = {userId:string};
+
+const Question = ({userId}: Props) => {
+  const router = useRouter();
+  const pathName = usePathname()
+
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
     defaultValues: {
@@ -32,9 +39,11 @@ const Question = (props: Props) => {
   const editorRef = useRef(null);
 
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
-    await setTimeout(() => {
-      0;
-    }, 5000);
+   await createQuestion({authorId:userId,
+    title: values.title,
+    content: values.explanation,  
+    tags: values.tags,
+   })
   }
   const handleInputKeyDown = (
     e: KeyboardEvent<HTMLInputElement>,
@@ -69,20 +78,20 @@ const Question = (props: Props) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full flex-col gap-10"
+        className="flex w-full flex-col items-center justify-center gap-10"
       >
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
-              <FormLabel className="paragraph-semibold text-dark400_light800">
+              <FormLabel className="paragraph-semibold text-dark400_light800 font-semibold">
                 Question Title <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
                 <Input
                   {...field}
-                  className="no-focus paragraph-regular background-light900_dark300 light-border-2 test-dark300_Light700 min-h-[56px] border"
+                  className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light900 min-h-[56px] border-2"
                 />
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-dark-100 dark:text-light-500">
@@ -98,7 +107,7 @@ const Question = (props: Props) => {
           name="explanation"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col gap-3">
-              <FormLabel className="paragraph-semibold text-dark400_light800">
+              <FormLabel className="paragraph-semibold text-dark400_light800 font-semibold">
                 What are the details of your problem?
                 <span className="text-primary-500">*</span>
               </FormLabel>
@@ -109,6 +118,8 @@ const Question = (props: Props) => {
                     //@ts-ignore
                     onInit={(_evt, editor) => (editorRef.current = editor)}
                     initialValue=""
+                    onBlur={field.onBlur}
+                    onEditorChange={(content) => field.onChange(content)}
                     init={{
                       height: 350,
                       menubar: false,
@@ -192,13 +203,13 @@ const Question = (props: Props) => {
           name="tags"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
-              <FormLabel className="paragraph-semibold text-dark400_light800">
+              <FormLabel className="paragraph-semibold text-dark400_light800 font-semibold">
                 Tags <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
                 <>
                   <Input
-                    className="no-focus paragraph-regular background-light900_dark300 light-border-2 test-dark300_Light700 min-h-[56px] border"
+                    className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light900 min-h-[56px] border-2"
                     onKeyDown={(e) => handleInputKeyDown(e, field)}
                   />
                   {field.value.length > 0 && (
@@ -207,11 +218,11 @@ const Question = (props: Props) => {
                         return (
                           <Badge
                             key={tag}
-                            className="subt1e-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize"
+                            className="subt1e-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-[#C9CED6] px-4 py-2 capitalize dark:border-[#564545]"
                           >
                             {tag}
                             <X
-                              className="size-2 cursor-pointer fill-black object-contain dark:fill-white"
+                              className="size-3 cursor-pointer fill-black object-contain dark:fill-white"
                               onClick={() => handleTagRemove(tag, field)}
                             />
                           </Badge>
@@ -229,7 +240,14 @@ const Question = (props: Props) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button
+          type="submit"
+          className="w-56 bg-gradient-to-r from-[#00A7FF] to-[#63CAFD] font-medium text-white"
+          disabled={form.formState.isSubmitting}
+        >{form.formState.isSubmitting? <Loader className="x animate-spin text-center" />
+               :
+          'Submit'}
+        </Button>
       </form>
     </Form>
   );
