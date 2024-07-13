@@ -5,65 +5,13 @@ import QuestionCard from "@/components/shared/QuestionCard";
 import LocalSearchBar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
+import { getQuestions } from "@/lib/actions/question.action";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-const questions = [
-  {
-    id: 1,
-    title: "How to implement caching in Redis?",
-    tags: [
-      { _id: 1, name: "redis" },
-      { _id: 2, name: "caching" },
-    ],
-    author: {
-      _id: "1",
-      name: "John Doe",
-      picture: "/assets/images/rohit.jpg",
-    },
-    upvotes: 25,
-    views: 500,
-    answers: [
-      {
-        _id: "1",
-        author: {
-          _id: "2",
-          name: "Jane Smith",
-          picture: "rohit.png",
-        },
-        text: "You can implement caching in Redis by...",
-        createdAt: "2022-01-01T12:00:00.000Z",
-      },
-    ],
-    createdAt: "2022-01-01T10:00:00.000Z",
-  },
 
-  {
-    id: 9,
-    title: "How to create a responsive design with Tailwind CSS?",
-    tags: [
-      { _id: 16, name: "tailwind css" },
-      { _id: 17, name: "responsive design" },
-    ],
-    author: {
-      _id: "9",
-      name: "Grace Miller",
-      picture: "/assets/images/rohit.jpg",
-    },
-    upvotes: 50,
-    views: 122200,
-    answers: [
-      {
-        _id: "9",
-        author: { _id: "6", name: "David White", picture: "david_white.jpg" },
-        text: "To create a responsive design with Tailwind CSS...",
-        createdAt: "2022-01-09T12:00:00.000Z",
-      },
-    ],
-    createdAt: "2024-07-04T10:00:00.000Z",
-  },
-];
 type Props = {};
-const page = (props: Props) => {
+const page = async (props: Props) => {
+  const result = await getQuestions({});
   return (
     <>
       <div className="flex flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -93,15 +41,15 @@ const page = (props: Props) => {
       </div>{" "}
       <HomeFilters />
       <div className="mt-10 flex w-full flex-col gap-6 overflow-hidden">
-        {questions.length > 0 ? (
-          questions.map((question) => (
+        {result.questions.length > 0 ? (
+          result?.questions.map((question) => (
             <QuestionCard
               key={question.id}
               id={question.id}
               title={question.title}
               tags={question.tags}
               author={question.author}
-              upvotes={question.upvotes}
+              upvotes={question.upvotes.length}
               views={question.views}
               answers={question.answers}
               createdAt={question.createdAt}
