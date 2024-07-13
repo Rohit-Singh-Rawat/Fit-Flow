@@ -12,6 +12,16 @@ import Link from "next/link";
 type Props = {};
 const page = async (props: Props) => {
   const result = await getQuestions({});
+  if(!result){
+    return (
+      <NoResult
+        title="No Questions Available"
+        description="It looks like there are no questions to display right now. Be the first to start the conversation and help others with your fitness knowledge."
+        href="/ask"
+        label="Ask a Question"
+      />
+    );
+  }
   return (
     <>
       <div className="flex flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -41,7 +51,7 @@ const page = async (props: Props) => {
       </div>{" "}
       <HomeFilters />
       <div className="mt-10 flex w-full flex-col gap-6 overflow-hidden">
-        {result.questions.length > 0 ? (
+        {result!.questions?.length  > 0 ? (
           result?.questions.map((question) => (
             <QuestionCard
               key={question.id}
