@@ -2,9 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "../db";
-import { CreateQuestionParams, GetQuestionParams } from "./shared.tyes";
+import { CreateQuestionParams, GetQuestionsParams } from "./shared.types";
 
-export async function getQuestions(params: GetQuestionParams) {
+export async function getQuestions(params: GetQuestionsParams) {
   try {
     const questions = await prisma.question.findMany({
       where: {},
@@ -13,9 +13,9 @@ export async function getQuestions(params: GetQuestionParams) {
         tags: { select: { id: true, name: true } },
         answers: true,
         upvotes: true,
-      },orderBy:{createdAt:"desc"}
+      },
+      orderBy: { createdAt: "desc" },
     });
-    console.log(questions);
     return { questions };
   } catch (error) {}
 }
@@ -24,7 +24,7 @@ export async function createQuestion(
   params: CreateQuestionParams,
 ): Promise<void> {
   try {
-    const { title, content, tags, authorId,path } = params;
+    const { title, content, tags, authorId, path } = params;
 
     const question = await prisma.question.create({
       data: {
@@ -39,7 +39,7 @@ export async function createQuestion(
         },
       },
     });
-    revalidatePath(path)
+    revalidatePath(path);
   } catch (error) {
     console.error("Error creating question:", error);
   }

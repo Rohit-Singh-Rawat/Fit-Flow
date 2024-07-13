@@ -21,7 +21,7 @@ model Question {
   views     Int      @default(0)
   upvotes   User[]   @relation("Upvotes")
   downvotes User[]   @relation("Downvotes")
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  String
   createdAt DateTime @default(now())
   answers   Answer[]
@@ -39,7 +39,7 @@ model Tag {
 model User {
   id                 String     @id @default(cuid())
   name               String
-  clerkId            String
+  clerkId            String     @unique
   username           String     @unique
   email              String     @unique
   password           String?
@@ -58,6 +58,6 @@ model User {
 model Answer {
   id         String    @id @default(cuid())
   content    String
-  Question   Question? @relation(fields: [questionId], references: [id])
+  Question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String?
 }
