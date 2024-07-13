@@ -14,15 +14,17 @@ datasource db {
 }
 
 model Question {
-  id        String @id @default(cuid())
+  id        String   @id @default(cuid())
   title     String
   content   String
   tags      Tag[]
-  views     Int    @default(0)
-  upvotes   User[] @relation("Upvotes")
-  downvotes User[] @relation("Downvotes")
-  author    User   @relation(fields: [authorId], references: [id])
+  views     Int      @default(0)
+  upvotes   User[]   @relation("Upvotes")
+  downvotes User[]   @relation("Downvotes")
+  author    User     @relation(fields: [authorId], references: [id])
   authorId  String
+  createdAt DateTime @default(now())
+  answers   Answer[]
 }
 
 model Tag {
@@ -51,4 +53,11 @@ model User {
   tagsFollowed       Tag[]
   QuestionsUpvoted   Question[] @relation("Upvotes")
   QuestionsDownvoted Question[] @relation("Downvotes")
+}
+
+model Answer {
+  id         String    @id @default(cuid())
+  content    String
+  Question   Question? @relation(fields: [questionId], references: [id])
+  questionId String?
 }

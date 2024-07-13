@@ -22,11 +22,11 @@ import { resolve } from "path";
 import { createQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
 
-type Props = {userId:string};
+type Props = { userId: string };
 
-const Question = ({userId}: Props) => {
+const Question = ({ userId }: Props) => {
   const router = useRouter();
-  const pathName = usePathname()
+  const pathName = usePathname();
 
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
@@ -39,11 +39,16 @@ const Question = ({userId}: Props) => {
   const editorRef = useRef(null);
 
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
-   await createQuestion({authorId:userId,
-    title: values.title,
-    content: values.explanation,  
-    tags: values.tags,
-   })
+    try {
+      await createQuestion({
+        authorId: userId,
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        path: pathName,
+      });
+      router.push("/");
+    } catch (error) {}
   }
   const handleInputKeyDown = (
     e: KeyboardEvent<HTMLInputElement>,
@@ -244,9 +249,12 @@ const Question = ({userId}: Props) => {
           type="submit"
           className="w-56 bg-gradient-to-r from-[#00A7FF] to-[#63CAFD] font-medium text-white"
           disabled={form.formState.isSubmitting}
-        >{form.formState.isSubmitting? <Loader className="x animate-spin text-center" />
-               :
-          'Submit'}
+        >
+          {form.formState.isSubmitting ? (
+            <Loader className="x animate-spin text-center" />
+          ) : (
+            "Submit"
+          )}
         </Button>
       </form>
     </Form>

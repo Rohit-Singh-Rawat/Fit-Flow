@@ -7,24 +7,24 @@ import Avatar from "./Avatar";
 import { getCompactNumber, getTime } from "@/lib/utils";
 
 interface Tag {
-  _id: number;
+  id: string;
   name: string;
 }
 interface author {
-  _id: string;
+  id: string;
   name: string;
   picture: string;
 }
 
 interface QuestionProps {
-  id: number;
+  id: string;
   title: string;
   tags: Tag[];
   author: author;
   upvotes: number;
   views: number;
   answers: Array<object>;
-  createdAt: string;
+  createdAt: string | Date;
 }
 
 const QuestionCard = ({
@@ -37,6 +37,7 @@ const QuestionCard = ({
   answers,
   createdAt,
 }: QuestionProps) => {
+  console.log(tags)
   return (
     <div className="card-wrapper rounded-[15px] border border-[#e2e5ee] p-9 dark:border-[#282626] sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
@@ -54,7 +55,7 @@ const QuestionCard = ({
       </div>
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (
-          <RenderTag _id={String(tag._id)} name={tag.name} key={tag._id} />
+          <RenderTag _id={String(tag.id)} name={tag.name} key={tag.id} />
         ))}
       </div>
       <div className="flex-between ga mt-6 flex w-full items-center">
@@ -62,7 +63,7 @@ const QuestionCard = ({
           <Avatar
             altText={author.name}
             imageUrl={author.picture}
-            id={author._id}
+            id={author.id}
           />
           <div className="flex items-center justify-center">
             <span className="small-medium text-black dark:text-[#676F75]">
