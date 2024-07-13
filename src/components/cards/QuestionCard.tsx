@@ -1,10 +1,10 @@
 import Link from "next/link";
 import React from "react";
-import RenderTag from "./RenderTag";
-import Metric from "./Metric";
 import { Dot, MessageCircleMore, ThumbsUp, View } from "lucide-react";
-import Avatar from "./Avatar";
 import { getCompactNumber, getTime } from "@/lib/utils";
+import RenderTag from "../shared/RenderTag";
+import Avatar from "../shared/Avatar";
+import Metric from "../shared/Metric";
 
 interface Tag {
   id: string;

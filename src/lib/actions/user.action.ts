@@ -5,8 +5,20 @@ import prisma from "../db";
 import {
   CreateUserParams,
   DeleteUserParams,
+  GetAllUsersParams,
   UpdateUserParams,
 } from "./shared.types";
+
+export async function getAllUsers(params:GetAllUsersParams) {
+  try {
+    // const {  } = params;
+    const users = await prisma.user.findMany({ where: {  } });
+    return {users};
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 export async function getUserById(params: { userId: string }) {
   try {
