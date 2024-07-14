@@ -10,7 +10,9 @@ export async function getAnswers(params: GetAnswersParams) {
     const answers = await prisma.answer.findMany({
       where: { questionId },
       include: {
-        author: { select: { id: true, clerkId: true, picture: true } },
+        author: {
+          select: { id: true, clerkId: true, picture: true, name: true },
+        },
         upvotes: true,
         downvotes: true,
       },

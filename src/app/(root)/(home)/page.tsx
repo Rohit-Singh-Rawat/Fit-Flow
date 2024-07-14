@@ -44,7 +44,7 @@ const page = async (props: Props) => {
           route="/"
         />
         <Filter
-          filter={HomePageFilters}
+          filters={HomePageFilters}
           containerClasses="hidden max-md:flex "
           otherClasses="min-h-[56px] sm:min-w-[170px]"
         />

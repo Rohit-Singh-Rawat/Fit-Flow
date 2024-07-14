@@ -1,5 +1,5 @@
 "use client";
-import { KeyboardEvent, useRef } from "react";
+import {  useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -14,17 +14,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { AnswerSchema } from "@/lib/validations";
-import { Files, Loader, X } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
-import { getUserById } from "@/lib/actions/user.action";
+import { Loader } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { createAnswer } from "@/lib/actions/answer.action";
 
-type Props = { userId: string };
+type Props = { question: string; questionId: string; authorId?: string };
 
-const Answer = async () => {
-  const router = useRouter();
+const Answer =({ question, questionId, authorId }: Props) => {
   const pathName = usePathname();
 
   const form = useForm<z.infer<typeof AnswerSchema>>({
@@ -35,11 +32,35 @@ const Answer = async () => {
   });
   const editorRef = useRef(null);
 
-  async function onSubmit(values: z.infer<typeof AnswerSchema>) {}
+  const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
+    if (!authorId) {
+      form.setError("root", { type: "custom", message: "custom message" });
+      return;
+    }
+    console.log("object");
+    try {
+      await createAnswer({
+        content: values.answer,
+        authorId: authorId,
+        questionId: questionId,
+        path: pathName,
+      });
+
+      form.reset();
+
+      if (editorRef.current) {
+        const editor = editorRef.current as any;
+
+        editor.setContent("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
-      <div className=" flex sm:flex-row mt-10 flex-col justify-between gap-5 sm:items-center sm:gap-2">
+      <div className="mt-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
         <h4 className="paragraph-semibold text-dark400_light800">
           Write your answer here
         </h4>
@@ -48,7 +69,7 @@ const Answer = async () => {
 
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(handleCreateAnswer)}
           className="flex w-full flex-col items-center justify-center gap-10"
         >
           <FormField
@@ -135,10 +156,7 @@ const Answer = async () => {
                     <Loader className="size-5 w-full animate-spin text-center" />
                   )}
                 </FormControl>
-                <FormDescription className="body-regular mt-2.5 text-dark-100 dark:text-light-500">
-                  Introduce the problem and expand on what you put in the title.
-                  Minimum 20 characters.
-                </FormDescription>
+
                 <FormMessage className="text-red-500" />
               </FormItem>
             )}
@@ -159,4 +177,5 @@ const Answer = async () => {
     </div>
   );
 };
+
 export default Answer;

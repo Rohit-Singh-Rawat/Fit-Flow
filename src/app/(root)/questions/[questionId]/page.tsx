@@ -1,17 +1,25 @@
 import Answer from "@/components/forms/Answer";
+import AllAnswers from "@/components/shared/AllAnswers";
 import Avatar from "@/components/shared/Avatar";
 import Metric from "@/components/shared/Metric";
 import NoResult from "@/components/shared/NoResult";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
 import { getQuestionById } from "@/lib/actions/question.action";
+import { getUserById } from "@/lib/actions/user.action";
 import { getCompactNumber, getTime } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
 import { Clock, Eye, MessageCircleMore } from "lucide-react";
 import Link from "next/link";
 
 type Props = { params: { questionId: string } };
 const page = async ({ params }: Props) => {
-  
+  const { userId: clerkId } = auth();
+  let user;
+  if (clerkId) {
+    user = await getUserById({ userId: clerkId });
+  }
+
   const { questionId } = params;
   const result = await getQuestionById({ questionId });
   const question = result?.question;
@@ -74,7 +82,12 @@ const page = async ({ params }: Props) => {
           <RenderTag _id={String(tag.id)} name={tag.name} key={tag.id} />
         ))}
       </div>
-      <Answer/>
+      <AllAnswers  questionId={question.id} userId={user?.id} />
+      <Answer
+        question={question.content}
+        questionId={question.id}
+        authorId={user?.id}
+      />
     </>
   );
 };

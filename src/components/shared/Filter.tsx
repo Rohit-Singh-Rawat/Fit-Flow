@@ -10,11 +10,11 @@ import { cn } from "@/lib/utils";
 type Props = {
   containerClasses: string;
   otherClasses: string;
-  filter: { value: string; name: string }[];
+  filters: { value: string; name: string }[];
 };
 export default function Filter({
   containerClasses,
-  filter,
+  filters,
   otherClasses,
 }: Props) {
   return (
@@ -32,7 +32,7 @@ export default function Filter({
         </SelectTrigger>
         <SelectContent className="light-border background-light800_dark300 text-dark500_light700">
           <SelectGroup>
-            {filter.map((item) => (
+            {filters.map((item) => (
               <SelectItem
                 key={item.value}
                 value={item.value}

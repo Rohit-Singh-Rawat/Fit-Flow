@@ -24,7 +24,7 @@ const page = async (props: Props) => {
           route="/"
         />
         <Filter
-          filter={UserFilters}
+          filters={UserFilters}
           containerClasses=""
           otherClasses="min-h-[56px] sm:min-w-[170px]"
         />
