@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { Dot, MessageCircleMore, ThumbsUp, View } from "lucide-react";
+import { Dot, Eye, MessageCircleMore, ThumbsUp } from "lucide-react";
 import { getCompactNumber, getTime } from "@/lib/utils";
 import RenderTag from "../shared/RenderTag";
 import Avatar from "../shared/Avatar";
@@ -45,7 +45,7 @@ const QuestionCard = ({
           <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
             {getTime(createdAt)}
           </span>
-          <Link href={`question/${id}`}>
+          <Link href={`questions/${id}`}>
             <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-2 flex-1 sm:line-clamp-3">
               {title}
             </h3>
@@ -84,9 +84,7 @@ const QuestionCard = ({
             textStyles="small-medium  text-black  dark:text-[#676F75]"
           />
           <Metric
-            icon={
-              <View className="size-4 stroke-black dark:stroke-[#676F75]" />
-            }
+            icon={<Eye className="size-4 stroke-black dark:stroke-[#676F75]" />}
             title="Views"
             value={getCompactNumber(views)}
             textStyles="small-medium text-black  dark:text-[#676F75]"

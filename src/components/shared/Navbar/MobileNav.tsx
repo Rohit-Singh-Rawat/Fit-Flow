@@ -64,7 +64,7 @@ const MobileNav = () => {
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="background-light900_dark200 flex h-screen flex-col justify-between border-none p-5"
+        className="background-light900_dark200 flex h-screen flex-col justify-around border-none p-5"
       >
         <Link href="/">
           <MainIcon className="max-sm:block" />

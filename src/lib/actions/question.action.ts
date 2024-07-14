@@ -2,7 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "../db";
-import { CreateQuestionParams, GetQuestionsParams } from "./shared.types";
+import {
+  CreateQuestionParams,
+  GetQuestionByIdParams,
+  GetQuestionsParams,
+} from "./shared.types";
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
@@ -43,4 +47,21 @@ export async function createQuestion(
   } catch (error) {
     console.error("Error creating question:", error);
   }
+}
+export async function getQuestionById(params: GetQuestionByIdParams) {
+  const { questionId } = params;
+  try {
+    const question = await prisma.question.findUnique({
+      where: { id: questionId },
+      include: {
+        author: {
+          select: { clerkId: true, picture: true, id: true, name: true },
+        },
+        tags: { select: { id: true, name: true } },
+        answers: true,
+        upvotes: true,
+      },
+    });
+    return { question };
+  } catch (error) {}
 }

@@ -19,8 +19,8 @@ model Question {
   content   String
   tags      Tag[]
   views     Int      @default(0)
-  upvotes   User[]   @relation("Upvotes")
-  downvotes User[]   @relation("Downvotes")
+  upvotes   User[]   @relation("QuestionsUpvotes")
+  downvotes User[]   @relation("QuestionsDownvotes")
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  String
   createdAt DateTime @default(now())
@@ -48,11 +48,14 @@ model User {
   location           String?
   portfolioWebsite   String?
   reputation         Int        @default(0)
-  saved              Question[]
+  Questions          Question[]
   joinedAt           DateTime   @default(now())
   tagsFollowed       Tag[]
-  QuestionsUpvoted   Question[] @relation("Upvotes")
-  QuestionsDownvoted Question[] @relation("Downvotes")
+  QuestionsUpvoted   Question[] @relation("QuestionsUpvotes")
+  QuestionsDownvoted Question[] @relation("QuestionsDownvotes")
+  Answers            Answer[]
+  AnswersUpvoted     Answer[]   @relation("AnswersUpvotes")
+  AnswerDownvoted    Answer[]   @relation("AnswersDownvotes")
 }
 
 model Answer {
@@ -60,4 +63,9 @@ model Answer {
   content    String
   Question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String?
+  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId   String
+  upvotes    User[]    @relation("AnswersUpvotes")
+  downvotes  User[]    @relation("AnswersDownvotes")
+  createdAt DateTime @default(now())
 }

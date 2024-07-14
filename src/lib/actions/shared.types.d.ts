@@ -1,7 +1,7 @@
 export interface CreateAnswerParams {
   content: string;
-  author: string; // User ID
-  question: string; // Question ID
+  authorId: string; // User ID
+  questionId: string; // Question ID
   path: string;
 }
 
