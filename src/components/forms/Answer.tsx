@@ -34,10 +34,9 @@ const Answer =({ question, questionId, authorId }: Props) => {
 
   const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
     if (!authorId) {
-      form.setError("root", { type: "custom", message: "custom message" });
+      form.setError("answer", { type: "custom", message: "sign in to asnwer" });
       return;
     }
-    console.log("object");
     try {
       await createAnswer({
         content: values.answer,

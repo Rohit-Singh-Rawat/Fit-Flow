@@ -10,21 +10,64 @@ import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { getCompactNumber, getTime } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
-import { Prisma } from "@prisma/client";
 import { Clock, Eye, MessageCircleMore } from "lucide-react";
 import Link from "next/link";
 
+type User = {
+  id: string;
+  name: string;
+  clerkId: string;
+  username: string;
+  email: string;
+  password: string | null;
+  bio: string | null;
+  picture: string;
+  location: string | null;
+  portfolioWebsite: string | null;
+  reputation: number;
+  joinedAt: Date;
+  savedQuestions: {
+    id: string;
+    title: string;
+    content: string;
+    views: number;
+    authorId: string;
+    createdAt: Date;
+  }[];
+};
+
+type Question = {
+  id: string;
+  title: string;
+  content: string;
+  views: number;
+  createdAt: Date;
+  author: {
+    id: string;
+    name: string;
+    clerkId: string;
+    picture: string;
+  };
+  tags: { id: string; name: string }[];
+  upvotes: { id: string }[];
+  downvotes: { id: string }[];
+  answers: { id: string }[];
+};
+
 type Props = { params: { questionId: string } };
+
 const Page = async ({ params }: Props) => {
   const { userId: clerkId } = auth();
-  let user: ({ savedQuestions: { id: string; title: string; content: string; views: number; authorId: string; createdAt: Date; }[]; } & { id: string; name: string; clerkId: string; username: string; email: string; password: string | null; bio: string | null; picture: string; location: string | null; portfolioWebsite: string | null; reputation: number; joinedAt: Date; }) | null
+  let user: User | null = null;
+
   if (clerkId) {
     user = await getUserById({ userId: clerkId });
   }
 
   const { questionId } = params;
   const result = await getQuestionById({ questionId });
-  const question = result?.question;
+  const question: Question | null = result?.question || null;
+
   if (!question) {
     return (
       <NoResult
@@ -35,6 +78,7 @@ const Page = async ({ params }: Props) => {
       />
     );
   }
+
   return (
     <>
       <div className="flex-start w-full flex-col">
@@ -52,18 +96,24 @@ const Page = async ({ params }: Props) => {
             </Link>
           </div>
           <div className="flex justify-end">
-            {/* <Votes
-              type="question"
+            <Votes
+              type="Question"
               itemId={question.id}
-              hasUpvoted={question.upvotes.some(
-                (o) => o.id === user?.id,
-              )}
-              hasDownvoted={question.downvotes.some(
-                (o) =>  o.id === user?.id,
-              )}
+              userId={user?.id}
+              hasupVoted={
+                user ? question.upvotes.some((o) => o.id === user.id) : false
+              }
+              hasdownVoted={
+                user ? question.downvotes.some((o) => o.id === user.id) : false
+              }
               upvotes={question.upvotes.length}
-              hasSaved={ user!.savedQuestions.some((o) => o.id === question.id)}
-            /> */}
+              downvotes={question.downvotes.length}
+              hasSaved={
+                user
+                  ? user.savedQuestions.some((o) => o.id === question.id)
+                  : false
+              }
+            />
           </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
@@ -107,4 +157,5 @@ const Page = async ({ params }: Props) => {
     </>
   );
 };
+
 export default Page;

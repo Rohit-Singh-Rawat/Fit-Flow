@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/menubar";
 import { themes } from "@/constants";
 import { Mode, useTheme } from "@/context/ThemeProvider";
-import { Sun } from "lucide-react"
+import { Sun } from "lucide-react";
 import Image from "next/image";
 type Props = {};
 const Theme = (props: Props) => {
@@ -19,9 +19,9 @@ const Theme = (props: Props) => {
       <MenubarMenu>
         <MenubarTrigger className="size-10 rounded hover:bg-light-800 focus:bg-light-900 active:bg-light-850 data-[state='open']:bg-light-900 dark:hover:bg-dark-500 dark:focus:bg-dark-200 dark:data-[state='open']:bg-dark-200">
           {mode == "light" ? (
-            <Sun className="size-7"/>
+            <Sun className="size-7" />
           ) : (
-            <MoonIcon className="fill-white "/>
+            <MoonIcon className="fill-white" />
           )}
         </MenubarTrigger>
 
@@ -29,6 +29,7 @@ const Theme = (props: Props) => {
           {themes.map((theme) => {
             return (
               <MenubarItem
+                key={theme.value}
                 className="flex items-center justify-start gap-2 rounded-md hover:bg-light-800 dark:hover:bg-dark-500"
                 onClick={() => {
                   setMode(theme.value);

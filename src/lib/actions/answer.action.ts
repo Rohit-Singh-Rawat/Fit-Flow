@@ -31,7 +31,7 @@ export async function createAnswer(params: CreateAnswerParams): Promise<void> {
         content: content,
 
         author: { connect: { id: authorId } },
-        Question: { connect: { id: questionId } },
+        question: { connect: { id: questionId } },
       },
     });
     revalidatePath(path);
