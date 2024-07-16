@@ -5,17 +5,19 @@ import Metric from "@/components/shared/Metric";
 import NoResult from "@/components/shared/NoResult";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
+import Votes from "@/components/shared/Votes";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { getCompactNumber, getTime } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
+import { Prisma } from "@prisma/client";
 import { Clock, Eye, MessageCircleMore } from "lucide-react";
 import Link from "next/link";
 
 type Props = { params: { questionId: string } };
-const page = async ({ params }: Props) => {
+const Page = async ({ params }: Props) => {
   const { userId: clerkId } = auth();
-  let user;
+  let user: ({ savedQuestions: { id: string; title: string; content: string; views: number; authorId: string; createdAt: Date; }[]; } & { id: string; name: string; clerkId: string; username: string; email: string; password: string | null; bio: string | null; picture: string; location: string | null; portfolioWebsite: string | null; reputation: number; joinedAt: Date; }) | null
   if (clerkId) {
     user = await getUserById({ userId: clerkId });
   }
@@ -40,14 +42,28 @@ const page = async ({ params }: Props) => {
           <div className="flex items-center justify-start gap-1">
             <Avatar
               imageUrl={question.author.picture}
-              altText={question?.author?.name}
+              altText={question.author.name}
               id={question.author.clerkId}
             />
-            <Link href={`profile/${question.author.clerkId}`}>
+            <Link href={`/profile/${question.author.clerkId}`}>
               <p className="paragraph-semibold text-dark300_light700">
                 {question.author.name}
               </p>
             </Link>
+          </div>
+          <div className="flex justify-end">
+            {/* <Votes
+              type="question"
+              itemId={question.id}
+              hasUpvoted={question.upvotes.some(
+                (o) => o.id === user?.id,
+              )}
+              hasDownvoted={question.downvotes.some(
+                (o) =>  o.id === user?.id,
+              )}
+              upvotes={question.upvotes.length}
+              hasSaved={ user!.savedQuestions.some((o) => o.id === question.id)}
+            /> */}
           </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
@@ -59,13 +75,13 @@ const page = async ({ params }: Props) => {
           icon={<Clock className="size-4 stroke-black dark:stroke-[#676F75]" />}
           title="asked"
           value={getTime(question.createdAt)}
-          textStyles="small-medium  text-black  dark:text-[#676F75]"
+          textStyles="small-medium text-black dark:text-[#676F75]"
         />
         <Metric
           icon={<Eye className="size-4 stroke-black dark:stroke-[#676F75]" />}
           title="Views"
           value={getCompactNumber(question.views)}
-          textStyles="small-medium text-black  dark:text-[#676F75]"
+          textStyles="small-medium text-black dark:text-[#676F75]"
         />
         <Metric
           icon={
@@ -73,7 +89,7 @@ const page = async ({ params }: Props) => {
           }
           title="Answers"
           value={getCompactNumber(question.answers.length)}
-          textStyles="small-medium   text-black  dark:text-[#676F75]"
+          textStyles="small-medium text-black dark:text-[#676F75]"
         />
       </div>
       <ParseHTML data={question.content} />
@@ -82,7 +98,7 @@ const page = async ({ params }: Props) => {
           <RenderTag _id={String(tag.id)} name={tag.name} key={tag.id} />
         ))}
       </div>
-      <AllAnswers  questionId={question.id} userId={user?.id} />
+      <AllAnswers questionId={question.id} userId={user?.id} />
       <Answer
         question={question.content}
         questionId={question.id}
@@ -91,4 +107,4 @@ const page = async ({ params }: Props) => {
     </>
   );
 };
-export default page;
+export default Page;

@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,17 +8,20 @@ datasource db {
 }
 
 model Question {
-  id        String   @id @default(cuid())
-  title     String
-  content   String
-  tags      Tag[]
-  views     Int      @default(0)
-  upvotes   User[]   @relation("QuestionsUpvotes")
-  downvotes User[]   @relation("QuestionsDownvotes")
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId  String
-  createdAt DateTime @default(now())
-  answers   Answer[]
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  tags        Tag[]
+  views       Int      @default(0)
+  upvotes     User[]   @relation("QuestionUpvotes")
+  downvotes   User[]   @relation("QuestionDownvotes")
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
+  createdAt   DateTime @default(now())
+  answers     Answer[]
+  savedByUsers User[]  @relation("SavedQuestions")
+
+  @@index([title])
 }
 
 model Tag {
@@ -33,7 +30,9 @@ model Tag {
   description String?
   questions   Question[]
   followers   User[]
-  createdOn   DateTime   @default(now())
+  createdAt   DateTime   @default(now())
+
+  @@index([name])
 }
 
 model User {
@@ -48,24 +47,28 @@ model User {
   location           String?
   portfolioWebsite   String?
   reputation         Int        @default(0)
-  Questions          Question[]
+  savedQuestions     Question[] @relation("SavedQuestions")
+  authoredQuestions  Question[]
   joinedAt           DateTime   @default(now())
-  tagsFollowed       Tag[]
-  QuestionsUpvoted   Question[] @relation("QuestionsUpvotes")
-  QuestionsDownvoted Question[] @relation("QuestionsDownvotes")
-  Answers            Answer[]
-  AnswersUpvoted     Answer[]   @relation("AnswersUpvotes")
-  AnswerDownvoted    Answer[]   @relation("AnswersDownvotes")
+  followedTags       Tag[]
+  upvotedQuestions   Question[] @relation("QuestionUpvotes")
+  downvotedQuestions Question[] @relation("QuestionDownvotes")
+  authoredAnswers    Answer[]
+  upvotedAnswers     Answer[]   @relation("AnswerUpvotes")
+  downvotedAnswers   Answer[]   @relation("AnswerDownvotes")
+
+  @@index([username])
+  @@index([clerkId])
 }
 
 model Answer {
   id         String    @id @default(cuid())
   content    String
-  Question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String?
   author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId   String
-  upvotes    User[]    @relation("AnswersUpvotes")
-  downvotes  User[]    @relation("AnswersDownvotes")
-  createdAt DateTime @default(now())
+  upvotes    User[]    @relation("AnswerUpvotes")
+  downvotes  User[]    @relation("AnswerDownvotes")
+  createdAt  DateTime  @default(now())
 }

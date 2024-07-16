@@ -23,7 +23,7 @@ export async function getAllUsers(params:GetAllUsersParams) {
 export async function getUserById(params: { userId: string }) {
   try {
     const { userId } = params;
-    const user = await prisma.user.findFirst({ where: { clerkId: userId } });
+    const user = await prisma.user.findFirst({ where: { clerkId: userId },include:{savedQuestions:true} });
     return user;
   } catch (error) {
     console.log(error);

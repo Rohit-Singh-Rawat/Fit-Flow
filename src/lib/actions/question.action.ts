@@ -59,9 +59,10 @@ export async function getQuestionById(params: GetQuestionByIdParams) {
         },
         tags: { select: { id: true, name: true } },
         answers: true,
-        upvotes: true,
+        upvotes: { select: { id: true, clerkId: true } },
+        downvotes: { select: { id: true, clerkId: true } },
       },
-    });
+    }); 
     return { question };
   } catch (error) {}
 }
