@@ -4,6 +4,8 @@ import { dark } from "@clerk/themes";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { Metadata } from "next";
 import { ThemeProvider } from "@/context/ThemeProvider";
+import { Toaster } from "sonner";
+import ThemedSonner from "@/components/shared/ThemedSonner";
 
 export const metadata: Metadata = {
   title: "Fit Flow",
@@ -41,6 +43,7 @@ export default function RootLayout({
             }}
           >
             {children}
+            <ThemedSonner/>
           </ClerkProvider>
         </ThemeProvider>
       </body>

@@ -1,5 +1,5 @@
 "use client";
-import {  useRef } from "react";
+import { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -18,10 +18,11 @@ import { AnswerSchema } from "@/lib/validations";
 import { Loader } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { createAnswer } from "@/lib/actions/answer.action";
+import { toast } from "sonner";
 
 type Props = { question: string; questionId: string; authorId?: string };
 
-const Answer =({ question, questionId, authorId }: Props) => {
+const Answer = ({ question, questionId, authorId }: Props) => {
   const pathName = usePathname();
 
   const form = useForm<z.infer<typeof AnswerSchema>>({
@@ -34,7 +35,9 @@ const Answer =({ question, questionId, authorId }: Props) => {
 
   const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
     if (!authorId) {
-      form.setError("answer", { type: "custom", message: "sign in to asnwer" });
+      toast.message("Please log in", {
+        description: "You must log in to perform this action",
+      });
       return;
     }
     try {
@@ -51,9 +54,10 @@ const Answer =({ question, questionId, authorId }: Props) => {
         const editor = editorRef.current as any;
 
         editor.setContent("");
-      }
+      }toast.success("Answer Submitted");
     } catch (error) {
       console.log(error);
+      toast.error('Error Occurred')
     }
   };
 

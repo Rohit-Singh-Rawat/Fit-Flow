@@ -8,6 +8,7 @@ import {
 import { usePathname } from "next/navigation";
 import { downVoteAnswer, upVoteAnswer } from "@/lib/actions/answer.action";
 import { toggleSaveQuestion } from "@/lib/actions/user.action";
+import { toast } from "sonner";
 
 type Props = {
   type: string;
@@ -32,6 +33,9 @@ export default function Votes({
   const pathName = usePathname();
   const handleUpVote = async () => {
     if (!userId) {
+      toast.message("Please log in", {
+        description: "You must log in to perform this action",
+      });
       return;
     }
     if (type == "Question") {
@@ -56,6 +60,9 @@ export default function Votes({
 
   const handleDownVote = async () => {
     if (!userId) {
+      toast.message("Please log in", {
+        description: "You must log in to perform this action",
+      });
       return;
     }
     if (type == "Question") {
@@ -81,6 +88,9 @@ export default function Votes({
 
   const handleSave = async () => {
     if (!userId || hasSaved == null) {
+      toast.message("Please log in", {
+        description: "You must log in to perform this action",
+      });
       return;
     }
     await toggleSaveQuestion({

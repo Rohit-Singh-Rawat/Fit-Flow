@@ -14,7 +14,8 @@ import { useEffect, useState } from "react";
 type Props = {};
 const Theme = (props: Props) => {
   const [mounted, setMounted] = useState(false)
-  const { setTheme, resolvedTheme } = useTheme();useEffect(() => {
+  const { setTheme, resolvedTheme } = useTheme();
+  useEffect(() => {
     setMounted(true);
   }, []);
 

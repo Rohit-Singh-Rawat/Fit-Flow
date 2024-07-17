@@ -21,6 +21,7 @@ import { Badge } from "../ui/badge";
 import { resolve } from "path";
 import { createQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type Props = { userId: string };
 
@@ -47,8 +48,10 @@ const Question = ({ userId }: Props) => {
         tags: values.tags,
         path: pathName,
       });
+      toast.success("Question created successfully");
       router.push("/");
-    } catch (error) {}
+    } catch (error) {
+      toast.error("Error Occurred");}
   }
   const handleInputKeyDown = (
     e: KeyboardEvent<HTMLInputElement>,
