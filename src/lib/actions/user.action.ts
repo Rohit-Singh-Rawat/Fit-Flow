@@ -11,11 +11,11 @@ import {
   UpdateUserParams,
 } from "./shared.types";
 
-export async function getAllUsers(params:GetAllUsersParams) {
+export async function getAllUsers(params: GetAllUsersParams) {
   try {
     // const {  } = params;
-    const users = await prisma.user.findMany({ where: {  } });
-    return {users};
+    const users = await prisma.user.findMany({ where: {} });
+    return { users };
   } catch (error) {
     console.log(error);
     throw error;
@@ -25,7 +25,10 @@ export async function getAllUsers(params:GetAllUsersParams) {
 export async function getUserById(params: { userId: string }) {
   try {
     const { userId } = params;
-    const user = await prisma.user.findFirst({ where: { clerkId: userId },include:{savedQuestions:true} });
+    const user = await prisma.user.findFirst({
+      where: { clerkId: userId },
+      include: { savedQuestions: true },
+    });
     return user;
   } catch (error) {
     console.log(error);
@@ -80,18 +83,20 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
   try {
     const user = await prisma.user.update({
       where: { id: userId },
-      data: query
+      data: query,
     });
-    console.log(user);
-    revalidatePath(path);
   } catch (error) {
-    console.log(error);
-    throw error;
+    return {
+      error: "Some thing Went wrong",
+    };
+  } finally {
+    revalidatePath(path);
   }
 }
+
 export async function getSavedQuestion(params: GetSavedQuestionsParams) {
-  const { clerkId,filter,pageSize,page,searchQuery } = params;
-  
+  const { clerkId, filter, pageSize, page, searchQuery } = params;
+
   try {
     const user = await prisma.user.findUnique({
       where: { clerkId: clerkId },
@@ -109,7 +114,7 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
         },
       },
     });
-    return {savedQuestions:user?.savedQuestions}
+    return { savedQuestions: user?.savedQuestions };
   } catch (error) {
     console.log(error);
     throw error;

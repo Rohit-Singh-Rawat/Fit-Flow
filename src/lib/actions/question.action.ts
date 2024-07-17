@@ -85,12 +85,15 @@ export async function upVoteQuestion(params: QuestionVoteParams) {
       where: { id: questionId },
       data: query,
     });
-
-    revalidatePath(path);
   } catch (error) {
-    console.log(error);
+    return {
+      error: "Some thing Went wrong",
+    };
+  } finally {
+    revalidatePath(path);
   }
 }
+
 export async function downVoteQuestion(params: QuestionVoteParams) {
   const { questionId, hasdownVoted, hasupVoted, path, userId } = params;
   let query;
@@ -109,9 +112,14 @@ export async function downVoteQuestion(params: QuestionVoteParams) {
       where: { id: questionId },
       data: query,
     });
-
+  } catch (error) {
+    return {
+      error: "Some thing Went wrong",
+    };
+  } finally {
     revalidatePath(path);
-  } catch (error) {}
+  }
 }
+
 
 

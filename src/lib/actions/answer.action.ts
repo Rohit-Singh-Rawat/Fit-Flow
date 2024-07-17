@@ -2,7 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "../db";
-import { AnswerVoteParams, CreateAnswerParams, GetAnswersParams } from "./shared.types";
+import {
+  AnswerVoteParams,
+  CreateAnswerParams,
+  GetAnswersParams,
+} from "./shared.types";
 
 export async function getAnswers(params: GetAnswersParams) {
   const { questionId } = params;
@@ -22,10 +26,9 @@ export async function getAnswers(params: GetAnswersParams) {
   } catch (error) {}
 }
 
-export async function createAnswer(params: CreateAnswerParams): Promise<void> {
+export async function createAnswer(params: CreateAnswerParams) {
+  const { authorId, content, path, questionId } = params;
   try {
-    const { authorId, content, path, questionId } = params;
-
     const answer = await prisma.answer.create({
       data: {
         content: content,
@@ -34,11 +37,15 @@ export async function createAnswer(params: CreateAnswerParams): Promise<void> {
         question: { connect: { id: questionId } },
       },
     });
-    revalidatePath(path);
   } catch (error) {
-    console.error("Error creating question:", error);
+    return {
+      error: "Some thing Went wrong",
+    };
+  } finally {
+    revalidatePath(path);
   }
 }
+
 // export async function getQuestionById(params: GetQuestionByIdParams) {
 //   const { questionId } = params;
 //   try {
@@ -56,7 +63,6 @@ export async function createAnswer(params: CreateAnswerParams): Promise<void> {
 //     return { question };
 //   } catch (error) {}
 // }
-
 
 export async function upVoteAnswer(params: AnswerVoteParams) {
   const { answerId, hasdownVoted, hasupVoted, path, userId } = params;
@@ -78,12 +84,15 @@ export async function upVoteAnswer(params: AnswerVoteParams) {
       data: query,
     });
     console.log(answer);
-
-    revalidatePath(path);
   } catch (error) {
-    console.log(error);
+    return {
+      error: "Some thing Went wrong",
+    };
+  } finally {
+    revalidatePath(path);
   }
 }
+
 export async function downVoteAnswer(params: AnswerVoteParams) {
   const { answerId, hasdownVoted, hasupVoted, path, userId } = params;
   let query;
@@ -102,7 +111,11 @@ export async function downVoteAnswer(params: AnswerVoteParams) {
       where: { id: answerId },
       data: query,
     });
-
+  } catch (error) {
+    return {
+      error: "Some thing Went wrong",
+    };
+  } finally {
     revalidatePath(path);
-  } catch (error) {}
+  }
 }
