@@ -77,13 +77,11 @@ export async function upVoteAnswer(params: AnswerVoteParams) {
   } else {
     query = { upvotes: { connect: { id: userId } } };
   }
-  console.log("d3dd23", query);
   try {
     const answer = await prisma.answer.update({
       where: { id: answerId },
       data: query,
     });
-    console.log(answer);
   } catch (error) {
     return {
       error: "Some thing Went wrong",

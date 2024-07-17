@@ -74,7 +74,6 @@ export async function deleteUser(userParams: DeleteUserParams) {
 export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
   const { questionId, path, userId, hasSaved } = params;
   let query;
-  console.log("object");
   if (hasSaved) {
     query = { savedQuestions: { disconnect: { id: questionId } } };
   } else {
@@ -91,6 +90,7 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
     };
   } finally {
     revalidatePath(path);
+    revalidatePath('/collection')
   }
 }
 

@@ -69,7 +69,6 @@ export default function Votes({
       hasupVoted: !optimisticState.hasupVoted,
       hasdownVoted: false,
     });
-    console.log(optimisticState)
     const response =
       type === "Question"
         ? await upVoteQuestion({

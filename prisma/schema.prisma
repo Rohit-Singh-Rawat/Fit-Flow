@@ -8,67 +8,83 @@ datasource db {
 }
 
 model Question {
-  id          String   @id @default(cuid())
-  title       String
-  content     String
-  tags        Tag[]
-  views       Int      @default(0)
-  upvotes     User[]   @relation("QuestionUpvotes")
-  downvotes   User[]   @relation("QuestionDownvotes")
-  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId    String
-  createdAt   DateTime @default(now())
-  answers     Answer[]
-  savedByUsers User[]  @relation("SavedQuestions")
+  id           String        @id @default(cuid())
+  title        String
+  content      String
+  tags         Tag[]
+  views        Int           @default(0)
+  upvotes      User[]        @relation("QuestionUpvotes")
+  downvotes    User[]        @relation("QuestionDownvotes")
+  author       User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId     String
+  createdAt    DateTime      @default(now())
+  answers      Answer[]
+  savedByUsers User[]        @relation("SavedQuestions")
+  Interaction  Interaction[]
 
   @@index([title])
 }
 
 model Tag {
-  id          String     @id @default(cuid())
-  name        String     @unique
+  id          String        @id @default(cuid())
+  name        String        @unique
   description String?
   questions   Question[]
   followers   User[]
-  createdAt   DateTime   @default(now())
+  createdAt   DateTime      @default(now())
+  Interaction Interaction[]
 
   @@index([name])
 }
 
 model User {
-  id                 String     @id @default(cuid())
+  id                 String        @id @default(cuid())
   name               String
-  clerkId            String     @unique
-  username           String     @unique
-  email              String     @unique
+  clerkId            String        @unique
+  username           String        @unique
+  email              String        @unique
   password           String?
   bio                String?
   picture            String
   location           String?
   portfolioWebsite   String?
-  reputation         Int        @default(0)
-  savedQuestions     Question[] @relation("SavedQuestions")
+  reputation         Int           @default(0)
+  savedQuestions     Question[]    @relation("SavedQuestions")
   authoredQuestions  Question[]
-  joinedAt           DateTime   @default(now())
+  joinedAt           DateTime      @default(now())
   followedTags       Tag[]
-  upvotedQuestions   Question[] @relation("QuestionUpvotes")
-  downvotedQuestions Question[] @relation("QuestionDownvotes")
+  upvotedQuestions   Question[]    @relation("QuestionUpvotes")
+  downvotedQuestions Question[]    @relation("QuestionDownvotes")
   authoredAnswers    Answer[]
-  upvotedAnswers     Answer[]   @relation("AnswerUpvotes")
-  downvotedAnswers   Answer[]   @relation("AnswerDownvotes")
+  upvotedAnswers     Answer[]      @relation("AnswerUpvotes")
+  downvotedAnswers   Answer[]      @relation("AnswerDownvotes")
+  Interaction        Interaction[]
 
   @@index([username])
   @@index([clerkId])
 }
 
 model Answer {
-  id         String    @id @default(cuid())
-  content    String
-  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  id          String        @id @default(cuid())
+  content     String
+  question    Question?     @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId  String?
+  author      User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
+  upvotes     User[]        @relation("AnswerUpvotes")
+  downvotes   User[]        @relation("AnswerDownvotes")
+  createdAt   DateTime      @default(now())
+  Interaction Interaction[]
+}
+
+model Interaction {
+  id         String   @id @default(cuid())
+  action     String
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   questionId String?
-  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId   String
-  upvotes    User[]    @relation("AnswerUpvotes")
-  downvotes  User[]    @relation("AnswerDownvotes")
-  createdAt  DateTime  @default(now())
+  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  answerId   String?
+  answer     Answer?   @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  tags       Tag[]
 }

@@ -6,6 +6,7 @@ import NoResult from "@/components/shared/NoResult";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
 import Votes from "@/components/shared/Votes";
+import { viewQuestion } from "@/lib/actions/interaction.action";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { getCompactNumber, getTime } from "@/lib/utils";
@@ -67,13 +68,14 @@ const Page = async ({ params }: Props) => {
   const { questionId } = params;
   const result = await getQuestionById({ questionId });
   const question: Question | null = result?.question || null;
+  await viewQuestion({ questionId, userId: user?.id });
   if (!question) {
     return (
       <NoResult
         title={`Question ID ${questionId} Not Found`}
         description={`We couldn't find the question with ID ${questionId}. Please try searching for another question or ask a new one.`}
         href="/ask"
-        label="Ask a Question"  
+        label="Ask a Question"
       />
     );
   }
