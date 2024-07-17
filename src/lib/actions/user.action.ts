@@ -6,6 +6,7 @@ import {
   CreateUserParams,
   DeleteUserParams,
   GetAllUsersParams,
+  GetSavedQuestionsParams,
   ToggleSaveQuestionParams,
   UpdateUserParams,
 } from "./shared.types";
@@ -83,6 +84,32 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
     });
     console.log(user);
     revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+export async function getSavedQuestion(params: GetSavedQuestionsParams) {
+  const { clerkId,filter,pageSize,page,searchQuery } = params;
+  
+  try {
+    const user = await prisma.user.findUnique({
+      where: { clerkId: clerkId },
+      select: {
+        savedQuestions: {
+          include: {
+            author: {
+              select: { clerkId: true, picture: true, id: true, name: true },
+            },
+            tags: { select: { id: true, name: true } },
+            answers: true,
+            upvotes: { select: { id: true, clerkId: true } },
+            downvotes: { select: { id: true, clerkId: true } },
+          },
+        },
+      },
+    });
+    return {savedQuestions:user?.savedQuestions}
   } catch (error) {
     console.log(error);
     throw error;
