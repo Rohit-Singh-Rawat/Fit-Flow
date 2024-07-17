@@ -5,22 +5,21 @@ import MoonIcon from "@/components/Icons/MoonIcon";
 import ProfileIcon from "@/components/Icons/ProfileIcon";
 import SystemIcon from "@/components/Icons/SystemIcon";
 import TagIcon from "@/components/Icons/TagIcon";
-import { Mode } from "@/context/ThemeProvider";
 import { SidebarLink, Theme } from "@/types";
 import { Star, Sun } from "lucide-react";
 export const themes: Theme[] = [
   {
-    value: Mode.Light,
+    value: "light",
     label: "Light",
     icon: Sun,
   },
   {
-    value: Mode.Dark,
+    value: "dark",
     label: "Dark",
     icon: MoonIcon,
   },
   {
-    value: Mode.System,
+    value: "system",
     label: "System",
     icon: SystemIcon,
   },

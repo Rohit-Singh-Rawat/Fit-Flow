@@ -3,12 +3,11 @@ import "./globals.css";
 import { dark } from "@clerk/themes";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { Metadata } from "next";
-import ThemeProvider from "@/context/ThemeProvider";
+import { ThemeProvider } from "@/context/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Fit Flow",
   description: "Stackoverflow for Gym Rats",
-  
 };
 
 const inter = Inter({
@@ -28,18 +27,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ThemeProvider>
-      <ClerkProvider
-        appearance={{
-          baseTheme: dark,
-        }}
-      >
-        <html lang="en">
-          <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ClerkProvider
+            appearance={{
+              baseTheme: dark,
+            }}
+          >
             {children}
-          </body>
-        </html>
-      </ClerkProvider>
-    </ThemeProvider>
+          </ClerkProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

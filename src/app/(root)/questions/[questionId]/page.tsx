@@ -57,6 +57,7 @@ type Question = {
 type Props = { params: { questionId: string } };
 
 const Page = async ({ params }: Props) => {
+  console.log(new Date().getTime())
   const { userId: clerkId } = auth();
   let user: User | null = null;
 
@@ -67,14 +68,14 @@ const Page = async ({ params }: Props) => {
   const { questionId } = params;
   const result = await getQuestionById({ questionId });
   const question: Question | null = result?.question || null;
-
+  console.log(new Date().getTime(), user,question);
   if (!question) {
     return (
       <NoResult
         title={`Question ID ${questionId} Not Found`}
         description={`We couldn't find the question with ID ${questionId}. Please try searching for another question or ask a new one.`}
         href="/ask"
-        label="Ask a Question"
+        label="Ask a Question"  
       />
     );
   }

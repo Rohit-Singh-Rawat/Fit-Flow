@@ -80,13 +80,11 @@ export async function upVoteQuestion(params: QuestionVoteParams) {
   } else {
     query = { upvotes: { connect: { id: userId } } };
   }
-  console.log("d3dd23",query);
   try {
     const question = await prisma.question.update({
       where: { id: questionId },
       data: query,
     });
-    console.log(question)
 
     revalidatePath(path);
   } catch (error) {

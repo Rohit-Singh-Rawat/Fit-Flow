@@ -29,13 +29,11 @@ export default function Votes({
   userId,
 }: Props) {
   const pathName = usePathname();
-  console.log(hasdownVoted);
   const handleUpVote = async () => {
     if (!userId) {
       return;
     }
     if (type == "Question") {
-      console.log("object");
       await upVoteQuestion({
         hasdownVoted,
         hasupVoted,

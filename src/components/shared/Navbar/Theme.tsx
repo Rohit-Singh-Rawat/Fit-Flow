@@ -8,17 +8,24 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { themes } from "@/constants";
-import { Mode, useTheme } from "@/context/ThemeProvider";
 import { Sun } from "lucide-react";
-import Image from "next/image";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 type Props = {};
 const Theme = (props: Props) => {
-  const { mode, setMode } = useTheme();
+  const [mounted, setMounted] = useState(false)
+  const { setTheme, resolvedTheme } = useTheme();useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
   return (
     <Menubar className="border-none bg-transparent shadow-none">
       <MenubarMenu>
         <MenubarTrigger className="size-10 rounded hover:bg-light-800 focus:bg-light-900 active:bg-light-850 data-[state='open']:bg-light-900 dark:hover:bg-dark-500 dark:focus:bg-dark-200 dark:data-[state='open']:bg-dark-200">
-          {mode == "light" ? (
+          {resolvedTheme == "light" ? (
             <Sun className="size-7" />
           ) : (
             <MoonIcon className="fill-white" />
@@ -26,28 +33,23 @@ const Theme = (props: Props) => {
         </MenubarTrigger>
 
         <MenubarContent className="absolute mt-3 min-w-[120px] rounded-md border py-2 dark:border-dark-400 dark:bg-dark-300">
-          {themes.map((theme) => {
+          {themes.map((the) => {
             return (
               <MenubarItem
-                key={theme.value}
+                key={the.value}
                 className="flex items-center justify-start gap-2 rounded-md hover:bg-light-800 dark:hover:bg-dark-500"
                 onClick={() => {
-                  setMode(theme.value);
-                  if (theme.value !== Mode.System) {
-                    localStorage.setItem("theme", theme.value);
-                  } else {
-                    localStorage.removeItem("theme");
-                  }
+                  setTheme(the.value);
                 }}
               >
-                <theme.icon
+                <the.icon
                   className={`size-4 stroke-black dark:fill-white dark:stroke-white`}
                 />
 
                 <p
-                  className={`body-semibold text-light-500 ${mode == theme.value ? "text-primary-500" : "text-dark100_light900"}`}
+                  className={`body-semibold text-light-500 ${resolvedTheme == the.value ? "text-primary-500" : "text-dark100_light900"}`}
                 >
-                  {theme.label}
+                  {the.label}
                 </p>
               </MenubarItem>
             );
