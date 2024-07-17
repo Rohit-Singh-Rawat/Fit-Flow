@@ -80,7 +80,7 @@ export default function Votes({
   };
 
   const handleSave = async () => {
-    if (!userId || !hasSaved) {
+    if (!userId || hasSaved == null) {
       return;
     }
     await toggleSaveQuestion({
