@@ -1,11 +1,12 @@
 "use client";
-import {  getCompactNumber } from "@/lib/utils";
+import { getCompactNumber } from "@/lib/utils";
 import { ArrowBigDownDash, ArrowBigUpDash, Star } from "lucide-react";
 import {
   downVoteQuestion,
   upVoteQuestion,
 } from "@/lib/actions/question.action";
 import { usePathname } from "next/navigation";
+import { downVoteAnswer, upVoteAnswer } from "@/lib/actions/answer.action";
 
 type Props = {
   type: string;
@@ -15,7 +16,7 @@ type Props = {
   hasupVoted: boolean;
   downvotes: number;
   hasdownVoted: boolean;
-  hasSaved: boolean;
+  hasSaved?: boolean;
 };
 export default function Votes({
   downvotes,
@@ -28,18 +29,27 @@ export default function Votes({
   userId,
 }: Props) {
   const pathName = usePathname();
-  console.log(hasdownVoted)
+  console.log(hasdownVoted);
   const handleUpVote = async () => {
     if (!userId) {
       return;
     }
     if (type == "Question") {
-    console.log("object");
+      console.log("object");
       await upVoteQuestion({
         hasdownVoted,
         hasupVoted,
         path: pathName,
         questionId: itemId,
+        userId,
+      });
+    }
+    if (type == "Answer") {
+      await upVoteAnswer({
+        hasdownVoted,
+        hasupVoted,
+        path: pathName,
+        answerId: itemId,
         userId,
       });
     }
@@ -58,6 +68,15 @@ export default function Votes({
         userId,
       });
     }
+    if (type == "Answer") {
+      await downVoteAnswer({
+        hasdownVoted,
+        hasupVoted,
+        path: pathName,
+        answerId: itemId,
+        userId,
+      });
+    }
     return;
   };
 
@@ -72,7 +91,7 @@ export default function Votes({
             onClick={handleUpVote}
             size={25}
             stroke="1"
-            className={`rotate-180 cursor-pointer ${hasupVoted ? "fill-red-800 stroke-red-800 dark:fill-red-600 dark:stroke-red-600" : "stroke-dark-500 dark:stroke-slate-200"}`}
+            className={`cursor-pointer ${hasupVoted ? "fill-red-800 stroke-red-800 dark:fill-red-600 dark:stroke-red-600" : "stroke-dark-500 dark:stroke-slate-200"}`}
           />
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
             <p className="subtle-medium text-dark400_light900">
@@ -84,7 +103,7 @@ export default function Votes({
           <ArrowBigDownDash
             size={25}
             onClick={handleDownVote}
-            className={`rotate-180 cursor-pointer ${hasdownVoted ? "fill-red-800 stroke-red-800 dark:fill-red-600 dark:stroke-red-600" : "stroke-dark-500 dark:stroke-slate-200"}`}
+            className={`cursor-pointer ${hasdownVoted ? "fill-red-800 stroke-red-800 dark:fill-red-600 dark:stroke-red-600" : "stroke-dark-500 dark:stroke-slate-200"}`}
           />
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
             <p className="subtle-medium text-dark400_light900">
@@ -92,7 +111,7 @@ export default function Votes({
             </p>
           </div>
         </div>
-        <Star color="#a6ff00" onClick={handleSave} />
+        {type == "Question" && <Star color="#a6ff00" onClick={handleSave} />}
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import Avatar from "./Avatar";
 import { getTime } from "@/lib/utils";
 import ParseHTML from "./ParseHTML";
 import { Minus } from "lucide-react";
+import Votes from "./Votes";
 
 interface Props {
   questionId: string;
@@ -43,13 +44,31 @@ const AllAnswers = async ({ questionId, userId, page, filter }: Props) => {
                   <p className="body-semibold text-dark300_light700">
                     {answer.author.name}
                   </p>
-                  <p className="small-regular text-light400_light500 ml-0.5 mt-0.5 line-clamp-1 flex justify-center items-center">
+                  <p className="small-regular text-light400_light500 ml-0.5 mt-0.5 line-clamp-1 flex items-center justify-center">
                     <span className="max-sm:hidden">
-                      <Minus size={8} className="mx-0.5"/>
+                      <Minus size={8} className="mx-0.5" />
                     </span>
                     answered {getTime(answer.createdAt)}{" "}
                   </p>
                 </div>
+                <Votes
+                  type="Answer"
+                  itemId={answer.id}
+                  userId={userId}
+                  hasupVoted={
+                    userId
+                      ? answer.upvotes.some((o) => o.id === userId)
+                      : false
+                  }
+                  hasdownVoted={
+                    userId
+                      ? answer.downvotes.some((o) => o.id === userId)
+                      : false
+                  }
+                  upvotes={answer.upvotes.length}
+                  downvotes={answer.downvotes.length}
+                  
+                />
               </div>
             </div>
             <ParseHTML data={answer.content} />
