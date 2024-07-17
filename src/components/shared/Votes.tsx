@@ -17,7 +17,7 @@ type Props = {
   hasupVoted: boolean;
   downvotes: number;
   hasdownVoted: boolean;
-  hasSaved: boolean;
+  hasSaved?: boolean;
 };
 export default function Votes({
   downvotes,
@@ -80,7 +80,7 @@ export default function Votes({
   };
 
   const handleSave = async () => {
-    if (!userId) {
+    if (!userId || !hasSaved) {
       return;
     }
     await toggleSaveQuestion({
