@@ -6,6 +6,7 @@ import {
   CreateUserParams,
   DeleteUserParams,
   GetAllUsersParams,
+  ToggleSaveQuestionParams,
   UpdateUserParams,
 } from "./shared.types";
 
@@ -61,6 +62,27 @@ export async function deleteUser(userParams: DeleteUserParams) {
       where: { clerkId },
     });
     return deleteUser;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
+  const { questionId, path, userId, hasSaved } = params;
+  let query;
+  console.log("object");
+  if (hasSaved) {
+    query = { savedQuestions: { disconnect: { id: questionId } } };
+  } else {
+    query = { savedQuestions: { connect: { id: questionId } } };
+  }
+  try {
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: query
+    });
+    console.log(user);
+    revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;

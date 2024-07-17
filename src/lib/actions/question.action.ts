@@ -88,7 +88,7 @@ export async function upVoteQuestion(params: QuestionVoteParams) {
 
     revalidatePath(path);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 export async function downVoteQuestion(params: QuestionVoteParams) {
@@ -113,3 +113,5 @@ export async function downVoteQuestion(params: QuestionVoteParams) {
     revalidatePath(path);
   } catch (error) {}
 }
+
+

@@ -134,6 +134,7 @@ export interface ToggleSaveQuestionParams {
   userId: string;
   questionId: string;
   path: string;
+  hasSaved:boolean
 }
 
 export interface GetSavedQuestionsParams {

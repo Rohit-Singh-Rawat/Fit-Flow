@@ -7,6 +7,7 @@ import {
 } from "@/lib/actions/question.action";
 import { usePathname } from "next/navigation";
 import { downVoteAnswer, upVoteAnswer } from "@/lib/actions/answer.action";
+import { toggleSaveQuestion } from "@/lib/actions/user.action";
 
 type Props = {
   type: string;
@@ -16,7 +17,7 @@ type Props = {
   hasupVoted: boolean;
   downvotes: number;
   hasdownVoted: boolean;
-  hasSaved?: boolean;
+  hasSaved: boolean;
 };
 export default function Votes({
   downvotes,
@@ -78,8 +79,17 @@ export default function Votes({
     return;
   };
 
-  const handleSave = () => {
-    // Handle save logic here
+  const handleSave = async () => {
+    if (!userId) {
+      return;
+    }
+    await toggleSaveQuestion({
+      hasSaved,
+      path: pathName,
+      questionId: itemId,
+      userId,
+    });
+    return;
   };
   return (
     <div className="flex gap-5">
@@ -109,7 +119,14 @@ export default function Votes({
             </p>
           </div>
         </div>
-        {type == "Question" && <Star color="#a6ff00" onClick={handleSave} />}
+        {type == "Question" && (
+          <Star
+            color="#a6ff00"
+            onClick={handleSave}
+            className="cursor-pointer"
+            fill={hasSaved ? "#a6ff00" : "none"}
+          />
+        )}
       </div>
     </div>
   );
