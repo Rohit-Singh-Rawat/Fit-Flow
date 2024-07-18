@@ -1,7 +1,7 @@
 "use client";
 
 import { sidebarLinks } from "@/constants";
-import { SignedOut } from "@clerk/nextjs";
+import { SignedOut, useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,9 +11,10 @@ import SignUpIcon from "../Icons/SignUpIcon";
 
 type Props = {};
 const LeftSideBar = (props: Props) => {
+  const {userId } = useAuth()
   const pathname = usePathname();
   return (
-    <section className="sticky right-0 top-0 p-5  flex h-screen pt-[100px]">
+    <section className="sticky right-0 top-0 flex h-screen p-5 pt-[100px]">
       <div className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex flex-col justify-between overflow-y-auto rounded-2xl border-r p-3 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px] lg:p-6">
         <div className="flex flex-col gap-6">
           {sidebarLinks.map((item) => {
@@ -21,7 +22,13 @@ const LeftSideBar = (props: Props) => {
               (pathname.includes(item.route) && item.route.length > 1) ||
               pathname === item.route;
 
-            // TODO
+            if (item.route === "/profile") {
+              if (userId) {
+                item.route = `${item.route}/${userId}`;
+              } else {
+                return null;
+              }
+            }
 
             return (
               <div key={item.route}>

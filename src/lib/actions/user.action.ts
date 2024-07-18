@@ -7,6 +7,8 @@ import {
   DeleteUserParams,
   GetAllUsersParams,
   GetSavedQuestionsParams,
+  GetUserByIdParams,
+  GetUserStatsParams,
   ToggleSaveQuestionParams,
   UpdateUserParams,
 } from "./shared.types";
@@ -90,7 +92,7 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
     };
   } finally {
     revalidatePath(path);
-    revalidatePath('/collection')
+    revalidatePath("/collection");
   }
 }
 
@@ -115,6 +117,59 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
       },
     });
     return { savedQuestions: user?.savedQuestions };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserInfo(params: GetUserByIdParams) {
+  try {
+    const { userId } = params;
+    const user = await prisma.user.findUnique({
+      where: { clerkId: userId },
+      include: {
+        _count: { select: { authoredQuestions: true, authoredAnswers: true } },
+      },
+    });
+    return { user };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+export async function getUserQuestions(params: GetUserStatsParams) {
+  try {
+    const { userId, page, pageSize } = params;
+    const questions = await prisma.question.findMany({
+      where: { authorId: userId },
+      include: {
+        author: true,
+        tags: { select: { id: true, name: true } },
+        answers: true,
+        upvotes: true,
+      },
+      orderBy: [{ views: "desc" }, { upvotes: { _count: "desc" } }],
+    });
+    return { questions };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+export async function getUserAnswers(params: GetUserStatsParams) {
+  try {
+    const { userId, page, pageSize } = params;
+    const answers = await prisma.answer.findMany({
+      where: { authorId: userId },
+      include: {
+        question: true,
+        author: true,
+        upvotes: true,
+      },
+      orderBy: [{ upvotes: { _count: "desc" } }],
+    });
+    return { answers };
   } catch (error) {
     console.log(error);
     throw error;
