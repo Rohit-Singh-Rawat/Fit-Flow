@@ -5,6 +5,7 @@ import prisma from "../db";
 import {
   AnswerVoteParams,
   CreateAnswerParams,
+  DeleteAnswerParams,
   GetAnswersParams,
 } from "./shared.types";
 
@@ -108,6 +109,21 @@ export async function downVoteAnswer(params: AnswerVoteParams) {
     const answer = await prisma.answer.update({
       where: { id: answerId },
       data: query,
+    });
+  } catch (error) {
+    return {
+      error: "Some thing Went wrong",
+    };
+  } finally {
+    revalidatePath(path);
+  }
+}
+export async function deleteAnswer(params: DeleteAnswerParams) {
+  const { answerId, path } = params;
+
+  try {
+    const question = await prisma.answer.delete({
+      where: { id: answerId },
     });
   } catch (error) {
     return {

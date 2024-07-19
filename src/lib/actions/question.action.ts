@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import prisma from "../db";
 import {
   CreateQuestionParams,
+  DeleteQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,
   QuestionVoteParams,
@@ -121,5 +122,18 @@ export async function downVoteQuestion(params: QuestionVoteParams) {
   }
 }
 
+export async function deleteQuestion(params: DeleteQuestionParams) {
+  const { questionId, path } = params;
 
-
+  try {
+    const question = await prisma.question.delete({
+      where: { id: questionId },
+    });
+  } catch (error) {
+    return {
+      error: "Some thing Went wrong",
+    };
+  } finally {
+    revalidatePath(path);
+  }
+}

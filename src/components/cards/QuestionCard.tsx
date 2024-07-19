@@ -5,6 +5,8 @@ import { getCompactNumber, getTime } from "@/lib/utils";
 import RenderTag from "../shared/RenderTag";
 import Avatar from "../shared/Avatar";
 import Metric from "../shared/Metric";
+import { SignedIn } from "@clerk/nextjs";
+import EditDeleteAction from "../shared/EditDeleteAction";
 
 interface Tag {
   id: string;
@@ -14,6 +16,7 @@ interface author {
   id: string;
   name: string;
   picture: string;
+  clerkId: string;
 }
 
 interface QuestionProps {
@@ -25,6 +28,7 @@ interface QuestionProps {
   views: number;
   answers: Array<object>;
   createdAt: string | Date;
+  clerkId?: string | null;
 }
 
 const QuestionCard = ({
@@ -35,8 +39,10 @@ const QuestionCard = ({
   upvotes,
   views,
   answers,
-  createdAt,
+  createdAt,clerkId
 }: QuestionProps) => {
+  const showActionButtons = clerkId && clerkId === author.clerkId;
+
   return (
     <div className="card-wrapper rounded-[15px] border border-[#e2e5ee] p-9 dark:border-[#282626] sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
@@ -45,12 +51,17 @@ const QuestionCard = ({
           <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
             {getTime(createdAt)}
           </span>
-          <Link href={`questions/${id}`}>
+          <Link href={`/questions/${id}`}>
             <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-2 flex-1 sm:line-clamp-3">
               {title}
             </h3>
           </Link>
-        </div>
+        </div>{" "}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteAction type="Question" itemId={JSON.stringify(id)} />
+          )}
+        </SignedIn>
       </div>
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (

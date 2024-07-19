@@ -5,6 +5,7 @@ import { getCompactNumber, getTime } from "@/lib/utils";
 import { SignedIn } from "@clerk/nextjs";
 import { Dot, ThumbsUp } from "lucide-react";
 import Avatar from "../shared/Avatar";
+import EditDeleteAction from "../shared/EditDeleteAction";
 
 interface Props {
   clerkId?: string | null;
@@ -48,11 +49,11 @@ const AnswerCard = ({
           </h3>
         </div>
 
-        {/* <SignedIn>
+        <SignedIn>
           {showActionButtons && (
-            <EditDeleteAction type="Answer" itemId={JSON.stringify(_id)} />
+            <EditDeleteAction type="Answer" itemId={JSON.stringify(id)} />
           )}
-        </SignedIn> */}
+        </SignedIn>
       </div>
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
