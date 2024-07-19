@@ -20,16 +20,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { updateUser } from "@/lib/actions/user.action";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import { User } from "@/lib/actions/shared.types";
 
 interface Props {
   clerkId: string;
-  user: {
-    name: string;
-    username: string;
-    portfolioWebsite?: string;
-    location: string;
-    bio: string;
-  };
+  user: User
 }
 
 const Profile = ({ clerkId, user }: Props) => {

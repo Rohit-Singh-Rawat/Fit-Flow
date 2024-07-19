@@ -154,3 +154,43 @@ export interface GetUserStatsParams {
 export interface DeleteUserParams {
   clerkId: string;
 }
+export type User = {
+  id: string;
+  name: string;
+  clerkId: string;
+  username: string;
+  email: string;
+  password: string | null;
+  bio: string | null;
+  picture: string;
+  location: string | null;
+  portfolioWebsite: string | null;
+  reputation: number;
+  joinedAt: Date;
+  savedQuestions: {
+    id: string;
+    title: string;
+    content: string;
+    views: number;
+    authorId: string;
+    createdAt: Date;
+  }[];
+};
+
+export type Question = {
+  id: string;
+  title: string;
+  content: string;
+  views: number;
+  createdAt: Date;
+  author: {
+    id: string;
+    name: string;
+    clerkId: string;
+    picture: string;
+  };
+  tags: { id: string; name: string }[];
+  upvotes: { id: string }[];
+  downvotes: { id: string }[];
+  answers: { id: string }[];
+};

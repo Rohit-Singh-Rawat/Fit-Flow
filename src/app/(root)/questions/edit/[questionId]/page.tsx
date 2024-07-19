@@ -1,50 +1,11 @@
 import Question from "@/components/forms/Question";
 import NoResult from "@/components/shared/NoResult";
 import { getQuestionById } from "@/lib/actions/question.action";
+import { Question as QuestionProps } from "@/lib/actions/shared.types";
 import { getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs/server";
+import { User } from "@prisma/client";
 import { redirect } from "next/navigation";
-
-type User = {
-  id: string;
-  name: string;
-  clerkId: string;
-  username: string;
-  email: string;
-  password: string | null;
-  bio: string | null;
-  picture: string;
-  location: string | null;
-  portfolioWebsite: string | null;
-  reputation: number;
-  joinedAt: Date;
-  savedQuestions: {
-    id: string;
-    title: string;
-    content: string;
-    views: number;
-    authorId: string;
-    createdAt: Date;
-  }[];
-};
-
-export type Question = {
-  id: string;
-  title: string;
-  content: string;
-  views: number;
-  createdAt: Date;
-  author: {
-    id: string;
-    name: string;
-    clerkId: string;
-    picture: string;
-  };
-  tags: { id: string; name: string }[];
-  upvotes: { id: string }[];
-  downvotes: { id: string }[];
-  answers: { id: string }[];
-};
 
 type Props = { params: { questionId: string } };
 
@@ -61,7 +22,7 @@ const Page = async ({ params }: Props) => {
 
   const { questionId } = params;
   const result = await getQuestionById({ questionId });
-  const question: Question | null = result?.question || null;
+  const question: QuestionProps | null = result?.question || null;
   if (!question) {
     return (
       <NoResult

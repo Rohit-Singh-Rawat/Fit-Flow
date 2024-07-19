@@ -22,7 +22,7 @@ import { resolve } from "path";
 import { createQuestion, EditQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Question as QuestionDetailsProp } from "@/app/(root)/questions/edit/[questionId]/page";
+import { Question as QuestionDetailsProp } from "@/lib/actions/shared.types";
 
 type Props = {
   userId: string;

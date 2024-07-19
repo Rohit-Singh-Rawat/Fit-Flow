@@ -8,52 +8,14 @@ import RenderTag from "@/components/shared/RenderTag";
 import Votes from "@/components/shared/Votes";
 import { viewQuestion } from "@/lib/actions/interaction.action";
 import { getQuestionById } from "@/lib/actions/question.action";
+import { Question, User } from "@/lib/actions/shared.types";
 import { getUserById } from "@/lib/actions/user.action";
 import { getCompactNumber, getTime } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
 import { Clock, Eye, MessageCircleMore } from "lucide-react";
 import Link from "next/link";
 
-type User = {
-  id: string;
-  name: string;
-  clerkId: string;
-  username: string;
-  email: string;
-  password: string | null;
-  bio: string | null;
-  picture: string;
-  location: string | null;
-  portfolioWebsite: string | null;
-  reputation: number;
-  joinedAt: Date;
-  savedQuestions: {
-    id: string;
-    title: string;
-    content: string;
-    views: number;
-    authorId: string;
-    createdAt: Date;
-  }[];
-};
 
-type Question = {
-  id: string;
-  title: string;
-  content: string;
-  views: number;
-  createdAt: Date;
-  author: {
-    id: string;
-    name: string;
-    clerkId: string;
-    picture: string;
-  };
-  tags: { id: string; name: string }[];
-  upvotes: { id: string }[];
-  downvotes: { id: string }[];
-  answers: { id: string }[];
-};
 
 type Props = { params: { questionId: string } };
 
