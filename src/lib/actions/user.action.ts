@@ -54,11 +54,12 @@ export async function updateUser(userParams: UpdateUserParams) {
       where: { clerkId },
       data: updateData,
     });
-    revalidatePath(path);
     return updatedUser;
   } catch (error) {
-    console.log(error);
     throw error;
+    
+  } finally {
+    revalidatePath(path);
   }
 }
 export async function deleteUser(userParams: DeleteUserParams) {

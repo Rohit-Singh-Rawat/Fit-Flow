@@ -1,6 +1,6 @@
-import { getUserAnswers } from '@/lib/actions/user.action';
-import { SearchParamsProps } from '@/types'
-import AnswerCard from '../cards/AnswerCard';
+import { getUserAnswers } from "@/lib/actions/user.action";
+import { SearchParamsProps } from "@/types";
+import AnswerCard from "../cards/AnswerCard";
 
 interface Props extends SearchParamsProps {
   userId: string;
@@ -8,24 +8,28 @@ interface Props extends SearchParamsProps {
 }
 
 const AnswersTab = async ({ searchParams, userId, clerkId }: Props) => {
-  const {answers} = await getUserAnswers({
+  const { answers } = await getUserAnswers({
     userId,
     page: searchParams.page ? +searchParams.page : 1,
-  })
+  });
 
   return (
     <>
-      {answers.map((item) => (
-        <AnswerCard
-          key={item.id}
-          clerkId={clerkId}
-          id={item.id}
-          question={{title:item.question!.title, id:item.question!.id}}
-          author={item.author}
-          upvotes={item.upvotes.length}
-          createdAt={item.createdAt}
-        />  
-      ))}
+      {answers.length === 0 ? (
+        <p>No question answered</p>
+      ) : (
+        answers.map((item) => (
+          <AnswerCard
+            key={item.id}
+            clerkId={clerkId}
+            id={item.id}
+            question={{ title: item.question!.title, id: item.question!.id }}
+            author={item.author}
+            upvotes={item.upvotes.length}
+            createdAt={item.createdAt}
+          />
+        ))
+      )}
 
       {/* <div className="mt-10">
         <Pagination 
@@ -34,7 +38,7 @@ const AnswersTab = async ({ searchParams, userId, clerkId }: Props) => {
         />
       </div> */}
     </>
-  )
-}
+  );
+};
 
-export default AnswersTab
+export default AnswersTab;

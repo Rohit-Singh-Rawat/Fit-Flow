@@ -15,20 +15,24 @@ const QuestionTab = async ({ searchParams, userId, clerkId }: Props) => {
 
   return (
     <>
-      {questions.map((question) => (
-        <QuestionCard
-          key={question.id}
-          id={question.id}
-          title={question.title}
-          tags={question.tags}
-          author={question.author}
-          upvotes={question.upvotes.length}
-          views={question.views}
-          answers={question.answers}
-          createdAt={question.createdAt}
-          clerkId={clerkId}
-        />
-      ))}
+      {questions.length === 0 ? (
+        <p>No questions Asked</p>
+      ) : (
+        questions.map((question) => (
+          <QuestionCard
+            key={question.id}
+            id={question.id}
+            title={question.title}
+            tags={question.tags}
+            author={question.author}
+            upvotes={question.upvotes.length}
+            views={question.views}
+            answers={question.answers}
+            createdAt={question.createdAt}
+            clerkId={clerkId}
+          />
+        ))
+      )}
     </>
   );
 };

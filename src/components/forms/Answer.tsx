@@ -170,7 +170,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? (
-              <Loader className="x animate-spin text-center" />
+              <Loader className="x size-4 animate-spin text-center" />
             ) : (
               "Submit"
             )}

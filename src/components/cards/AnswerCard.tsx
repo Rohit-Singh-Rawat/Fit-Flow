@@ -36,7 +36,7 @@ const AnswerCard = ({
 
   return (
     <Link
-      href={`/question/${question.id}/#${id}`}
+      href={`/questions/${question.id}/#${id}`}
       className="card-wrapper card-wrapper rounded-[15px] border border-[#e2e5ee] p-9 px-11 py-9 dark:border-[#282626]"
     >
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
