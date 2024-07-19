@@ -22,7 +22,7 @@ const Avatar: React.FC<Props> = ({
   );
 
   return (
-    <Link href={`user/${id}`}>
+    <Link href={`/profile/${id}`}>
       <div className={avatarClass}>
         <Image
           src={imageUrl}

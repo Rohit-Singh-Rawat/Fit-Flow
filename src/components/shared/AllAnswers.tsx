@@ -56,9 +56,7 @@ const AllAnswers = async ({ questionId, userId, page, filter }: Props) => {
                   itemId={answer.id}
                   userId={userId}
                   hasupVoted={
-                    userId
-                      ? answer.upvotes.some((o) => o.id === userId)
-                      : false
+                    userId ? answer.upvotes.some((o) => o.id === userId) : false
                   }
                   hasdownVoted={
                     userId
@@ -67,11 +65,12 @@ const AllAnswers = async ({ questionId, userId, page, filter }: Props) => {
                   }
                   upvotes={answer.upvotes.length}
                   downvotes={answer.downvotes.length}
-                  
                 />
               </div>
             </div>
-            <ParseHTML data={answer.content} />
+         
+              <ParseHTML data={answer.content} />
+            
           </article>
         ))}
       </div>

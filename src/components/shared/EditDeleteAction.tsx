@@ -59,8 +59,8 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
 
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <button className="size-5">
-            <DeleteIcon className="size-full fill-red-700" />
+          <button className="size-7">
+            <DeleteIcon className="size-5 fill-red-700" />
           </button>
         </AlertDialogTrigger>
         <AlertDialogContent>

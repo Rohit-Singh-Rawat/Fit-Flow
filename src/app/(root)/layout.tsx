@@ -16,7 +16,7 @@ export default function Layout({
       <div className="flex  relative">
         <LeftSideBar/>
         <section className="max-md:pd-14 flex min-h-screen flex-1 flex-col xs:px-6 pb-6 pt-36 sm:px-14">
-          <div className="mx-auto w-full max-w-2xl ">{children}</div>
+          <div className="mx-auto w-full max-w-5xl ">{children}</div>
         </section>
         <RightSidebar/>
       </div>
