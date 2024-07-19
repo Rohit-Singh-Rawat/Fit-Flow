@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { EditQuestionParams } from "./shared.types.d";
 import { revalidatePath } from "next/cache";
 import prisma from "../db";
@@ -151,5 +151,19 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
     };
   } finally {
     revalidatePath(path);
+  }
+}
+
+export async function getHotQuestions() {
+  try {
+    const questions = await prisma.question.findMany({
+      where: {},
+      select: { id: true, title: true },
+      orderBy: [{ views: "desc"}, {upvotes: { _count: "desc" } }],
+      take: 5,
+    });
+    return { questions };
+  } catch (error) {
+    throw error
   }
 }

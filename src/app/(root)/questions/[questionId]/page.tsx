@@ -74,14 +74,14 @@ const Page = async ({ params }: Props) => {
       <NoResult
         title={`Question ID ${questionId} Not Found`}
         description={`We couldn't find the question with ID ${questionId}. Please try searching for another question or ask a new one.`}
-        href="/ask"
+        href="/questions/ask"
         label="Ask a Question"
       />
     );
   }
 
   return (
-    <div className="max-w-[730px] ">
+    <div className="max-w-[730px]">
       <div className="flex-start w-full flex-col">
         <div className="flex w-full flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
           <div className="flex items-center justify-start gap-1">

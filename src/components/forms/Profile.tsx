@@ -23,22 +23,27 @@ import { Loader } from "lucide-react";
 
 interface Props {
   clerkId: string;
-  user: string;
+  user: {
+    name: string;
+    username: string;
+    portfolioWebsite?: string;
+    location: string;
+    bio: string;
+  };
 }
 
 const Profile = ({ clerkId, user }: Props) => {
-  const parsedUser = JSON.parse(user);
   const router = useRouter();
   const pathname = usePathname();
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
-      name: parsedUser.name || "",
-      username: parsedUser.username || "",
-      portfolioWebsite: parsedUser.portfolioWebsite || "",
-      location: parsedUser.location || "",
-      bio: parsedUser.bio || "",
+      name: user?.name || "",
+      username: user.username || "",
+      portfolioWebsite: user?.portfolioWebsite || "",
+      location: user.location || "",
+      bio: user.bio || "",
     },
   });
 
@@ -173,11 +178,11 @@ const Profile = ({ clerkId, user }: Props) => {
         <div className="mt-7 flex justify-end">
           <Button
             type="submit"
-            className="inline-flex  py-4 items-center justify-center rounded-lg border border-blue-600  px-6  font-medium text-white  focus:outline-none focus:ring-2  focus:ring-offset-2 focus:ring-offset-slate-50 dark:border-[#282626]  bg-blue-600 dark:bg-black dark:text-light-900 dark:ring-offset-[#1a4334] dark:hover:bg-dark-200 dark:focus:ring-[#0e2618]"
+            className="inline-flex items-center justify-center rounded-lg border border-blue-600 bg-blue-600 px-6 py-4 font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-50 dark:border-[#282626] dark:bg-black dark:text-light-900 dark:ring-offset-[#1a4334] dark:hover:bg-dark-200 dark:focus:ring-[#0e2618]"
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? (
-              <Loader className="x animate-spin text-center size-4" />
+              <Loader className="x size-4 animate-spin text-center" />
             ) : (
               "Save"
             )}

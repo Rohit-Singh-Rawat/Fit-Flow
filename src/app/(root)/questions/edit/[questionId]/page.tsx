@@ -1,4 +1,3 @@
-
 import Question from "@/components/forms/Question";
 import NoResult from "@/components/shared/NoResult";
 import { getQuestionById } from "@/lib/actions/question.action";
@@ -56,8 +55,8 @@ const Page = async ({ params }: Props) => {
   if (clerkId) {
     user = await getUserById({ userId: clerkId });
   }
-  if(!clerkId || !user){
-    redirect('/sign-in')
+  if (!clerkId || !user) {
+    redirect("/sign-in");
   }
 
   const { questionId } = params;
@@ -68,7 +67,7 @@ const Page = async ({ params }: Props) => {
       <NoResult
         title={`Question ID ${questionId} Not Found`}
         description={`We couldn't find the question with ID ${questionId}. Please try searching for another question or ask a new one.`}
-        href="/ask"
+        href="/questions/ask"
         label="Ask a Question"
       />
     );
@@ -78,7 +77,7 @@ const Page = async ({ params }: Props) => {
     <div className="">
       <h1 className="h1-bold text-dark100_light900">Edit</h1>
       <div className="mt-9">
-        <Question userId={user.id} type='Edit' questionDetails={question}/>
+        <Question userId={user.id} type="Edit" questionDetails={question} />
       </div>
     </div>
   );

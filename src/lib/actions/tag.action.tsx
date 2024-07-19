@@ -39,3 +39,16 @@ export async function getAllTags(params: GetAllTagsParams) {
     return { tags };
   } catch (error) {}
 }
+export async function getPopularTags() {
+  try {
+    const tags = await prisma.tag.findMany({
+      where: {},
+      select: { id: true, name:true, _count: { select: { questions: true } } },
+      orderBy: { questions: { _count: "desc" } },
+      take: 5,
+    });
+    return { tags };
+  } catch (error) {
+    throw error;
+  }
+}
