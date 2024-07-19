@@ -27,7 +27,7 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
   const router = useRouter();
 
   const handleEdit = () => {
-    router.push(`/question/edit/${JSON.parse(itemId)}`);
+    router.push(`/questions/edit/${JSON.parse(itemId)}`);
   };
 
   const handleDelete = async () => {
@@ -49,30 +49,40 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
   };
 
   return (
-    <div className="flex items-center justify-end gap-3 max-sm:w-full flex-wrap">
+    <div className="flex flex-wrap items-center justify-end gap-3 max-sm:w-full">
       {type === "Question" && (
-        <button className="size-7 flex items-center justify-center" onClick={handleEdit}>
+        <button
+          className="flex size-7 items-center justify-center"
+          onClick={handleEdit}
+        >
           <EditIcon className="stroke-black dark:stroke-white/50" />
         </button>
       )}
 
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <button className="size-7">
-            <DeleteIcon className="size-5 fill-red-700" />
+          <button className="size-7 bg-transparent">
+            <DeleteIcon className="size-5 stroke-red-600 dark:fill-white" />
           </button>
         </AlertDialogTrigger>
-        <AlertDialogContent>
+        <AlertDialogContent className="rounded-lg bg-white p-6 text-black shadow-lg dark:bg-black dark:text-white">
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-xl font-bold">
+              Are you absolutely sure?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground mt-2">
               This action cannot be undone. This will permanently delete your
               account and remove your data from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>
+          <AlertDialogFooter className="mt-4 flex justify-end">
+            <AlertDialogCancel className="mr-2 rounded border border-black bg-white px-4 py-2 text-black dark:border-white dark:bg-black dark:text-white">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="rounded bg-black px-4 py-2 text-white dark:bg-white dark:text-black"
+            >
               Continue
             </AlertDialogAction>
           </AlertDialogFooter>

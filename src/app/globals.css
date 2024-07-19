@@ -99,23 +99,31 @@ body {
   width: 3px;
   height: 3px;
   left: -100px;
-  border-radius: 2px;
+  border-radius: 100vw;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  margin-inline: 3em;
+  border-radius: 100vw;
+  background-color: wheat;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: transparent;
-  border-radius: 50px;
+
+  border-radius: 100vw;
 }
 .custom-scrollbar:hover {
   &::-webkit-scrollbar-thumb {
     background-color: #000000;
-    border-radius: 50px;
+
+    border-radius: 100vw;
   }
 }
 .dark .custom-scrollbar:hover {
   &::-webkit-scrollbar-thumb {
     background-color: #ffffff;
-    border-radius: 50px;
+
+    border-radius: 100vw;
   }
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {

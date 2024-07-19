@@ -1,5 +1,5 @@
-"use server";
-
+"use server"
+import { EditQuestionParams } from "./shared.types.d";
 import { revalidatePath } from "next/cache";
 import prisma from "../db";
 import {
@@ -48,6 +48,22 @@ export async function createQuestion(
     revalidatePath(path);
   } catch (error) {
     console.error("Error creating question:", error);
+  }
+}
+export async function EditQuestion(params: EditQuestionParams): Promise<void> {
+  try {
+    const { title, content, path, questionId } = params;
+
+    const question = await prisma.question.update({
+      where: { id: questionId },
+      data: {
+        title,
+        content,
+      },
+    });
+    revalidatePath(path);
+  } catch (error) {
+    console.error("Error Editing question:", error);
   }
 }
 export async function getQuestionById(params: GetQuestionByIdParams) {

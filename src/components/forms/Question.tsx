@@ -19,39 +19,56 @@ import { QuestionsSchema } from "@/lib/validations";
 import { Files, Loader, X } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { resolve } from "path";
-import { createQuestion } from "@/lib/actions/question.action";
+import { createQuestion, EditQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Question as QuestionDetailsProp } from "@/app/(root)/questions/edit/[questionId]/page";
 
-type Props = { userId: string };
+type Props = {
+  userId: string;
+  type?: "Edit" | "create";
+  questionDetails?: QuestionDetailsProp;
+};
 
-const Question = ({ userId }: Props) => {
+const Question = ({ userId, questionDetails, type }: Props) => {
   const router = useRouter();
   const pathName = usePathname();
-
+  const groupedTags = questionDetails?.tags.map((tag) => tag.name);
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
     defaultValues: {
-      explanation: "",
-      tags: [],
-      title: "",
+      explanation: questionDetails?.content || "",
+      tags: groupedTags || [],
+      title: questionDetails?.title || "",
     },
   });
   const editorRef = useRef(null);
 
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     try {
-      await createQuestion({
-        authorId: userId,
-        title: values.title,
-        content: values.explanation,
-        tags: values.tags,
-        path: pathName,
-      });
-      toast.success("Question created successfully");
-      router.push("/");
+      if (type === "Edit" && questionDetails) {
+        await EditQuestion({
+          title: values.title,
+          content: values.explanation,
+          path: `/questions/${questionDetails.id}`,
+          questionId: questionDetails?.id,
+        });
+        toast.success("Question Edited successfully");
+        router.push(`/questions/${questionDetails.id}`);
+      } else {
+        await createQuestion({
+          authorId: userId,
+          title: values.title,
+          content: values.explanation,
+          tags: values.tags,
+          path: pathName,
+        });
+        toast.success("Question created successfully");
+        router.push("/");
+      }
     } catch (error) {
-      toast.error("Error Occurred");}
+      toast.error("Error Occurred");
+    }
   }
   const handleInputKeyDown = (
     e: KeyboardEvent<HTMLInputElement>,
@@ -125,7 +142,7 @@ const Question = ({ userId }: Props) => {
                     apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
                     //@ts-ignore
                     onInit={(_evt, editor) => (editorRef.current = editor)}
-                    initialValue=""
+                    initialValue={questionDetails?.content || ""}
                     onBlur={field.onBlur}
                     onEditorChange={(content) => field.onChange(content)}
                     init={{
@@ -218,6 +235,7 @@ const Question = ({ userId }: Props) => {
                 <>
                   <Input
                     className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light900 min-h-[56px] border-2"
+                    disabled={type == "Edit"}
                     onKeyDown={(e) => handleInputKeyDown(e, field)}
                   />
                   {field.value.length > 0 && (
@@ -229,10 +247,12 @@ const Question = ({ userId }: Props) => {
                             className="subt1e-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-[#C9CED6] px-4 py-2 capitalize dark:border-[#564545]"
                           >
                             {tag}
-                            <X
-                              className="size-3 cursor-pointer fill-black object-contain dark:fill-white"
-                              onClick={() => handleTagRemove(tag, field)}
-                            />
+                            {type !== "Edit" && (
+                              <X
+                                className="size-3 cursor-pointer fill-black object-contain dark:fill-white"
+                                onClick={() => handleTagRemove(tag, field)}
+                              />
+                            )}
                           </Badge>
                         );
                       })}
@@ -255,6 +275,8 @@ const Question = ({ userId }: Props) => {
         >
           {form.formState.isSubmitting ? (
             <Loader className="x animate-spin text-center" />
+          ) : type == "Edit" ? (
+            "Edit"
           ) : (
             "Submit"
           )}
