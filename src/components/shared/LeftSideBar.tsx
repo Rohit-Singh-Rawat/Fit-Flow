@@ -14,7 +14,7 @@ const LeftSideBar = (props: Props) => {
   const {userId } = useAuth()
   const pathname = usePathname();
   return (
-    <section className="sticky right-0 top-0 flex h-screen p-5 pt-[100px]">
+    <section className="sticky right-0 top-0 flex h-screen sm:p-5  sm:pt-[100px]">
       <div className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex flex-col justify-between overflow-y-auto rounded-2xl border-r p-3 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px] lg:p-6">
         <div className="flex flex-col gap-6">
           {sidebarLinks.map((item) => {

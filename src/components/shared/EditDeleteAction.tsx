@@ -40,7 +40,6 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
       });
       toast.success("Question deleted successfully");
     } else if (type === "Answer") {
-      // Delete answer
       await deleteAnswer({
         answerId: JSON.parse(itemId),
         path: pathname,
@@ -50,9 +49,9 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
   };
 
   return (
-    <div className="flex items-center justify-end gap-3 max-sm:w-full">
+    <div className="flex items-center justify-end gap-3 max-sm:w-full flex-wrap">
       {type === "Question" && (
-        <button className="size-7" onClick={handleEdit}>
+        <button className="size-7 flex items-center justify-center" onClick={handleEdit}>
           <EditIcon className="stroke-black dark:stroke-white/50" />
         </button>
       )}
