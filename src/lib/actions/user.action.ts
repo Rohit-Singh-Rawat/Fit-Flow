@@ -16,7 +16,8 @@ import { PAGE_SIZE } from "@/constants";
 
 export async function getAllUsers(params: GetAllUsersParams) {
   try {
-    const { searchQuery, filter, page = 1, pageSize = PAGE_SIZE } = params;  const skip = (page - 1) * pageSize;
+    const { searchQuery, filter, page = 1, pageSize = PAGE_SIZE } = params;
+    const skip = (page - 1) * pageSize;
     let orderBy: any = [];
     let where: any = {};
     const Query = searchQuery
@@ -61,7 +62,7 @@ export async function getAllUsers(params: GetAllUsersParams) {
           },
           {
             username: {
-              contains: searchQuery ,
+              contains: searchQuery,
               mode: "insensitive",
             },
           },
@@ -84,11 +85,12 @@ export async function getAllUsers(params: GetAllUsersParams) {
         email: true,
         bio: true,
       },
-    });const totalUsers = await prisma.user.count({
+    });
+    const totalUsers = await prisma.user.count({
       where: where,
       orderBy: orderBy,
     });
-    return { users,totalUsers };
+    return { users, totalUsers };
   } catch (error) {
     console.log(error);
     throw error;
@@ -168,9 +170,16 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
 }
 
 export async function getSavedQuestion(params: GetSavedQuestionsParams) {
-  const { clerkId, filter, pageSize, page, searchQuery } = params;
+  const {
+    clerkId,
+    filter,
+    page = 1,
+    pageSize = PAGE_SIZE,
+    searchQuery,
+  } = params;
   let orderBy: any = [];
   let where: any = {};
+  const skip = (page - 1) * pageSize;
   const Query = searchQuery
     ?.split(" ")
     .filter((x) => x.length > 0)
@@ -231,6 +240,8 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
       select: {
         savedQuestions: {
           where: where,
+          skip: skip,
+          take: pageSize,
           include: {
             author: {
               select: { clerkId: true, picture: true, id: true, name: true },
@@ -244,7 +255,15 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
         },
       },
     });
-    return { savedQuestions: user?.savedQuestions };
+    const userc = await prisma.user.findUnique({
+      where: { clerkId: clerkId },
+      include: {
+        _count: {
+          select: { savedQuestions: { where: where } },
+        },
+      },
+    });
+    return { savedQuestions: user?.savedQuestions,totalQuestions:userc?._count.savedQuestions };
   } catch (error) {
     console.log(error);
     throw error;

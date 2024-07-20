@@ -139,7 +139,7 @@ const MainIcon = ({ className }: Props) => {
             </g>{" "}
             <g transform="translate(46.400001525878906,14.316570281982422)">
               <g
-                fillRule=""
+                
                 stroke="#FFFFFF"
                 className="tp-name iconsvg-namesvg"
               >
@@ -372,7 +372,7 @@ const MainIcon = ({ className }: Props) => {
               </g>{" "}
               <g transform="translate(46.400001525878906,14.316570281982422)">
                 <g
-                  fillRule=""
+                  
                   stroke="#FFFFFF"
                   className="tp-name iconsvg-namesvg"
                 >
@@ -600,7 +600,7 @@ const MainIcon = ({ className }: Props) => {
               </g>{" "}
               <g transform="translate(46.400001525878906,14.316570281982422)">
                 <g
-                  fillRule=""
+                  
                   stroke="#000000"
                   className="tp-name iconsvg-namesvg"
                 >
