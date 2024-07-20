@@ -48,8 +48,8 @@ const QuestionCard = ({
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
         {" "}
         <div>
-          <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
-            {getTime(createdAt)}
+          <span className="subtle-regular text-dark400_light700 line-clamp-1 mb-1 flex sm:hidden">
+            Asked {getTime(createdAt)}
           </span>
           <Link href={`/questions/${id}`}>
             <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-2 flex-1 sm:line-clamp-3">

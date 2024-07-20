@@ -15,19 +15,37 @@ import {
 
 export async function getAllUsers(params: GetAllUsersParams) {
   try {
-    const { searchQuery } = params;
-    let orderBy: any = {};
+    const { searchQuery, filter } = params;
+    let orderBy: any = [];
     let where: any = {};
+    switch (filter) {
+      case "new_users":
+        orderBy = [{ joinedAt: "desc" }];
+        break;
+      case "old_users":
+        orderBy = [{ joinedAt: "asc" }];
+        break;
+      case "top_contributors":
+        orderBy = [{ reputation: "desc" }];
+        break;
+
+      default:
+        break;
+    }
 
     if (searchQuery) {
-      orderBy = {
-        _relevance: {
-          fields: ["name", "username"],
-          search: searchQuery,
-          sort: "asc",
+      orderBy = [
+        {
+          _relevance: {
+            fields: ["name", "username"],
+            search: searchQuery,
+            sort: "asc",
+          },
         },
-      };
+        ...orderBy,
+      ];
       where = {
+        ...where,
         OR: [
           {
             name: {
@@ -59,6 +77,7 @@ export async function getAllUsers(params: GetAllUsersParams) {
         bio: true,
       },
     });
+    console.log(users,where,orderBy,filter )
     return { users };
   } catch (error) {
     console.log(error);
