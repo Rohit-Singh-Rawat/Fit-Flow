@@ -2,8 +2,10 @@ import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilters from "@/components/Home/HomeFilters";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
+import { PaginationSection as Pagination } from "@/components/shared/Pagination";
 import LocalSearchBar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
+import { PAGE_SIZE } from "@/constants";
 import { HomePageFilters } from "@/constants/filters";
 import { getQuestions } from "@/lib/actions/question.action";
 import { SearchParamsProps } from "@/types";
@@ -11,11 +13,15 @@ import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
 const page = async ({ searchParams }: SearchParamsProps) => {
+  const pageSize = searchParams.pageSize ? +searchParams.pageSize : PAGE_SIZE;
   const result = await getQuestions({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
+    pageSize: pageSize,
   });
   const questions = result?.questions ?? [];
+  const totalPages = Math.ceil(result.totalQuestions / pageSize);
 
   return (
     <>
@@ -68,6 +74,12 @@ const page = async ({ searchParams }: SearchParamsProps) => {
             label="Ask a Question"
           />
         )}
+        <div className="mt-10">
+          <Pagination
+            pageNumber={searchParams?.page ? +searchParams.page : 1}
+            totalPages={totalPages}
+          />
+        </div>
       </div>
     </>
   );

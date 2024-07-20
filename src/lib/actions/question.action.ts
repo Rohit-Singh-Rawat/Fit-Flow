@@ -9,11 +9,16 @@ import {
   GetQuestionsParams,
   QuestionVoteParams,
 } from "./shared.types";
+import { PAGE_SIZE } from "@/constants";
 export async function getQuestions(params: GetQuestionsParams) {
-  const { searchQuery, filter } = params;
+  const { searchQuery, filter, page = 1, pageSize = PAGE_SIZE } = params;
+  const skip = (page - 1) * pageSize;
   let orderBy: any = [];
   let where: any = {};
-  const Query = searchQuery?.split(' ').filter((x)=> x.length>0).join(' | ')
+  const Query = searchQuery
+    ?.split(" ")
+    .filter((x) => x.length > 0)
+    .join(" | ");
 
   switch (filter) {
     case "newest":
@@ -62,10 +67,12 @@ export async function getQuestions(params: GetQuestionsParams) {
       ...orderBy,
     ];
   }
-console.log(Query)
+  console.log(Query);
   try {
     const questions = await prisma.question.findMany({
       where: where,
+      skip: skip,
+      take: pageSize,
       orderBy: Array.isArray(orderBy) ? orderBy : [orderBy],
       include: {
         author: true,
@@ -74,7 +81,11 @@ console.log(Query)
         upvotes: true,
       },
     });
-    return { questions };
+    const totalQuestions = await prisma.question.count({
+      where: where,
+      orderBy: Array.isArray(orderBy) ? orderBy : [orderBy],
+    });
+    return { questions, totalQuestions };
   } catch (error) {
     console.error("Error fetching questions:", error);
     throw new Error("Unable to fetch questions.");
