@@ -5,15 +5,19 @@ import { GetAllTagsParams, GetQuestionsByTagIdParams } from "./shared.types";
 
 export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
   const { tagId, page, pageSize, searchQuery } = params;
+const Query = searchQuery
+  ?.split(" ")
+  .filter((x) => x.length > 0)
+  .join(" | ");
 
   let orderBy: any = {};
   let where: any = {};
 
-  if (searchQuery) {
+  if (Query) {
     orderBy = {
       _relevance: {
         fields: ["title", "content"],
-        search: searchQuery,
+        search: Query,
         sort: "asc",
       },
     };
@@ -21,13 +25,13 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
       OR: [
         {
           title: {
-            contains: searchQuery,
+            contains: Query,
             mode: "insensitive",
           },
         },
         {
           content: {
-            contains: searchQuery,
+            contains: Query,
             mode: "insensitive",
           },
         },
@@ -65,17 +69,22 @@ export async function getAllTags(params: GetAllTagsParams) {
   const { page, pageSize, searchQuery } = params;
   let orderBy: any = {};
   let where: any = {};
-  if (searchQuery) {
+  const Query = searchQuery
+    ?.split(" ")
+    .filter((x) => x.length > 0)
+    .join(" | ");
+
+  if (Query) {
     orderBy = {
       _relevance: {
         fields: ["name"],
-        search: searchQuery,
+        search: Query,
         sort: "asc",
       },
     };
     where = {
       name: {
-        contains: searchQuery,
+        contains: Query,
         mode: "insensitive",
       },
     };

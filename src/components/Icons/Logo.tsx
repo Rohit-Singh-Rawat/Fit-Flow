@@ -22,62 +22,62 @@ const Logo = (props: Props) => {
         height="5260.696536424057"
         viewBox="148.88600673675538 78.7194341659546 42.227624130249026 92.56113166809082"
         preserveAspectRatio="xMidYMid meet"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
         className="size-[50px] max-sm:hidden dark:max-sm:flex sm:hidden"
       >
         <g>
           <defs>
             <linearGradient id="92" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#fa71cd"></stop>{" "}
-              <stop offset="100%" stop-color="#9b59b6"></stop>
+              <stop offset="0%" stopColor="#fa71cd"></stop>{" "}
+              <stop offset="100%" stopColor="#9b59b6"></stop>
             </linearGradient>
             <linearGradient id="93" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#f9d423"></stop>{" "}
-              <stop offset="100%" stop-color="#f83600"></stop>
+              <stop offset="0%" stopColor="#f9d423"></stop>{" "}
+              <stop offset="100%" stopColor="#f83600"></stop>
             </linearGradient>
             <linearGradient id="94" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#0064d2"></stop>{" "}
-              <stop offset="100%" stop-color="#1cb0f6"></stop>
+              <stop offset="0%" stopColor="#0064d2"></stop>{" "}
+              <stop offset="100%" stopColor="#1cb0f6"></stop>
             </linearGradient>
             <linearGradient id="95" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#f00978"></stop>{" "}
-              <stop offset="100%" stop-color="#3f51b1"></stop>
+              <stop offset="0%" stopColor="#f00978"></stop>{" "}
+              <stop offset="100%" stopColor="#3f51b1"></stop>
             </linearGradient>
             <linearGradient id="96" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#7873f5"></stop>{" "}
-              <stop offset="100%" stop-color="#ec77ab"></stop>
+              <stop offset="0%" stopColor="#7873f5"></stop>{" "}
+              <stop offset="100%" stopColor="#ec77ab"></stop>
             </linearGradient>
             <linearGradient id="97" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#f9d423"></stop>{" "}
-              <stop offset="100%" stop-color="#e14fad"></stop>
+              <stop offset="0%" stopColor="#f9d423"></stop>{" "}
+              <stop offset="100%" stopColor="#e14fad"></stop>
             </linearGradient>
             <linearGradient id="98" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#009efd"></stop>{" "}
-              <stop offset="100%" stop-color="#2af598"></stop>
+              <stop offset="0%" stopColor="#009efd"></stop>{" "}
+              <stop offset="100%" stopColor="#2af598"></stop>
             </linearGradient>
             <linearGradient id="99" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#ffcc00"></stop>{" "}
-              <stop offset="100%" stop-color="#00b140"></stop>
+              <stop offset="0%" stopColor="#ffcc00"></stop>{" "}
+              <stop offset="100%" stopColor="#00b140"></stop>
             </linearGradient>
             <linearGradient id="100" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#d51007"></stop>{" "}
-              <stop offset="100%" stop-color="#ff8177"></stop>
+              <stop offset="0%" stopColor="#d51007"></stop>{" "}
+              <stop offset="100%" stopColor="#ff8177"></stop>
             </linearGradient>
             <linearGradient id="102" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#a2b6df"></stop>{" "}
-              <stop offset="100%" stop-color="#0c3483"></stop>
+              <stop offset="0%" stopColor="#a2b6df"></stop>{" "}
+              <stop offset="100%" stopColor="#0c3483"></stop>
             </linearGradient>
             <linearGradient id="103" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#7ac5d8"></stop>{" "}
-              <stop offset="100%" stop-color="#eea2a2"></stop>
+              <stop offset="0%" stopColor="#7ac5d8"></stop>{" "}
+              <stop offset="100%" stopColor="#eea2a2"></stop>
             </linearGradient>
             <linearGradient id="104" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#00ecbc"></stop>{" "}
-              <stop offset="100%" stop-color="#007adf"></stop>
+              <stop offset="0%" stopColor="#00ecbc"></stop>{" "}
+              <stop offset="100%" stopColor="#007adf"></stop>
             </linearGradient>
             <linearGradient id="105" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#b88746"></stop>{" "}
-              <stop offset="100%" stop-color="#fdf5a6"></stop>
+              <stop offset="0%" stopColor="#b88746"></stop>{" "}
+              <stop offset="100%" stopColor="#fdf5a6"></stop>
             </linearGradient>
           </defs>
           <g
@@ -87,8 +87,8 @@ const Logo = (props: Props) => {
             <g mask="url(#1365741f-5ac7-46e3-aadf-3b0bc3ea9bc7)">
               <rect
                 fill="#FFFFFF"
-                fill-opacity="0"
-                stroke-width="2"
+                fillOpacity="0"
+                strokeWidth="2"
                 x="0"
                 y="0"
                 width="29.399999999999977"
@@ -145,9 +145,9 @@ const Logo = (props: Props) => {
               y2="0"
               id="0ZPCiW2UzhYq5Z-_pNEXZ"
             >
-              <stop offset="0%" stop-color="#ffffff"></stop>
-              <stop offset="50%" stop-color="#a0a8b2"></stop>
-              <stop offset="100%" stop-color="#032c30"></stop>
+              <stop offset="0%" stopColor="#ffffff"></stop>
+              <stop offset="50%" stopColor="#a0a8b2"></stop>
+              <stop offset="100%" stopColor="#032c30"></stop>
             </linearGradient>
             <filter
               id="42443b3f1de60f6b6fd3b6a9844b4764"
@@ -202,62 +202,62 @@ const Logo = (props: Props) => {
           height="5260.696536424057"
           viewBox="148.88600673675538 78.7194341659546 42.227624130249026 92.56113166809082"
           preserveAspectRatio="xMidYMid meet"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
           className="size-[50px] max-sm:hidden dark:max-sm:flex sm:hidden"
         >
           <g>
             <defs>
               <linearGradient id="92" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#fa71cd"></stop>{" "}
-                <stop offset="100%" stop-color="#9b59b6"></stop>
+                <stop offset="0%" stopColor="#fa71cd"></stop>{" "}
+                <stop offset="100%" stopColor="#9b59b6"></stop>
               </linearGradient>
               <linearGradient id="93" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#f9d423"></stop>{" "}
-                <stop offset="100%" stop-color="#f83600"></stop>
+                <stop offset="0%" stopColor="#f9d423"></stop>{" "}
+                <stop offset="100%" stopColor="#f83600"></stop>
               </linearGradient>
               <linearGradient id="94" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#0064d2"></stop>{" "}
-                <stop offset="100%" stop-color="#1cb0f6"></stop>
+                <stop offset="0%" stopColor="#0064d2"></stop>{" "}
+                <stop offset="100%" stopColor="#1cb0f6"></stop>
               </linearGradient>
               <linearGradient id="95" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#f00978"></stop>{" "}
-                <stop offset="100%" stop-color="#3f51b1"></stop>
+                <stop offset="0%" stopColor="#f00978"></stop>{" "}
+                <stop offset="100%" stopColor="#3f51b1"></stop>
               </linearGradient>
               <linearGradient id="96" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#7873f5"></stop>{" "}
-                <stop offset="100%" stop-color="#ec77ab"></stop>
+                <stop offset="0%" stopColor="#7873f5"></stop>{" "}
+                <stop offset="100%" stopColor="#ec77ab"></stop>
               </linearGradient>
               <linearGradient id="97" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#f9d423"></stop>{" "}
-                <stop offset="100%" stop-color="#e14fad"></stop>
+                <stop offset="0%" stopColor="#f9d423"></stop>{" "}
+                <stop offset="100%" stopColor="#e14fad"></stop>
               </linearGradient>
               <linearGradient id="98" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#009efd"></stop>{" "}
-                <stop offset="100%" stop-color="#2af598"></stop>
+                <stop offset="0%" stopColor="#009efd"></stop>{" "}
+                <stop offset="100%" stopColor="#2af598"></stop>
               </linearGradient>
               <linearGradient id="99" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#ffcc00"></stop>{" "}
-                <stop offset="100%" stop-color="#00b140"></stop>
+                <stop offset="0%" stopColor="#ffcc00"></stop>{" "}
+                <stop offset="100%" stopColor="#00b140"></stop>
               </linearGradient>
               <linearGradient id="100" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#d51007"></stop>{" "}
-                <stop offset="100%" stop-color="#ff8177"></stop>
+                <stop offset="0%" stopColor="#d51007"></stop>{" "}
+                <stop offset="100%" stopColor="#ff8177"></stop>
               </linearGradient>
               <linearGradient id="102" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#a2b6df"></stop>{" "}
-                <stop offset="100%" stop-color="#0c3483"></stop>
+                <stop offset="0%" stopColor="#a2b6df"></stop>{" "}
+                <stop offset="100%" stopColor="#0c3483"></stop>
               </linearGradient>
               <linearGradient id="103" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#7ac5d8"></stop>{" "}
-                <stop offset="100%" stop-color="#eea2a2"></stop>
+                <stop offset="0%" stopColor="#7ac5d8"></stop>{" "}
+                <stop offset="100%" stopColor="#eea2a2"></stop>
               </linearGradient>
               <linearGradient id="104" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#00ecbc"></stop>{" "}
-                <stop offset="100%" stop-color="#007adf"></stop>
+                <stop offset="0%" stopColor="#00ecbc"></stop>{" "}
+                <stop offset="100%" stopColor="#007adf"></stop>
               </linearGradient>
               <linearGradient id="105" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#b88746"></stop>{" "}
-                <stop offset="100%" stop-color="#fdf5a6"></stop>
+                <stop offset="0%" stopColor="#b88746"></stop>{" "}
+                <stop offset="100%" stopColor="#fdf5a6"></stop>
               </linearGradient>
             </defs>
             <g
@@ -267,8 +267,8 @@ const Logo = (props: Props) => {
               <g mask="url(#1365741f-5ac7-46e3-aadf-3b0bc3ea9bc7)">
                 <rect
                   fill="#FFFFFF"
-                  fill-opacity="0"
-                  stroke-width="2"
+                  fillOpacity="0"
+                  strokeWidth="2"
                   x="0"
                   y="0"
                   width="29.399999999999977"
@@ -325,9 +325,9 @@ const Logo = (props: Props) => {
                 y2="0"
                 id="0ZPCiW2UzhYq5Z-_pNEXZ"
               >
-                <stop offset="0%" stop-color="#ffffff"></stop>
-                <stop offset="50%" stop-color="#a0a8b2"></stop>
-                <stop offset="100%" stop-color="#032c30"></stop>
+                <stop offset="0%" stopColor="#ffffff"></stop>
+                <stop offset="50%" stopColor="#a0a8b2"></stop>
+                <stop offset="100%" stopColor="#032c30"></stop>
               </linearGradient>
               <filter
                 id="42443b3f1de60f6b6fd3b6a9844b4764"
@@ -377,62 +377,62 @@ const Logo = (props: Props) => {
           height="5260.696536424057"
           viewBox="148.88600673675538 78.7194341659546 42.227624130249026 92.56113166809082"
           preserveAspectRatio="xMidYMid meet"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
           className="size-[50px] dark:max-sm:hidden sm:hidden"
         >
           <g>
             <defs>
               <linearGradient id="92" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#fa71cd"></stop>{" "}
-                <stop offset="100%" stop-color="#9b59b6"></stop>
+                <stop offset="0%" stopColor="#fa71cd"></stop>{" "}
+                <stop offset="100%" stopColor="#9b59b6"></stop>
               </linearGradient>
               <linearGradient id="93" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#f9d423"></stop>{" "}
-                <stop offset="100%" stop-color="#f83600"></stop>
+                <stop offset="0%" stopColor="#f9d423"></stop>{" "}
+                <stop offset="100%" stopColor="#f83600"></stop>
               </linearGradient>
               <linearGradient id="94" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#0064d2"></stop>{" "}
-                <stop offset="100%" stop-color="#1cb0f6"></stop>
+                <stop offset="0%" stopColor="#0064d2"></stop>{" "}
+                <stop offset="100%" stopColor="#1cb0f6"></stop>
               </linearGradient>
               <linearGradient id="95" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#f00978"></stop>{" "}
-                <stop offset="100%" stop-color="#3f51b1"></stop>
+                <stop offset="0%" stopColor="#f00978"></stop>{" "}
+                <stop offset="100%" stopColor="#3f51b1"></stop>
               </linearGradient>
               <linearGradient id="96" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#7873f5"></stop>{" "}
-                <stop offset="100%" stop-color="#ec77ab"></stop>
+                <stop offset="0%" stopColor="#7873f5"></stop>{" "}
+                <stop offset="100%" stopColor="#ec77ab"></stop>
               </linearGradient>
               <linearGradient id="97" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#f9d423"></stop>{" "}
-                <stop offset="100%" stop-color="#e14fad"></stop>
+                <stop offset="0%" stopColor="#f9d423"></stop>{" "}
+                <stop offset="100%" stopColor="#e14fad"></stop>
               </linearGradient>
               <linearGradient id="98" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#009efd"></stop>{" "}
-                <stop offset="100%" stop-color="#2af598"></stop>
+                <stop offset="0%" stopColor="#009efd"></stop>{" "}
+                <stop offset="100%" stopColor="#2af598"></stop>
               </linearGradient>
               <linearGradient id="99" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#ffcc00"></stop>{" "}
-                <stop offset="100%" stop-color="#00b140"></stop>
+                <stop offset="0%" stopColor="#ffcc00"></stop>{" "}
+                <stop offset="100%" stopColor="#00b140"></stop>
               </linearGradient>
               <linearGradient id="100" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#d51007"></stop>{" "}
-                <stop offset="100%" stop-color="#ff8177"></stop>
+                <stop offset="0%" stopColor="#d51007"></stop>{" "}
+                <stop offset="100%" stopColor="#ff8177"></stop>
               </linearGradient>
               <linearGradient id="102" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#a2b6df"></stop>{" "}
-                <stop offset="100%" stop-color="#0c3483"></stop>
+                <stop offset="0%" stopColor="#a2b6df"></stop>{" "}
+                <stop offset="100%" stopColor="#0c3483"></stop>
               </linearGradient>
               <linearGradient id="103" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#7ac5d8"></stop>{" "}
-                <stop offset="100%" stop-color="#eea2a2"></stop>
+                <stop offset="0%" stopColor="#7ac5d8"></stop>{" "}
+                <stop offset="100%" stopColor="#eea2a2"></stop>
               </linearGradient>
               <linearGradient id="104" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#00ecbc"></stop>{" "}
-                <stop offset="100%" stop-color="#007adf"></stop>
+                <stop offset="0%" stopColor="#00ecbc"></stop>{" "}
+                <stop offset="100%" stopColor="#007adf"></stop>
               </linearGradient>
               <linearGradient id="105" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#b88746"></stop>{" "}
-                <stop offset="100%" stop-color="#fdf5a6"></stop>
+                <stop offset="0%" stopColor="#b88746"></stop>{" "}
+                <stop offset="100%" stopColor="#fdf5a6"></stop>
               </linearGradient>
             </defs>
             <g
@@ -442,8 +442,8 @@ const Logo = (props: Props) => {
               <g mask="url(#24e7ab33-ccfd-482e-9630-d9e8148f22b8)">
                 <rect
                   fill="#000000"
-                  fill-opacity="0"
-                  stroke-width="2"
+                  fillOpacity="0"
+                  strokeWidth="2"
                   x="0"
                   y="0"
                   width="29.399999999999977"
@@ -500,9 +500,9 @@ const Logo = (props: Props) => {
                 y2="0"
                 id="6zXjz1kQA8iYb4vdfz1T1"
               >
-                <stop offset="0%" stop-color="#000000"></stop>
-                <stop offset="50%" stop-color="#62b2b3"></stop>
-                <stop offset="100%" stop-color="#beebef"></stop>
+                <stop offset="0%" stopColor="#000000"></stop>
+                <stop offset="50%" stopColor="#62b2b3"></stop>
+                <stop offset="100%" stopColor="#beebef"></stop>
               </linearGradient>
               <filter
                 id="42443b3f1de60f6b6fd3b6a9844b4764"

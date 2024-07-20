@@ -11,9 +11,9 @@ import {
 } from "./shared.types";
 export async function getQuestions(params: GetQuestionsParams) {
   const { searchQuery, filter } = params;
-
   let orderBy: any = [];
   let where: any = {};
+  const Query = searchQuery?.split(' ').filter((x)=> x.length>0).join(' | ')
 
   switch (filter) {
     case "newest":
@@ -33,20 +33,18 @@ export async function getQuestions(params: GetQuestionsParams) {
       break;
   }
 
-  if (searchQuery) {
+  if (Query) {
     where = {
       ...where,
       OR: [
         {
           title: {
-            contains: searchQuery,
-            mode: "insensitive",
+            search: Query,
           },
         },
         {
           content: {
-            contains: searchQuery,
-            mode: "insensitive",
+            search: Query,
           },
         },
       ],
@@ -55,18 +53,18 @@ export async function getQuestions(params: GetQuestionsParams) {
       {
         _relevance: {
           fields: ["title", "content"],
-          search: searchQuery,
+          search: Query,
           sort: "asc",
         },
       },
       ...orderBy,
     ];
   }
-
+console.log(Query)
   try {
     const questions = await prisma.question.findMany({
       where: where,
-      orderBy: Array.isArray(orderBy) ? orderBy : [orderBy], // Ensure orderBy is an array
+      orderBy: Array.isArray(orderBy) ? orderBy : [orderBy],
       include: {
         author: true,
         tags: { select: { id: true, name: true } },

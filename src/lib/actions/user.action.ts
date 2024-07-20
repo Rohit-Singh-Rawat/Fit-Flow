@@ -17,7 +17,11 @@ export async function getAllUsers(params: GetAllUsersParams) {
   try {
     const { searchQuery, filter } = params;
     let orderBy: any = [];
-    let where: any = {};
+    let where: any = {};const Query = searchQuery
+      ?.split(" ")
+      .filter((x) => x.length > 0)
+      .join(" | ");
+
     switch (filter) {
       case "new_users":
         orderBy = [{ joinedAt: "desc" }];
@@ -33,12 +37,12 @@ export async function getAllUsers(params: GetAllUsersParams) {
         break;
     }
 
-    if (searchQuery) {
+    if (Query) {
       orderBy = [
         {
           _relevance: {
             fields: ["name", "username"],
-            search: searchQuery,
+            search: Query,
             sort: "asc",
           },
         },
@@ -49,13 +53,13 @@ export async function getAllUsers(params: GetAllUsersParams) {
         OR: [
           {
             name: {
-              contains: searchQuery,
+              contains: Query,
               mode: "insensitive",
             },
           },
           {
             username: {
-              contains: searchQuery,
+              contains: Query,
               mode: "insensitive",
             },
           },
@@ -161,12 +165,16 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
   const { clerkId, filter, pageSize, page, searchQuery } = params;
   let orderBy: any = {};
   let where: any = {};
+const Query = searchQuery
+  ?.split(" ")
+  .filter((x) => x.length > 0)
+  .join(" | ");
 
-  if (searchQuery) {
+  if (Query) {
     orderBy = {
       _relevance: {
         fields: ["title", "content"],
-        search: searchQuery,
+        search: Query,
         sort: "asc",
       },
     };
@@ -174,13 +182,13 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
       OR: [
         {
           title: {
-            contains: searchQuery,
+            contains: Query,
             mode: "insensitive",
           },
         },
         {
           content: {
-            contains: searchQuery,
+            contains: Query,
             mode: "insensitive",
           },
         },
