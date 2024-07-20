@@ -15,8 +15,50 @@ import {
 
 export async function getAllUsers(params: GetAllUsersParams) {
   try {
-    // const {  } = params;
-    const users = await prisma.user.findMany({ where: {} });
+    const { searchQuery } = params;
+    let orderBy: any = {};
+    let where: any = {};
+
+    if (searchQuery) {
+      orderBy = {
+        _relevance: {
+          fields: ["name", "username"],
+          search: searchQuery,
+          sort: "asc",
+        },
+      };
+      where = {
+        OR: [
+          {
+            name: {
+              contains: searchQuery,
+              mode: "insensitive",
+            },
+          },
+          {
+            username: {
+              contains: searchQuery,
+              mode: "insensitive",
+            },
+          },
+        ],
+      };
+    }
+
+    const users = await prisma.user.findMany({
+      where: where,
+      orderBy: orderBy,
+      select: {
+        id: true,
+        clerkId: true,
+        picture: true,
+        name: true,
+        username: true,
+        password: false,
+        email: true,
+        bio: true,
+      },
+    });
     return { users };
   } catch (error) {
     console.log(error);
@@ -57,7 +99,6 @@ export async function updateUser(userParams: UpdateUserParams) {
     return updatedUser;
   } catch (error) {
     throw error;
-    
   } finally {
     revalidatePath(path);
   }
