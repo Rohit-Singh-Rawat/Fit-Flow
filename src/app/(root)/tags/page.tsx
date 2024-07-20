@@ -5,15 +5,20 @@ import { TagFilters } from "@/constants/filters";
 import { getAllTags } from "@/lib/actions/tag.action";
 import { SearchParamsProps } from "@/types";
 import Link from "next/link";
+import { PaginationSection as Pagination } from "@/components/shared/Pagination";
+import { PAGE_SIZE } from "@/constants";
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
+  const pageSize = searchParams.pageSize ? +searchParams.pageSize : PAGE_SIZE;
   const result = await getAllTags({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
     page: searchParams.page ? +searchParams.page : 1,
+    pageSize: pageSize,
   });
 
   const tags = result?.tags ?? [];
+  const totalPages = Math.ceil(result.totalTags / pageSize);
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">All Tags</h1>
@@ -65,7 +70,11 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
             href="/questions/ask"
             label="Ask a Question"
           />
-        )}
+        )}{" "}
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          totalPages={totalPages}
+        />
       </section>
     </>
   );

@@ -1,10 +1,11 @@
 "use server";
 
+import { PAGE_SIZE } from "@/constants";
 import prisma from "../db";
 import { GetAllTagsParams, GetQuestionsByTagIdParams } from "./shared.types";
 
 export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
-  const { tagId, page, pageSize, searchQuery } = params;
+  const { tagId, page = 1, pageSize = PAGE_SIZE, searchQuery } = params;
   const Query = searchQuery
     ?.split(" ")
     .filter((x) => x.length > 0)
@@ -12,6 +13,7 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
 
   let orderBy: any = {};
   let where: any = {};
+    const skip = (page - 1) * pageSize;
 
   if (Query) {
     orderBy = {
@@ -50,6 +52,8 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
       include: {
         questions: {
           where: where,
+          skip: skip,
+          take: pageSize,
           include: {
             author: true,
             tags: true,
@@ -61,27 +65,45 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
         },
       },
     });
-    return { tagWithQuestion };
-  } catch (error) {}
+    const questionsC = await prisma.tag.findUnique({
+      where: {
+        id: tagId,
+      },
+      include: {
+        _count: {
+          select: {
+            questions: {
+              where: where,
+
+            },
+          },
+        },
+      },
+    });
+    return { tagWithQuestion, totalQuestions:questionsC?._count.questions };
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function getAllTags(params: GetAllTagsParams) {
-  const { page, pageSize, searchQuery, filter } = params;
+  const { page = 1, pageSize = PAGE_SIZE, searchQuery, filter } = params;
   let orderBy: any = [];
   let where: any = {};
+  const skip = (page - 1) * pageSize;
   const Query = searchQuery
     ?.split(" ")
     .filter((x) => x.length > 0)
     .join(" | ");
   switch (filter) {
     case "popular":
-      orderBy = [{ questions:{_count:'desc'} }];
+      orderBy = [{ questions: { _count: "desc" } }];
       break;
     case "oldest":
       orderBy = [{ createdAt: "desc" }];
       break;
     case "name":
-      orderBy = [{ name:'asc'}];
+      orderBy = [{ name: "asc" }];
       break;
     case "recent":
       orderBy = [{ createdAt: "asc" }];
@@ -113,15 +135,22 @@ export async function getAllTags(params: GetAllTagsParams) {
   try {
     const tags = await prisma.tag.findMany({
       where: where,
+      skip: skip,
+      take: pageSize,
       include: {
         _count: { select: { questions: true } },
       },
       orderBy: orderBy,
     });
-    console.log(tags,where,orderBy)
-    return { tags };
+    const totalTags = await prisma.tag.count({
+      where: where,
+
+      orderBy: orderBy,
+    });
+    return { tags, totalTags };
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    throw error;
   }
 }
 export async function getPopularTags() {

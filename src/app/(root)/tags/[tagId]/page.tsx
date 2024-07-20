@@ -4,6 +4,7 @@ import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
 import LocalSearchBar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
+import { PAGE_SIZE } from "@/constants";
 import { QuestionFilters } from "@/constants/filters";
 import { getQuestions } from "@/lib/actions/question.action";
 import { getQuestionsByTagId } from "@/lib/actions/tag.action";
@@ -12,6 +13,7 @@ import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { PaginationSection as Pagination } from "@/components/shared/Pagination";
 
 type Props = {
   params: {
@@ -19,11 +21,20 @@ type Props = {
   };
   searchParams: { [key: string]: string | undefined };
 };
-const page = async ({params,searchParams}: Props) => {
-  const{tagId} = params
-  const result = await getQuestionsByTagId({tagId,searchQuery:searchParams.q  });
+const page = async ({ params, searchParams }: Props) => {
+  const pageSize = searchParams.pageSize ? +searchParams.pageSize : PAGE_SIZE;
+  const { tagId } = params;
+  const result = await getQuestionsByTagId({
+    tagId,
+    searchQuery: searchParams.q,
+    page: searchParams.page ? +searchParams.page : 1,
+    pageSize: pageSize,
+  });
   const questions = result?.tagWithQuestion?.questions ?? [];
-  console.log(questions)
+  const totalPages = Math.ceil(
+    (result?.totalQuestions ? result?.totalQuestions : 0) / pageSize,
+  );
+
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">
@@ -63,6 +74,10 @@ const page = async ({params,searchParams}: Props) => {
             label="Ask a Question"
           />
         )}
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          totalPages={totalPages}
+        />
       </div>
     </>
   );
