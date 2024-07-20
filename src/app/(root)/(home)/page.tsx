@@ -6,12 +6,12 @@ import LocalSearchBar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import { getQuestions } from "@/lib/actions/question.action";
+import { SearchParamsProps } from "@/types";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
-type Props = {};
-const page = async (props: Props) => {
-  const result = await getQuestions({});
+const page = async ({searchParams}: SearchParamsProps) => {
+  const result = await getQuestions({searchQuery:searchParams.q});
   const questions = result?.questions ?? [];
 
   return (

@@ -10,20 +10,59 @@ import {
   QuestionVoteParams,
 } from "./shared.types";
 
+
 export async function getQuestions(params: GetQuestionsParams) {
+  const { searchQuery } = params;
+
+  let orderBy: any = {};
+  let where: any = {};
+
+  if (searchQuery) {
+    orderBy = {
+      _relevance: {
+        fields: ["title", "content"],
+        search: searchQuery,
+        sort: "asc",
+      },
+    };
+    where = {
+      OR: [
+        {
+          title: {
+            contains: searchQuery,
+            mode: "insensitive",
+          },
+        },
+        {
+          content: {
+            contains: searchQuery,
+            mode: "insensitive",
+          },
+        },
+      ],
+    };
+  } else {
+    orderBy = {
+      createdAt: "desc",
+    };
+  }
+
   try {
     const questions = await prisma.question.findMany({
-      where: {},
+      where: where,
+      orderBy: orderBy,
       include: {
         author: true,
         tags: { select: { id: true, name: true } },
         answers: true,
         upvotes: true,
       },
-      orderBy: { createdAt: "desc" },
     });
     return { questions };
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+    throw new Error("Unable to fetch questions.");
+  }
 }
 
 export async function createQuestion(
@@ -159,11 +198,11 @@ export async function getHotQuestions() {
     const questions = await prisma.question.findMany({
       where: {},
       select: { id: true, title: true },
-      orderBy: [{ views: "desc"}, {upvotes: { _count: "desc" } }],
+      orderBy: [{ views: "desc" }, { upvotes: { _count: "desc" } }],
       take: 5,
     });
     return { questions };
   } catch (error) {
-    throw error
+    throw error;
   }
 }
