@@ -22,8 +22,8 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
         <LocalSearchBar
           iconPosition="left"
           otherClasses=""
-          placeHolder="Search for questions"
-          route="/"
+          placeHolder="Search for tag name"
+          route="/tags"
         />
 
         <Filter

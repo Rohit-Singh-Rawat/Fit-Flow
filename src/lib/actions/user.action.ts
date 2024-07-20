@@ -191,7 +191,6 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
         },
       },
     });
-    console.log(user,orderBy,where)
     return { savedQuestions: user?.savedQuestions };
   } catch (error) {
     console.log(error);

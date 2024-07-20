@@ -35,12 +35,12 @@ const LocalSearchBar = ({
         });
         router.push(newUrl, { scroll: false });
       } else {
-        if(pathname == route){
+        if (pathname == route) {
           const newUrl = removeKeysFromQuery({
-            params:searchParams.toString(),
-            keysToRemove:['q']
-          })
-        router.push(newUrl, { scroll: false });
+            params: searchParams.toString(),
+            keysToRemove: ["q"],
+          });
+          router.push(newUrl, { scroll: false });
         }
       }
     }, 300);
@@ -56,15 +56,18 @@ const LocalSearchBar = ({
     >
       <SearchIcon className="fill-black dark:fill-[#3C3C3C]" />
       <div className="flex grow items-center justify-between">
-        <form className="flex-1"
+        <form
+          className="flex-1"
           onSubmit={(e) => {
             e.preventDefault();
-            const newUrl = formUrlQuery({
-              params: searchParams.toString(),
-              key: "q",
-              value: search,
-            });
-            router.push(newUrl, { scroll: false });
+            if (search) {
+              const newUrl = formUrlQuery({
+                params: searchParams.toString(),
+                key: "q",
+                value: search,
+              });
+              router.push(newUrl, { scroll: false });
+            }
           }}
         >
           <Input

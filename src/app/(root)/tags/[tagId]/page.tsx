@@ -13,14 +13,15 @@ import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-type Props = { params: { tagId: string } };
-const page = async ({params}: Props) => {
-  const { userId: clerkId } = auth();
-  if (!clerkId) {
-    redirect("/sign-in");
-  }
+type Props = {
+  params: {
+    tagId: string;
+  };
+  searchParams: { [key: string]: string | undefined };
+};
+const page = async ({params,searchParams}: Props) => {
   const{tagId} = params
-  const result = await getQuestionsByTagId({tagId  });
+  const result = await getQuestionsByTagId({tagId,searchQuery:searchParams.q  });
   const questions = result?.tagWithQuestion?.questions ?? [];
   console.log(questions)
   return (
@@ -36,7 +37,7 @@ const page = async ({params}: Props) => {
           iconPosition="left"
           otherClasses=""
           placeHolder="Search for questions"
-          route="/"
+          route={`/tags/${tagId}`}
         />
       </div>{" "}
       <div className="mt-10 flex w-full flex-col gap-6 overflow-hidden">
