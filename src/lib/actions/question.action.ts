@@ -9,23 +9,33 @@ import {
   GetQuestionsParams,
   QuestionVoteParams,
 } from "./shared.types";
-
-
 export async function getQuestions(params: GetQuestionsParams) {
-  const { searchQuery } = params;
+  const { searchQuery, filter } = params;
 
-  let orderBy: any = {};
+  let orderBy: any = [];
   let where: any = {};
 
+  switch (filter) {
+    case "newest":
+      orderBy = [{ createdAt: "desc" }];
+      break;
+    case "recommended":
+      orderBy = [{ upvotes: { _count: "desc" } }];
+      break;
+    case "frequent":
+      orderBy = [{ views: "desc" }];
+      break;
+    case "unanswered":
+      where = { answers: { none: {} } };
+      break;
+    default:
+      orderBy = [{ createdAt: "desc" }];
+      break;
+  }
+
   if (searchQuery) {
-    orderBy = {
-      _relevance: {
-        fields: ["title", "content"],
-        search: searchQuery,
-        sort: "asc",
-      },
-    };
     where = {
+      ...where,
       OR: [
         {
           title: {
@@ -41,16 +51,22 @@ export async function getQuestions(params: GetQuestionsParams) {
         },
       ],
     };
-  } else {
-    orderBy = {
-      createdAt: "desc",
-    };
+    orderBy = [
+      {
+        _relevance: {
+          fields: ["title", "content"],
+          search: searchQuery,
+          sort: "asc",
+        },
+      },
+      ...orderBy,
+    ];
   }
 
   try {
     const questions = await prisma.question.findMany({
       where: where,
-      orderBy: orderBy,
+      orderBy: Array.isArray(orderBy) ? orderBy : [orderBy], // Ensure orderBy is an array
       include: {
         author: true,
         tags: { select: { id: true, name: true } },

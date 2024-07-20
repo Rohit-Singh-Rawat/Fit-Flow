@@ -10,8 +10,11 @@ import { SearchParamsProps } from "@/types";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
-const page = async ({searchParams}: SearchParamsProps) => {
-  const result = await getQuestions({searchQuery:searchParams.q});
+const page = async ({ searchParams }: SearchParamsProps) => {
+  const result = await getQuestions({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+  });
   const questions = result?.questions ?? [];
 
   return (
