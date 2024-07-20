@@ -40,11 +40,13 @@ export async function getQuestions(params: GetQuestionsParams) {
         {
           title: {
             search: Query,
+            mode: "insensitive",
           },
         },
         {
           content: {
             search: Query,
+            mode: "insensitive",
           },
         },
       ],

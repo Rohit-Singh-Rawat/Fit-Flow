@@ -28,7 +28,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
 
         <Filter
           filters={TagFilters}
-          containerClasses="hidden max-md:flex "
+          containerClasses=""
           otherClasses="min-h-[56px] sm:min-w-[170px]"
         />
       </div>

@@ -54,13 +54,13 @@ export async function getAllUsers(params: GetAllUsersParams) {
         OR: [
           {
             name: {
-              search: Query,
+              contains: searchQuery,
               mode: "insensitive",
             },
           },
           {
             username: {
-              search: Query,
+              contains: searchQuery ,
               mode: "insensitive",
             },
           },

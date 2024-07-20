@@ -5,10 +5,10 @@ import { GetAllTagsParams, GetQuestionsByTagIdParams } from "./shared.types";
 
 export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
   const { tagId, page, pageSize, searchQuery } = params;
-const Query = searchQuery
-  ?.split(" ")
-  .filter((x) => x.length > 0)
-  .join(" | ");
+  const Query = searchQuery
+    ?.split(" ")
+    .filter((x) => x.length > 0)
+    .join(" | ");
 
   let orderBy: any = {};
   let where: any = {};
@@ -66,25 +66,46 @@ const Query = searchQuery
 }
 
 export async function getAllTags(params: GetAllTagsParams) {
-  const { page, pageSize, searchQuery } = params;
-  let orderBy: any = {};
+  const { page, pageSize, searchQuery, filter } = params;
+  let orderBy: any = [];
   let where: any = {};
   const Query = searchQuery
     ?.split(" ")
     .filter((x) => x.length > 0)
     .join(" | ");
+  switch (filter) {
+    case "popular":
+      orderBy = [{ questions:{_count:'desc'} }];
+      break;
+    case "oldest":
+      orderBy = [{ createdAt: "desc" }];
+      break;
+    case "name":
+      orderBy = [{ name:'asc'}];
+      break;
+    case "recent":
+      orderBy = [{ createdAt: "asc" }];
+      break;
 
+    default:
+      orderBy = [{ createdAt: "desc" }];
+      break;
+  }
   if (Query) {
-    orderBy = {
-      _relevance: {
-        fields: ["name"],
-        search: Query,
-        sort: "asc",
+    orderBy = [
+      {
+        _relevance: {
+          fields: "name",
+          search: Query,
+          sort: "asc",
+        },
       },
-    };
+      ...orderBy,
+    ];
     where = {
+      ...where,
       name: {
-        search: Query,
+        contains: searchQuery,
         mode: "insensitive",
       },
     };
@@ -97,8 +118,11 @@ export async function getAllTags(params: GetAllTagsParams) {
       },
       orderBy: orderBy,
     });
+    console.log(tags,where,orderBy)
     return { tags };
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 }
 export async function getPopularTags() {
   try {
