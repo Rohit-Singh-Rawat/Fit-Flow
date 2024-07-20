@@ -7,18 +7,21 @@ import { Button } from "@/components/ui/button";
 import { QuestionFilters } from "@/constants/filters";
 import { getQuestions } from "@/lib/actions/question.action";
 import { getSavedQuestion } from "@/lib/actions/user.action";
+import { SearchParamsProps } from "@/types";
 import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-type Props = {};
-const page = async (props: Props) => {
+const page = async ({ searchParams }: SearchParamsProps) => {
   const { userId: clerkId } = auth();
   if (!clerkId) {
     redirect("/sign-in");
   }
-  const result = await getSavedQuestion({ clerkId });
+  const result = await getSavedQuestion({
+    clerkId,
+    searchQuery: searchParams.q,
+  });
   const savedQuestions = result?.savedQuestions ?? [];
 
   return (
@@ -29,7 +32,7 @@ const page = async (props: Props) => {
           iconPosition="left"
           otherClasses=""
           placeHolder="Search for questions"
-          route="/"
+          route="/collection"
         />
         <Filter
           filters={QuestionFilters}

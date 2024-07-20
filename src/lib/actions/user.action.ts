@@ -140,12 +140,44 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
 
 export async function getSavedQuestion(params: GetSavedQuestionsParams) {
   const { clerkId, filter, pageSize, page, searchQuery } = params;
+  let orderBy: any = {};
+  let where: any = {};
 
+  if (searchQuery) {
+    orderBy = {
+      _relevance: {
+        fields: ["title", "content"],
+        search: searchQuery,
+        sort: "asc",
+      },
+    };
+    where = {
+      OR: [
+        {
+          title: {
+            contains: searchQuery,
+            mode: "insensitive",
+          },
+        },
+        {
+          content: {
+            contains: searchQuery,
+            mode: "insensitive",
+          },
+        },
+      ],
+    };
+  } else {
+    orderBy = {
+      createdAt: "desc",
+    };
+  }
   try {
     const user = await prisma.user.findUnique({
       where: { clerkId: clerkId },
       select: {
         savedQuestions: {
+          where: where,
           include: {
             author: {
               select: { clerkId: true, picture: true, id: true, name: true },
@@ -155,9 +187,11 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
             upvotes: { select: { id: true, clerkId: true } },
             downvotes: { select: { id: true, clerkId: true } },
           },
+          orderBy: orderBy,
         },
       },
     });
+    console.log(user,orderBy,where)
     return { savedQuestions: user?.savedQuestions };
   } catch (error) {
     console.log(error);
