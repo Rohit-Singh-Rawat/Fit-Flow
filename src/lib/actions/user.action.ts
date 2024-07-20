@@ -17,7 +17,8 @@ export async function getAllUsers(params: GetAllUsersParams) {
   try {
     const { searchQuery, filter } = params;
     let orderBy: any = [];
-    let where: any = {};const Query = searchQuery
+    let where: any = {};
+    const Query = searchQuery
       ?.split(" ")
       .filter((x) => x.length > 0)
       .join(" | ");
@@ -53,13 +54,13 @@ export async function getAllUsers(params: GetAllUsersParams) {
         OR: [
           {
             name: {
-              contains: Query,
+              search: Query,
               mode: "insensitive",
             },
           },
           {
             username: {
-              contains: Query,
+              search: Query,
               mode: "insensitive",
             },
           },
@@ -81,7 +82,7 @@ export async function getAllUsers(params: GetAllUsersParams) {
         bio: true,
       },
     });
-    console.log(users,where,orderBy,filter )
+    console.log(users, where, orderBy, filter);
     return { users };
   } catch (error) {
     console.log(error);
@@ -163,40 +164,60 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
 
 export async function getSavedQuestion(params: GetSavedQuestionsParams) {
   const { clerkId, filter, pageSize, page, searchQuery } = params;
-  let orderBy: any = {};
+  let orderBy: any = [];
   let where: any = {};
-const Query = searchQuery
-  ?.split(" ")
-  .filter((x) => x.length > 0)
-  .join(" | ");
+  const Query = searchQuery
+    ?.split(" ")
+    .filter((x) => x.length > 0)
+    .join(" | ");
 
+  switch (filter) {
+    case "most_recent":
+      orderBy = [{ createdAt: "asc" }];
+      break;
+    case "oldest":
+      orderBy = [{ createdAt: "desc" }];
+      break;
+    case "most_voted":
+      orderBy = [{ upvotes: { _count: "desc" } }];
+      break;
+    case "most_viewed":
+      orderBy = [{ views: "desc" }];
+      break;
+    case "most_answered":
+      orderBy = [{ answers: { _count: "desc" } }];
+      break;
+    default:
+      orderBy = [{ createdAt: "desc" }];
+      break;
+  }
   if (Query) {
-    orderBy = {
-      _relevance: {
-        fields: ["title", "content"],
-        search: Query,
-        sort: "asc",
+    orderBy = [
+      {
+        _relevance: {
+          fields: ["title", "content"],
+          search: Query,
+          sort: "asc",
+        },
       },
-    };
+      ...orderBy,
+    ];
     where = {
+      ...where,
       OR: [
         {
           title: {
-            contains: Query,
+            search: Query,
             mode: "insensitive",
           },
         },
         {
           content: {
-            contains: Query,
+            search: Query,
             mode: "insensitive",
           },
         },
       ],
-    };
-  } else {
-    orderBy = {
-      createdAt: "desc",
     };
   }
   try {

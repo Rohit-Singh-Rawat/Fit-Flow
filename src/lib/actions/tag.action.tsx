@@ -25,13 +25,13 @@ const Query = searchQuery
       OR: [
         {
           title: {
-            contains: Query,
+            search: Query,
             mode: "insensitive",
           },
         },
         {
           content: {
-            contains: Query,
+            search: Query,
             mode: "insensitive",
           },
         },
@@ -84,7 +84,7 @@ export async function getAllTags(params: GetAllTagsParams) {
     };
     where = {
       name: {
-        contains: Query,
+        search: Query,
         mode: "insensitive",
       },
     };
