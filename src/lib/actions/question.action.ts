@@ -67,7 +67,6 @@ export async function getQuestions(params: GetQuestionsParams) {
       ...orderBy,
     ];
   }
-  console.log(Query);
   try {
     const questions = await prisma.question.findMany({
       where: where,

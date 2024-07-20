@@ -2,16 +2,22 @@ import UserCard from "@/components/cards/UserCard";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
 import LocalSearchBar from "@/components/shared/search/LocalSearchbar";
+import { PaginationSection as Pagination } from "@/components/shared/Pagination";
+import { PAGE_SIZE } from "@/constants";
 import { UserFilters } from "@/constants/filters";
 import { getAllUsers } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 
 const page = async ({ searchParams }: SearchParamsProps) => {
+  const pageSize = searchParams.pageSize ? +searchParams.pageSize : PAGE_SIZE;
   const result = await getAllUsers({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
+    pageSize: pageSize,
   });
+ const totalPages = Math.ceil(result.totalUsers / pageSize);
 
   return (
     <>
@@ -42,6 +48,12 @@ const page = async ({ searchParams }: SearchParamsProps) => {
             label="Be the first"
           />
         )}
+        <div className="mt-10">
+          <Pagination
+            pageNumber={searchParams?.page ? +searchParams.page : 1}
+            totalPages={totalPages}
+          />
+        </div>
       </section>
     </>
   );

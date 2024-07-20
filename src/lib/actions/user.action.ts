@@ -12,10 +12,11 @@ import {
   ToggleSaveQuestionParams,
   UpdateUserParams,
 } from "./shared.types";
+import { PAGE_SIZE } from "@/constants";
 
 export async function getAllUsers(params: GetAllUsersParams) {
   try {
-    const { searchQuery, filter } = params;
+    const { searchQuery, filter, page = 1, pageSize = PAGE_SIZE } = params;  const skip = (page - 1) * pageSize;
     let orderBy: any = [];
     let where: any = {};
     const Query = searchQuery
@@ -71,6 +72,8 @@ export async function getAllUsers(params: GetAllUsersParams) {
     const users = await prisma.user.findMany({
       where: where,
       orderBy: orderBy,
+      skip: skip,
+      take: pageSize,
       select: {
         id: true,
         clerkId: true,
@@ -81,9 +84,11 @@ export async function getAllUsers(params: GetAllUsersParams) {
         email: true,
         bio: true,
       },
+    });const totalUsers = await prisma.user.count({
+      where: where,
+      orderBy: orderBy,
     });
-    console.log(users, where, orderBy, filter);
-    return { users };
+    return { users,totalUsers };
   } catch (error) {
     console.log(error);
     throw error;
