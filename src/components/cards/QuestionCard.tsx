@@ -73,7 +73,7 @@ const QuestionCard = ({
           <Avatar
             altText={author.name}
             imageUrl={author.picture}
-            id={author.id}
+            id={author.clerkId}
           />
           <div className="flex items-center justify-center">
             <span className="small-medium text-black dark:text-[#676F75]">

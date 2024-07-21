@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,11 +19,13 @@ import { Loader } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { toast } from "sonner";
+import AiIcon from "../Icons/AIIcon";
 
 type Props = { question: string; questionId: string; authorId?: string };
 
 const Answer = ({ question, questionId, authorId }: Props) => {
   const pathName = usePathname();
+  const [submittingAI, setIsSubmittingAI] = useState(false);
 
   const form = useForm<z.infer<typeof AnswerSchema>>({
     resolver: zodResolver(AnswerSchema),
@@ -54,10 +56,43 @@ const Answer = ({ question, questionId, authorId }: Props) => {
         const editor = editorRef.current as any;
 
         editor.setContent("");
-      }toast.success("Answer Submitted");
+      }
+      toast.success("Answer Submitted");
     } catch (error) {
       console.log(error);
-      toast.error('Error Occurred')
+      toast.error("Error Occurred");
+    }
+  };
+  const generateAIAnswer = async () => {
+    if (!authorId) {
+      toast.message("Please log in", {
+        description: "You must log in to perform this action",
+      });
+      return;
+    }
+
+    setIsSubmittingAI(true);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
+        {
+          method: "POST",
+          body: JSON.stringify({ question }),
+        },
+      );
+      const aiAnswer = await response.json();
+      const formattedAnswer = aiAnswer.reply.replace(/\n/g, "<br />");
+
+      if (editorRef.current) {
+        const editor = editorRef.current as any;
+        editor.setContent(formattedAnswer);
+      }
+    } catch (error) {
+       toast.error("Failed to generate AI Answer", {
+         description: "please try again after some time",
+       });
+    } finally {
+      setIsSubmittingAI(false);
     }
   };
 
@@ -67,7 +102,21 @@ const Answer = ({ question, questionId, authorId }: Props) => {
         <h4 className="paragraph-semibold text-dark400_light800">
           Write your answer here
         </h4>
-        <Button>Generate an AI Answer</Button>
+
+        <Button
+          className="btn light-border-2 dark: my-1 gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none text-center"
+          disabled={submittingAI}
+          onClick={() => !submittingAI && generateAIAnswer()}
+        >
+          {submittingAI ? (
+            <>Generating....</>
+          ) : (
+            <>
+              <AiIcon className="fill-white" />
+              Generate an AI Answer
+            </>
+          )}
+        </Button>
       </div>
 
       <Form {...form}>
