@@ -8,6 +8,19 @@ import { UserFilters } from "@/constants/filters";
 import { getAllUsers } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Community | Fit Flow",
+  description:
+    "Explore profiles of fitness enthusiasts on Fit Flow. Discover users who contribute valuable fitness-related content, ask questions, and share their expertise. Connect with like-minded individuals and grow your fitness network.",
+  keywords: [
+    "fitness enthusiasts",
+    "user profiles",
+    "Fit Flow community",
+    "fitness network",
+  ],
+};
 
 const page = async ({ searchParams }: SearchParamsProps) => {
   const pageSize = searchParams.pageSize ? +searchParams.pageSize : PAGE_SIZE;
@@ -17,7 +30,7 @@ const page = async ({ searchParams }: SearchParamsProps) => {
     page: searchParams.page ? +searchParams.page : 1,
     pageSize: pageSize,
   });
- const totalPages = Math.ceil(result.totalUsers / pageSize);
+  const totalPages = Math.ceil(result.totalUsers / pageSize);
 
   return (
     <>

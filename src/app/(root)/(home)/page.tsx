@@ -12,6 +12,21 @@ import { SearchParamsProps } from "@/types";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home | Fit Flow",
+  description:
+    "Welcome to Fit Flow, your hub for fitness questions and answers. Explore a variety of topics including workouts, nutrition advice, and expert tips. Whether you're looking to get started on your fitness journey or seeking advanced insights, join our community to ask questions, share knowledge, and achieve your fitness goals.",
+  keywords: [
+    "fitness",
+    "workouts",
+    "nutrition",
+    "exercise tips",
+    "fitness community",
+  ],
+};
+
 const page = async ({ searchParams }: SearchParamsProps) => {
   const pageSize = searchParams.pageSize ? +searchParams.pageSize : PAGE_SIZE;
   const result = await getQuestions({

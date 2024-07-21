@@ -3,6 +3,12 @@ import { getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Ask a question| Fit Flow",
+
+};
 type Props = {};
 const page = async (props: Props) => {
   const {userId} = auth()

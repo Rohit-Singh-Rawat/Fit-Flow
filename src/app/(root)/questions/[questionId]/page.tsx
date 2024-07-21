@@ -15,8 +15,32 @@ import { getCompactNumber, getTime } from "@/lib/utils";
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs/server";
 import { Clock, Eye, MessageCircleMore } from "lucide-react";
+import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
+type MetaProps = {
+  params: { questionId: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
+export async function generateMetadata(
+  { params, searchParams }: MetaProps,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  // read route params
+  const id = params.questionId;
+
+  const result = await getQuestionById({ questionId: id });
+  const question: Question | null = result?.question || null;
+  if (!question) {
+    return {
+      title: "Question not found",
+    };
+  }
+
+  return {
+    title: `${question?.title} |fit flow`,
+  };
+}
 interface Props extends SearchParamsProps {
   params: { questionId: string };
 }

@@ -12,7 +12,40 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { CalendarDays, Link2, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata, ResolvingMetadata } from "next";
+type Props = {
+  params: { userId: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  // read route params
+  const id = params.userId;
+
+  const { user: userInfo } = await getUserInfo({
+    userId: params.userId,
+  });
+  if (!userInfo) {
+    return {
+      title: "User not found",
+    };
+  }
+
+  return {
+    title: `User ${userInfo?.name} |fit flow`,
+    description: `View ${userInfo?.name}'s profile on Fit Flow. Explore their fitness journey, questions asked, answers provided, and contributions to the community. Connect with ${userInfo?.name} and discover their insights into workouts, nutrition, and more.`,
+    keywords: [
+      `${userInfo?.name} profile`,
+      "fitness journey",
+      "workouts",
+      "nutrition",
+      "Fit Flow community",
+    ],
+  };
+}
 const page = async ({
   params,
   searchParams,
@@ -21,7 +54,9 @@ const page = async ({
   searchParams: { [key: string]: string | undefined };
 }) => {
   const { userId: clerkId } = auth();
-  const { user: userInfo,badgeCounts } = await getUserInfo({ userId: params.userId });
+  const { user: userInfo, badgeCounts } = await getUserInfo({
+    userId: params.userId,
+  });
   if (!userInfo) {
     return (
       <NoResult
@@ -102,11 +137,11 @@ const page = async ({
 
       <div className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="flex-1">
-          <TabsList className="background-light800_dark400 min-h-[42px] inline-flex rounded-lg p-1">
-            <TabsTrigger value="top-posts" className="tab rounded-lg py-1 px-4">
+          <TabsList className="background-light800_dark400 inline-flex min-h-[42px] rounded-lg p-1">
+            <TabsTrigger value="top-posts" className="tab rounded-lg px-4 py-1">
               Top Posts
             </TabsTrigger>
-            <TabsTrigger value="answers" className="tab rounded-lg py-1 px-4">
+            <TabsTrigger value="answers" className="tab rounded-lg px-4 py-1">
               Answers
             </TabsTrigger>
           </TabsList>

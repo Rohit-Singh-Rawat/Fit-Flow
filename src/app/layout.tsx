@@ -9,7 +9,8 @@ import ThemedSonner from "@/components/shared/ThemedSonner";
 
 export const metadata: Metadata = {
   title: "Fit Flow",
-  description: "Stackoverflow for Gym Rats",
+  description:
+    "Discover and share fitness-related questions and answers on Fit Flow. Ask about workouts, nutrition, and more...",
 };
 
 const inter = Inter({

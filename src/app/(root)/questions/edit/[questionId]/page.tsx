@@ -7,6 +7,11 @@ import { auth } from "@clerk/nextjs/server";
 import { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Edit a question| Fit Flow",
+};
 type Props = { params: { questionId: string } };
 
 const Page = async ({ params }: Props) => {

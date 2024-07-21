@@ -1,11 +1,24 @@
-import { Loader } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-type Props = {};
-const Loading = (props: Props) => {
+const Loading = () => {
   return (
-    <div className="flex h-screen w-full items-center justify-center">
-      <Loader className="size-20 animate-spin stroke-black dark:stroke-white" />
-    </div>
+    <section>
+      <h1 className="h1-bold text-dark100_light900">Saved Questions</h1>
+
+      <div className="mb-12 mt-11 flex flex-wrap gap-5">
+        <Skeleton className="h-14 flex-1" />
+        <Skeleton className="h-14 w-28" />
+      </div>
+
+      <div className="flex flex-col gap-6">
+        {Array(10)
+          .fill(null)
+          .map((item) => (
+            <Skeleton key={item} className="h-48 w-full rounded-xl" />
+          ))}
+      </div>
+    </section>
   );
 };
+
 export default Loading;

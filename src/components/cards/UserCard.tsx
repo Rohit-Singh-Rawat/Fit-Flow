@@ -13,7 +13,7 @@ type Props = {
 };
 const UserCard = async ({ user }: Props) => {
   return (
-    <div className="shadow-light100-darknone w-full max-xs:min-w-full xs:w-[260px]">
+    <div className="shadow-light100-darknone w-full max-xs:min-w-full xs:w-[233px]">
       <article className="background-background-light900_dark200 light-border flex w-full flex-col items-center justify-center rounded-2xl border p-8">
         <Link href={`/profile/${user.clerkId}`} className="flex flex-col justify-center items-center">
           {" "}

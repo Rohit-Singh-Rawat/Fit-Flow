@@ -15,6 +15,15 @@ import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "collections | Fit Flow",
+  description:
+    "Explore your saved questions on Fit Flow. View and manage questions you've bookmarked for future reference. Stay organized and revisit valuable fitness insights whenever you need them.",
+  keywords: ["saved questions", "bookmarked questions", "fitness", "Fit Flow"],
+};
+
 const page = async ({ searchParams }: SearchParamsProps) => {
   const pageSize = searchParams.pageSize ? +searchParams.pageSize : PAGE_SIZE;
   const { userId: clerkId } = auth();

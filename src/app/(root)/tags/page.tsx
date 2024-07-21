@@ -7,6 +7,19 @@ import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 import { PaginationSection as Pagination } from "@/components/shared/Pagination";
 import { PAGE_SIZE } from "@/constants";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Tags | Fit Flow",
+  description:
+    "Explore fitness tags on Fit Flow. Discover popular topics, questions, and discussions related to fitness. Join the community and contribute your knowledge.",
+  keywords: [
+    "fitness tags",
+    "popular topics",
+    "Fit Flow community",
+    "fitness discussions",
+  ],
+};
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const pageSize = searchParams.pageSize ? +searchParams.pageSize : PAGE_SIZE;
@@ -46,7 +59,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
               key={tag.id}
               className="shadow-light100_darknone"
             >
-              <article className="background-light900_dark200 light-border flex w-full flex-col rounded-2xl border px-8 py-10 sm:w-[260px]">
+              <article className="background-light900_dark200 light-border flex w-full flex-col rounded-2xl border px-8 py-10 sm:w-[233px]">
                 <div className="background-light800_dark400 w-fit rounded-sm px-5 py-1.5">
                   <p className="paragraph-semibold text-dark300_light900">
                     {tag.name}
