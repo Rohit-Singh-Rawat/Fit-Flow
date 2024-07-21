@@ -50,7 +50,6 @@ export async function getAnswers(params: GetAnswersParams) {
 
       orderBy,
     });
-    console.log(filter, orderBy);
     return { answers, totalAnswers };
   } catch (error) {
     throw error;

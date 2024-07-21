@@ -17,9 +17,7 @@ const GlobalSearch = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
-    console.log("object");
     const delayDebouncefn = setTimeout(() => {
-      console.log("object");
       if (search) {
         const newUrl = formUrlQuery({
           params: searchParams.toString(),
@@ -63,7 +61,6 @@ const GlobalSearch = () => {
             <Input
               type="text"
               placeholder="Search globally"
-            
               onChange={(e) => {
                 setSearch(e.target.value);
                 if (!isSearchOpen) setIsSearchOpen(true);

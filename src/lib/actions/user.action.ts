@@ -1,4 +1,3 @@
-
 "use server";
 
 import { revalidatePath } from "next/cache";
@@ -14,6 +13,8 @@ import {
   UpdateUserParams,
 } from "./shared.types";
 import { PAGE_SIZE } from "@/constants";
+import { BadgeCriteriaType } from "@/types";
+import { assignBadges } from "../utils";
 
 export async function getAllUsers(params: GetAllUsersParams) {
   try {
@@ -98,9 +99,9 @@ export async function getAllUsers(params: GetAllUsersParams) {
   }
 }
 
-export async function getUserById(params:GetUserByIdParams) {
+export async function getUserById(params: GetUserByIdParams) {
   try {
-    const { userId, } = params;
+    const { userId } = params;
     const user = await prisma.user.findFirst({
       where: { clerkId: userId },
       include: { savedQuestions: true },
@@ -264,7 +265,10 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
         },
       },
     });
-    return { savedQuestions: user?.savedQuestions,totalQuestions:userc?._count.savedQuestions };
+    return {
+      savedQuestions: user?.savedQuestions,
+      totalQuestions: userc?._count.savedQuestions,
+    };
   } catch (error) {
     console.log(error);
     throw error;
@@ -278,9 +282,54 @@ export async function getUserInfo(params: GetUserByIdParams) {
       where: { clerkId: userId },
       include: {
         _count: { select: { authoredQuestions: true, authoredAnswers: true } },
+        authoredAnswers: {
+          include: { _count: { select: { upvotes: true } } },
+        },
+        authoredQuestions: {
+          include: { _count: { select: { upvotes: true } } },
+        },
       },
     });
-    return { user };
+    if (!user) {
+      return { error: "no user found" };
+    }
+    const totalQuestionsUpvotes = user.authoredQuestions.reduce(
+      (sum, question) => sum + question._count.upvotes,
+      0,
+    );
+    const totalAnswersUpvotes = user.authoredAnswers.reduce(
+      (sum, answer) => sum + answer._count.upvotes,
+      0,
+    );
+    const totalQuestionsView = user.authoredQuestions.reduce(
+      (sum, question) => sum + question.views,
+      0,
+    );
+    const criteria = [
+      {
+        type: "QUESTION_COUNT" as BadgeCriteriaType,
+        count: user._count.authoredQuestions,
+      },
+      {
+        type: "ANSWER_COUNT" as BadgeCriteriaType,
+        count: user._count.authoredAnswers,
+      },
+      {
+        type: "QUESTION_UPVOTES" as BadgeCriteriaType,
+        count: totalQuestionsUpvotes,
+      },
+      {
+        type: "ANSWER_UPVOTES" as BadgeCriteriaType,
+        count: totalAnswersUpvotes,
+      },
+      {
+        type: "TOTAL_VIEWS" as BadgeCriteriaType,
+        count: totalQuestionsView,
+      },
+    ];
+    const badgeCounts = assignBadges({ criteria });
+
+    return { user, badgeCounts };
   } catch (error) {
     console.log(error);
     throw error;
@@ -288,7 +337,8 @@ export async function getUserInfo(params: GetUserByIdParams) {
 }
 export async function getUserQuestions(params: GetUserStatsParams) {
   try {
-    const { userId, page = 1, pageSize = PAGE_SIZE } = params;const skip = (page - 1) * pageSize;
+    const { userId, page = 1, pageSize = PAGE_SIZE } = params;
+    const skip = (page - 1) * pageSize;
     const questions = await prisma.question.findMany({
       where: { authorId: userId },
       skip: skip,
@@ -303,10 +353,10 @@ export async function getUserQuestions(params: GetUserStatsParams) {
     });
     const totalQuestions = await prisma.question.count({
       where: { authorId: userId },
-      
+
       orderBy: [{ views: "desc" }, { upvotes: { _count: "desc" } }],
     });
-    return { questions ,totalQuestions};
+    return { questions, totalQuestions };
   } catch (error) {
     console.log(error);
     throw error;
@@ -314,7 +364,8 @@ export async function getUserQuestions(params: GetUserStatsParams) {
 }
 export async function getUserAnswers(params: GetUserStatsParams) {
   try {
-    const { userId, page = 1, pageSize = PAGE_SIZE } = params;const skip = (page - 1) * pageSize;
+    const { userId, page = 1, pageSize = PAGE_SIZE } = params;
+    const skip = (page - 1) * pageSize;
     const answers = await prisma.answer.findMany({
       where: { authorId: userId },
       skip: skip,
@@ -328,10 +379,10 @@ export async function getUserAnswers(params: GetUserStatsParams) {
     });
     const totalAnswers = await prisma.answer.count({
       where: { authorId: userId },
-     
+
       orderBy: [{ upvotes: { _count: "desc" } }],
     });
-    return { answers,totalAnswers };
+    return { answers, totalAnswers };
   } catch (error) {
     console.log(error);
     throw error;

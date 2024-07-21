@@ -21,7 +21,7 @@ const page = async ({
   searchParams: { [key: string]: string | undefined };
 }) => {
   const { userId: clerkId } = auth();
-  const { user: userInfo } = await getUserInfo({ userId: params.userId });
+  const { user: userInfo,badgeCounts } = await getUserInfo({ userId: params.userId });
   if (!userInfo) {
     return (
       <NoResult
@@ -97,6 +97,7 @@ const page = async ({
         reputation={userInfo.reputation}
         totalQuestions={userInfo._count.authoredQuestions}
         totalAnswers={userInfo._count.authoredAnswers}
+        badges={badgeCounts}
       />
 
       <div className="mt-10 flex gap-10">
