@@ -188,10 +188,10 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
 
   switch (filter) {
     case "most_recent":
-      orderBy = [{ createdAt: "asc" }];
+      orderBy = [{ createdAt: "desc" }];
       break;
     case "oldest":
-      orderBy = [{ createdAt: "desc" }];
+      orderBy = [{ createdAt: "asc" }];
       break;
     case "most_voted":
       orderBy = [{ upvotes: { _count: "desc" } }];

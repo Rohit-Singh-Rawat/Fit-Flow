@@ -100,13 +100,13 @@ export async function getAllTags(params: GetAllTagsParams) {
       orderBy = [{ questions: { _count: "desc" } }];
       break;
     case "oldest":
-      orderBy = [{ createdAt: "desc" }];
+      orderBy = [{ createdAt: "asc" }];
       break;
     case "name":
       orderBy = [{ name: "asc" }];
       break;
     case "recent":
-      orderBy = [{ createdAt: "asc" }];
+      orderBy = [{ createdAt: "desc" }];
       break;
 
     default:
