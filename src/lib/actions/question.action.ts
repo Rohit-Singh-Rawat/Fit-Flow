@@ -110,6 +110,23 @@ export async function createQuestion(
         },
       },
     });
+    await prisma.interaction.create({
+      data: {
+        action: "ask_question",
+        questionId: question.id,
+        userId: authorId,
+        tags: {
+          connectOrCreate: tags.map((tag) => ({
+            where: { name: tag },
+            create: { name: tag },
+          })),
+        },
+      },
+    });
+    await prisma.user.update({
+      where: { id: authorId },
+      data: { reputation: { increment: 5 } },
+    });
     revalidatePath(path);
   } catch (error) {
     console.error("Error creating question:", error);
@@ -167,6 +184,31 @@ export async function upVoteQuestion(params: QuestionVoteParams) {
       where: { id: questionId },
       data: query,
     });
+    // await prisma.interaction.create({
+    //   data: {
+    //     action: "ask_question",
+    //     questionId: question.id,
+    //     userId: authorId,
+    //     tags: {
+    //       connectOrCreate: tags.map((tag) => ({
+    //         where: { name: tag },
+    //         create: { name: tag },
+    //       })),
+    //     },
+    //   },
+    // });
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        reputation: { increment: hasdownVoted ? 0 : hasupVoted ? -1 : 1 },
+      },
+    });
+    await prisma.user.update({
+      where: { id: question.authorId },
+      data: {
+        reputation: { increment: hasdownVoted ? 0 : hasupVoted ? -10 : 10 },
+      },
+    });
   } catch (error) {
     return {
       error: "Some thing Went wrong",
@@ -193,6 +235,18 @@ export async function downVoteQuestion(params: QuestionVoteParams) {
     const question = await prisma.question.update({
       where: { id: questionId },
       data: query,
+    });
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        reputation: { increment: hasupVoted ? 0 : hasdownVoted ? -1 : 1 },
+      },
+    });
+    await prisma.user.update({
+      where: { id: question.authorId },
+      data: {
+        reputation: { increment: hasupVoted ? 0 : hasdownVoted ? -10 : 10 },
+      },
     });
   } catch (error) {
     return {

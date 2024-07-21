@@ -67,6 +67,22 @@ export async function createAnswer(params: CreateAnswerParams) {
         author: { connect: { id: authorId } },
         question: { connect: { id: questionId } },
       },
+      include: { question: { include: { tags: true } } },
+    });
+    await prisma.interaction.create({
+      data: {
+        action: "answer",
+        answerId: answer.id,
+        userId: authorId,
+        tags: {
+          connect:
+            answer.question?.tags?.map((tag) => ({ name: tag.name })) || [],
+        },
+      },
+    });
+    await prisma.user.update({
+      where: { id: authorId },
+      data: { reputation: { increment: 15 } },
     });
   } catch (error) {
     return {
@@ -113,6 +129,18 @@ export async function upVoteAnswer(params: AnswerVoteParams) {
       where: { id: answerId },
       data: query,
     });
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        reputation: { increment: hasdownVoted ? 0 : hasupVoted ? -2 : 2 },
+      },
+    });
+    await prisma.user.update({
+      where: { id: answer.authorId },
+      data: {
+        reputation: { increment: hasdownVoted ? 0 : hasupVoted ? -10 : 10 },
+      },
+    });
   } catch (error) {
     return {
       error: "Some thing Went wrong",
@@ -139,6 +167,18 @@ export async function downVoteAnswer(params: AnswerVoteParams) {
     const answer = await prisma.answer.update({
       where: { id: answerId },
       data: query,
+    });
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        reputation: { increment: hasupVoted ? 0 : hasdownVoted ? -2 : 2 },
+      },
+    });
+    await prisma.user.update({
+      where: { id: answer.authorId },
+      data: {
+        reputation: { increment: hasupVoted ? 0 : hasdownVoted ? -10 : 10 },
+      },
     });
   } catch (error) {
     return {
