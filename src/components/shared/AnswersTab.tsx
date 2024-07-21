@@ -1,18 +1,24 @@
 import { getUserAnswers } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import AnswerCard from "../cards/AnswerCard";
+import { PAGE_SIZE } from "@/constants";
 
+import { PaginationSection as Pagination } from "@/components/shared/Pagination";
 interface Props extends SearchParamsProps {
   userId: string;
   clerkId?: string | null;
 }
 
 const AnswersTab = async ({ searchParams, userId, clerkId }: Props) => {
-  const { answers } = await getUserAnswers({
+  const pageSize = searchParams.pageSize ? +searchParams.pageSize : PAGE_SIZE;
+  const { answers ,totalAnswers} = await getUserAnswers({
     userId,
     page: searchParams.page ? +searchParams.page : 1,
+    pageSize: pageSize,
   });
-
+const totalPages = Math.ceil(
+  totalAnswers / pageSize,
+);
   return (
     <>
       {answers.length === 0 ? (
@@ -31,12 +37,12 @@ const AnswersTab = async ({ searchParams, userId, clerkId }: Props) => {
         ))
       )}
 
-      {/* <div className="mt-10">
-        <Pagination 
+      <div className="mt-10">
+        <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
-          isNext={result.isNextAnswer}
+          totalPages={totalPages}
         />
-      </div> */}
+      </div>
     </>
   );
 };

@@ -7,14 +7,30 @@ import ParseHTML from "./ParseHTML";
 import { Minus } from "lucide-react";
 import Votes from "./Votes";
 
+import { PaginationSection as Pagination } from "@/components/shared/Pagination";
 interface Props {
   questionId: string;
   userId?: string;
   page?: number;
-  filter?: number;
+  filter?: string;
+  pageSize: number;
 }
-const AllAnswers = async ({ questionId, userId, page, filter }: Props) => {
-  const result = await getAnswers({ questionId });
+const AllAnswers = async ({
+  questionId,
+  userId,
+  page,
+  filter,
+  pageSize,
+}: Props) => {
+  const result = await getAnswers({
+    questionId,
+    page: page,
+    pageSize: pageSize,
+    filter: filter,
+  });
+  const totalPages = Math.ceil(
+    (result?.totalAnswers? result?.totalAnswers : 0) / pageSize,
+  );
   return (
     <div className="mt-11">
       <div className="flex items-center justify-between">
@@ -68,11 +84,14 @@ const AllAnswers = async ({ questionId, userId, page, filter }: Props) => {
                 />
               </div>
             </div>
-         
-              <ParseHTML data={answer.content} />
-            
+
+            <ParseHTML data={answer.content} />
           </article>
         ))}
+      </div>
+      <div className="mt-10">
+        
+        <Pagination pageNumber={page ? +page : 1} totalPages={totalPages} />
       </div>
     </div>
   );

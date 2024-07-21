@@ -6,20 +6,23 @@ import NoResult from "@/components/shared/NoResult";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
 import Votes from "@/components/shared/Votes";
+import { PAGE_SIZE } from "@/constants";
 import { viewQuestion } from "@/lib/actions/interaction.action";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { Question, User } from "@/lib/actions/shared.types";
 import { getUserById } from "@/lib/actions/user.action";
 import { getCompactNumber, getTime } from "@/lib/utils";
+import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs/server";
 import { Clock, Eye, MessageCircleMore } from "lucide-react";
 import Link from "next/link";
 
+interface Props extends SearchParamsProps {
+  params: { questionId: string };
+}
 
-
-type Props = { params: { questionId: string } };
-
-const Page = async ({ params }: Props) => {
+const Page = async ({ params, searchParams }: Props) => {
+  const pageSize = searchParams.pageSize ? +searchParams.pageSize : PAGE_SIZE;
   const { userId: clerkId } = auth();
   let user: User | null = null;
 
@@ -111,7 +114,13 @@ const Page = async ({ params }: Props) => {
           <RenderTag _id={String(tag.id)} name={tag.name} key={tag.id} />
         ))}
       </div>
-      <AllAnswers questionId={question.id} userId={user?.id} />
+      <AllAnswers
+        questionId={question.id}
+        userId={user?.id}
+        page={searchParams.page ? +searchParams.page : 1}
+        filter={searchParams.filter}
+        pageSize={pageSize}
+      />
       <Answer
         question={question.content}
         questionId={question.id}

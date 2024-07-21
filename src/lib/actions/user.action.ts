@@ -1,3 +1,4 @@
+
 "use server";
 
 import { revalidatePath } from "next/cache";
@@ -97,9 +98,9 @@ export async function getAllUsers(params: GetAllUsersParams) {
   }
 }
 
-export async function getUserById(params: { userId: string }) {
+export async function getUserById(params:GetUserByIdParams) {
   try {
-    const { userId } = params;
+    const { userId, } = params;
     const user = await prisma.user.findFirst({
       where: { clerkId: userId },
       include: { savedQuestions: true },
@@ -287,9 +288,11 @@ export async function getUserInfo(params: GetUserByIdParams) {
 }
 export async function getUserQuestions(params: GetUserStatsParams) {
   try {
-    const { userId, page, pageSize } = params;
+    const { userId, page = 1, pageSize = PAGE_SIZE } = params;const skip = (page - 1) * pageSize;
     const questions = await prisma.question.findMany({
       where: { authorId: userId },
+      skip: skip,
+      take: pageSize,
       include: {
         author: true,
         tags: { select: { id: true, name: true } },
@@ -298,7 +301,12 @@ export async function getUserQuestions(params: GetUserStatsParams) {
       },
       orderBy: [{ views: "desc" }, { upvotes: { _count: "desc" } }],
     });
-    return { questions };
+    const totalQuestions = await prisma.question.count({
+      where: { authorId: userId },
+      
+      orderBy: [{ views: "desc" }, { upvotes: { _count: "desc" } }],
+    });
+    return { questions ,totalQuestions};
   } catch (error) {
     console.log(error);
     throw error;
@@ -306,9 +314,11 @@ export async function getUserQuestions(params: GetUserStatsParams) {
 }
 export async function getUserAnswers(params: GetUserStatsParams) {
   try {
-    const { userId, page, pageSize } = params;
+    const { userId, page = 1, pageSize = PAGE_SIZE } = params;const skip = (page - 1) * pageSize;
     const answers = await prisma.answer.findMany({
       where: { authorId: userId },
+      skip: skip,
+      take: pageSize,
       include: {
         question: true,
         author: true,
@@ -316,7 +326,12 @@ export async function getUserAnswers(params: GetUserStatsParams) {
       },
       orderBy: [{ upvotes: { _count: "desc" } }],
     });
-    return { answers };
+    const totalAnswers = await prisma.answer.count({
+      where: { authorId: userId },
+     
+      orderBy: [{ upvotes: { _count: "desc" } }],
+    });
+    return { answers,totalAnswers };
   } catch (error) {
     console.log(error);
     throw error;

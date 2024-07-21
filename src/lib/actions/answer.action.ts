@@ -8,12 +8,34 @@ import {
   DeleteAnswerParams,
   GetAnswersParams,
 } from "./shared.types";
+import { PAGE_SIZE } from "@/constants";
 
 export async function getAnswers(params: GetAnswersParams) {
-  const { questionId } = params;
+  const { questionId, filter, page = 1, pageSize = PAGE_SIZE } = params;
+  const skip = (page - 1) * pageSize;
+  let orderBy: any = [];
+  switch (filter) {
+    case "highestUpvotes":
+      orderBy = [{ upvotes: { _count: "desc" } }];
+      break;
+    case "lowestUpvotes":
+      orderBy = [{ upvotes: { _count: "asc" } }];
+      break;
+    case "recent":
+      orderBy = [{ createdAt: "desc" }];
+      break;
+    case "old":
+      orderBy = [{ createdAt: "asc" }];
+      break;
+    default:
+      orderBy: [{ createdAt: "desc" }];
+      break;
+  }
   try {
     const answers = await prisma.answer.findMany({
       where: { questionId },
+      skip,
+      take: pageSize,
       include: {
         author: {
           select: { id: true, clerkId: true, picture: true, name: true },
@@ -21,10 +43,18 @@ export async function getAnswers(params: GetAnswersParams) {
         upvotes: true,
         downvotes: true,
       },
-      orderBy: { createdAt: "desc" },
+      orderBy,
     });
-    return { answers };
-  } catch (error) {}
+    const totalAnswers = await prisma.answer.count({
+      where: { questionId },
+
+      orderBy,
+    });
+    console.log(filter, orderBy);
+    return { answers, totalAnswers };
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function createAnswer(params: CreateAnswerParams) {
