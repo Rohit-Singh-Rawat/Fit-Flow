@@ -10,6 +10,7 @@ import GlobalResults from "./GlobalResults";
 
 const GlobalSearch = () => {
   const router = useRouter();
+  const searchContainerRef = useRef(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const query = searchParams.get("global");
@@ -37,8 +38,29 @@ const GlobalSearch = () => {
     }, 300);
     return () => clearTimeout(delayDebouncefn);
   }, [search, pathname, router, searchParams, query]);
+  useEffect(() => {
+    const handleOutsideClick = (event: any) => {
+      if (
+        searchContainerRef.current &&
+        //@ts-ignore
+        !searchContainerRef.current.contains(event.target)
+      ) {
+        setIsSearchOpen(false);
+        setSearch("");
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+
+    setIsSearchOpen(false);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [pathname]);
   return (
-    <div className="relative w-full max-w-[600px] max-lg:hidden">
+    <div
+      className="relative w-full max-w-[600px] max-lg:hidden"
+      ref={searchContainerRef}
+    >
       {" "}
       <div className="background-light_dark_gradient rounded-full border-2 border-[rgb(162,212,217)] p-[3px] dark:border-transparent">
         <div className="relative flex min-h-[52px] grow items-center gap-1 rounded-full border border-transparent px-4 focus-within:border-[rgb(113,120,194)] dark:focus-within:border-[#3C3C3C]">
@@ -75,7 +97,8 @@ const GlobalSearch = () => {
             <CircleX
               className="size-5 stroke-black dark:stroke-[#3C3C3C]"
               onClick={() => {
-                setSearch("");  setIsSearchOpen(false);
+                setSearch("");
+                setIsSearchOpen(false);
               }}
             />
           )}

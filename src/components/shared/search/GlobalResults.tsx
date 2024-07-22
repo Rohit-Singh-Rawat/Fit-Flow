@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,7 +17,6 @@ import { globalSearch } from "@/lib/actions/general.action";
 
 const GlobalResult = () => {
   const searchParams = useSearchParams();
-
   const [isLoading, setIsLoading] = useState(true);
   const [result, setResult] = useState([
     { type: "question", id: 1, title: "Next.js question" },
@@ -65,9 +64,10 @@ const GlobalResult = () => {
         return "/";
     }
   };
+    
 
   return (
-    <div className="absolute top-full z-10 mt-3 w-full rounded-xl bg-light-800 py-5 shadow-sm dark:bg-dark-400">
+    <div className="absolute top-full z-10 mt-3 w-full rounded-xl bg-light-800 py-5 shadow-sm dark:bg-dark-400" >
       <GlobalFilters />
       <div className="my-5 h-[1px] bg-light-700/50 dark:bg-dark-500/50" />
 
