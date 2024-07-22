@@ -1,27 +1,28 @@
-"use client"
+"use client";
 
-import { GlobalSearchFilters } from '@/constants/filters';
-import { formUrlQuery } from '@/lib/utils';
-import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
+import { GlobalSearchFilters } from "@/constants/filters";
+import { formUrlQuery } from "@/lib/utils";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState } from "react";
+import { RenderIcon } from "./GlobalResults";
 
 const GlobalFilters = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const typeParams = searchParams.get("type");
-  
-  const [active, setActive] = useState(typeParams || '')
+
+  const [active, setActive] = useState(typeParams || "");
 
   const handleTypeClick = (item: string) => {
-    if(active === item) {
+    if (active === item) {
       setActive("");
 
       const newUrl = formUrlQuery({
         params: searchParams.toString(),
-        key: 'type',
-        value: null
-      })
+        key: "type",
+        value: null,
+      });
 
       router.push(newUrl, { scroll: false });
     } else {
@@ -29,13 +30,13 @@ const GlobalFilters = () => {
 
       const newUrl = formUrlQuery({
         params: searchParams.toString(),
-        key: 'type',
-        value: item.toLowerCase()
-      })
+        key: "type",
+        value: item.toLowerCase(),
+      });
 
-        router.push(newUrl, { scroll: false });
-      }
+      router.push(newUrl, { scroll: false });
     }
+  };
 
   return (
     <div className="flex items-center gap-5 px-5">
@@ -45,20 +46,23 @@ const GlobalFilters = () => {
           <button
             type="button"
             key={item.value}
-            className={`light-border-2 small-medium :text-light-800 rounded-2xl px-5 py-2 capitalize dark:hover:text-primary-500
-              ${active === item.value 
-                ? 'bg-primary-500 text-light-900'
-                : 'bg-light-700 text-dark-400 hover:text-primary-500 dark:bg-dark-500'
-              }
-            `}
+            className={`light-border-2 small-medium justify-center items-center gap-1 :text-light-800 flex rounded-2xl px-5 py-2 capitalize dark:hover:text-primary-500 ${
+              active === item.value
+                ? "bg-primary-500 text-light-900"
+                : "bg-light-700 text-dark-400 hover:text-primary-500 dark:bg-dark-500"
+            } `}
             onClick={() => handleTypeClick(item.value)}
           >
+            <RenderIcon
+              type={item.value}
+              className="size-4 fill-black dark:fill-white"
+            />
             {item.name}
           </button>
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GlobalFilters
+export default GlobalFilters;

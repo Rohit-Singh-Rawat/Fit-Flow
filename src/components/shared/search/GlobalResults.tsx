@@ -6,11 +6,19 @@ import Link from "next/link";
 import Image from "next/image";
 import Loader from "../Loader";
 import GlobalFilters from "./GlobalFilters";
+import { toast } from "sonner";
+import QuestionIcon from "@/components/Icons/QustionIcon";
+import AnswerIcon from "@/components/Icons/AnswerIcon";
+import UserIcon from "@/components/Icons/Usericon";
+import TagIcon2 from "@/components/Icons/TagIcon2";
+import Unknown from "@/components/Icons/Unknown";
+import NOResult from "@/components/Icons/NOResult";
+import { globalSearch } from "@/lib/actions/general.action";
 
 const GlobalResult = () => {
   const searchParams = useSearchParams();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [result, setResult] = useState([
     { type: "question", id: 1, title: "Next.js question" },
     { type: "tag", id: 1, title: "Nextjs" },
@@ -26,11 +34,12 @@ const GlobalResult = () => {
       setIsLoading(true);
 
       try {
-        // const res = await globalSearch({ query: global, type });
+        const res = await globalSearch({ query: global, type });
 
-        // setResult(JSON.parse(res));
+        setResult(res.results);
       } catch (error) {
         console.error(error);
+        toast.error("failed to search, try again...");
         throw error;
       } finally {
         setIsLoading(false);
@@ -45,9 +54,9 @@ const GlobalResult = () => {
   const renderLink = (type: string, id: string) => {
     switch (type) {
       case "question":
-        return `/question/${id}`;
+        return `/questions/${id}`;
       case "answer":
-        return `/question/${id}`;
+        return `/questions/${id}`;
       case "user":
         return `/profile/${id}`;
       case "tag":
@@ -59,7 +68,7 @@ const GlobalResult = () => {
 
   return (
     <div className="absolute top-full z-10 mt-3 w-full rounded-xl bg-light-800 py-5 shadow-sm dark:bg-dark-400">
-      <GlobalFilters /> 
+      <GlobalFilters />
       <div className="my-5 h-[1px] bg-light-700/50 dark:bg-dark-500/50" />
 
       <div className="space-y-5">
@@ -83,14 +92,10 @@ const GlobalResult = () => {
                   key={item.type + item.id + index}
                   className="flex w-full cursor-pointer items-start gap-3 px-5 py-2.5 hover:bg-light-700/50 dark:bg-dark-500/50"
                 >
-                  <Image
-                    src="/assets/icons/tag.svg"
-                    alt="tags"
-                    width={18}
-                    height={18}
-                    className="invert-colors mt-1 object-contain"
+                  <RenderIcon
+                    type={item.type}
+                    className="mt-2 size-6 fill-black dark:fill-white"
                   />
-
                   <div className="flex flex-col">
                     <p className="body-medium text-dark200_light800 line-clamp-1">
                       {item.title}
@@ -103,6 +108,7 @@ const GlobalResult = () => {
               ))
             ) : (
               <div className="flex-center flex-col px-5">
+                <NOResult className="size-24" />
                 <p className="text-dark200_light800 body-regular px-5 py-2.5">
                   Oops, no results found
                 </p>
@@ -113,6 +119,26 @@ const GlobalResult = () => {
       </div>
     </div>
   );
+};
+export const RenderIcon = ({
+  type,
+  className,
+}: {
+  type: string;
+  className?: string;
+}) => {
+  switch (type) {
+    case "question":
+      return <QuestionIcon className={className} />;
+    case "answer":
+      return <AnswerIcon className={className} />;
+    case "user":
+      return <UserIcon className={className} />;
+    case "tag":
+      return <TagIcon2 className={className} />;
+    default:
+      return <Unknown className={className} />;
+  }
 };
 
 export default GlobalResult;

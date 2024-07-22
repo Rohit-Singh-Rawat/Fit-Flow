@@ -191,3 +191,15 @@ code {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px); /* Adjust the floating height as needed */
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite; /* Adjust duration and timing function as needed */
+}

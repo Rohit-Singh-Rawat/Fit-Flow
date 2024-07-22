@@ -75,7 +75,7 @@ const GlobalSearch = () => {
             <CircleX
               className="size-5 stroke-black dark:stroke-[#3C3C3C]"
               onClick={() => {
-                setSearch("");
+                setSearch("");  setIsSearchOpen(false);
               }}
             />
           )}
