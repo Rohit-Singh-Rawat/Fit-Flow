@@ -33,7 +33,7 @@ const Theme = (props: Props) => {
           )}
         </MenubarTrigger>
 
-        <MenubarContent className="absolute mt-3 min-w-[120px] rounded-md border py-2 dark:border-dark-400 dark:bg-dark-300">
+        <MenubarContent className="absolute mt-3 min-w-[120px] rounded-md border py-2 dark:border-dark-400 dark:bg-dark-300 bg-light-900">
           {themes.map((the) => {
             return (
               <MenubarItem

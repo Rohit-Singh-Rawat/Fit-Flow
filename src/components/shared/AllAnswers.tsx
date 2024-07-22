@@ -60,13 +60,16 @@ const AllAnswers = async ({
                   <p className="body-semibold text-dark300_light700">
                     {answer.author.name}
                   </p>
-                  <p className="small-regular text-light400_light500 ml-0.5 mt-0.5 line-clamp-1 flex items-center justify-center">
+                  <p className="small-regular text-light400_dark500 ml-0.5 mt-0.5 line-clamp-1 flex items-center justify-center">
                     <span className="max-sm:hidden">
                       <Minus size={8} className="mx-0.5" />
                     </span>
                     answered {getTime(answer.createdAt)}{" "}
                   </p>
                 </div>
+              </div>
+              <div className="flex justify-end">
+                {" "}
                 <Votes
                   type="Answer"
                   itemId={answer.id}
@@ -90,7 +93,6 @@ const AllAnswers = async ({
         ))}
       </div>
       <div className="mt-10">
-        
         <Pagination pageNumber={page ? +page : 1} totalPages={totalPages} />
       </div>
     </div>

@@ -19,11 +19,11 @@ const Loading = (props: Props) => {
           </Button>{" "}
         </Link>
       </div>
-      <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
+      <div className="my-11 flex mt-11 justify-between gap-5 max-sm:flex-col sm:items-center md:mt-11">
         <Skeleton className="h-14 flex-1" />
         <div className="hidden max-md:block">
           {" "}
-          <Skeleton className="h-14 w-28" />
+          <Skeleton className="h-14 w-28 " />
         </div>
       </div>{" "}
       <div className="my-10 hidden flex-wrap gap-6 md:flex">
@@ -33,9 +33,11 @@ const Loading = (props: Props) => {
         <Skeleton className="h-9 w-40" />
       </div>
       <div className="flex flex-col gap-6">
-        {Array(10).fill(null).map((item) => (
-          <Skeleton key={item} className="h-48 w-full rounded-xl" />
-        ))}
+        {Array(10)
+          .fill(null)
+          .map((item) => (
+            <Skeleton key={item} className="h-48 w-full rounded-xl" />
+          ))}
       </div>
     </section>
   );

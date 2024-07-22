@@ -1,5 +1,5 @@
 "use server";
-import { EditQuestionParams } from "./shared.types.d";
+import { EditQuestionParams, RecommendedParams } from "./shared.types.d";
 import { revalidatePath } from "next/cache";
 import prisma from "../db";
 import {
@@ -283,6 +283,97 @@ export async function getHotQuestions() {
     });
     return { questions };
   } catch (error) {
+    throw error;
+  }
+}
+
+export async function getRecommendedQuestions(params: RecommendedParams) {
+  try {
+    const { userId, page = 1, pageSize = PAGE_SIZE, searchQuery } = params;
+
+    const user = await prisma.user.findUnique({ where: { clerkId: userId } });
+
+    if (!user) {
+      throw new Error("user not found");
+    }
+
+    const skipAmount = (page - 1) * pageSize;
+
+    const userInteractions = await prisma.interaction.findMany({
+      where: { userId: user.id },
+      include: { tags: true },
+    });
+
+    const userTags: any = userInteractions.reduce<any[]>(
+      (tags, interaction) => {
+        if (interaction.tags) {
+          tags = tags.concat(interaction.tags);
+        }
+        return tags;
+      },
+      [],
+    );
+
+    const distinctUserTagIds = [
+      // @ts-ignore
+      ...new Set(userTags.map((tag: any) => tag.id)),
+    ];
+
+    const recommendedQuestions = await prisma.question.findMany({
+      where: {
+        authorId: { not: { equals: userId } },
+        OR: [
+          {
+            title: {
+              contains: searchQuery || "",
+              mode: "insensitive",
+            },
+          },
+          {
+            content: {
+              contains: searchQuery || "",
+              mode: "insensitive",
+            },
+          },
+        ],
+        tags: { some: { id: { in: distinctUserTagIds } } },
+      },
+      include: {
+        author: true,
+        tags: { select: { id: true, name: true } },
+        answers: true,
+        upvotes: true,
+      },
+      skip: skipAmount,
+      take: pageSize,
+    });
+    const recommendedQuestionsCount = await prisma.question.count({
+      where: {
+        authorId: { not: { equals: userId } },
+        OR: [
+          {
+            title: {
+              contains: searchQuery || "",
+              mode: "insensitive",
+            },
+          },
+          {
+            content: {
+              contains: searchQuery || "",
+              mode: "insensitive",
+            },
+          },
+        ],
+        tags: { some: { id: { in: distinctUserTagIds } } },
+      },
+    });
+
+    return {
+      questions: recommendedQuestions,
+      totalQuestions: recommendedQuestionsCount,
+    };
+  } catch (error) {
+    console.error("Error getting recommended questions:", error);
     throw error;
   }
 }

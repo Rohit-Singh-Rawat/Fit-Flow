@@ -7,12 +7,16 @@ import LocalSearchBar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { PAGE_SIZE } from "@/constants";
 import { HomePageFilters } from "@/constants/filters";
-import { getQuestions } from "@/lib/actions/question.action";
+import {
+  getQuestions,
+  getRecommendedQuestions,
+} from "@/lib/actions/question.action";
 import { SearchParamsProps } from "@/types";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
 import type { Metadata } from "next";
+import { auth } from "@clerk/nextjs/server";
 
 export const metadata: Metadata = {
   title: "Home | Fit Flow",
@@ -29,14 +33,30 @@ export const metadata: Metadata = {
 
 const page = async ({ searchParams }: SearchParamsProps) => {
   const pageSize = searchParams.pageSize ? +searchParams.pageSize : PAGE_SIZE;
-  const result = await getQuestions({
-    searchQuery: searchParams.q,
-    filter: searchParams.filter,
-    page: searchParams.page ? +searchParams.page : 1,
-    pageSize: pageSize,
-  });
+  let result;
+  const { userId } = auth();
+  if (searchParams?.filter === "recommended") {
+    if (userId) {
+      result = await getRecommendedQuestions({
+        userId,
+        searchQuery: searchParams.q,
+        page: searchParams.page ? +searchParams.page : 1,
+        pageSize: pageSize,
+      });
+    }
+  } else {
+    result = await getQuestions({
+      searchQuery: searchParams.q,
+      filter: searchParams.filter,
+      page: searchParams.page ? +searchParams.page : 1,
+      pageSize: pageSize,
+    });
+  }
+
   const questions = result?.questions ?? [];
-  const totalPages = Math.ceil(result.totalQuestions / pageSize);
+  const totalPages = Math.ceil(
+    (result?.totalQuestions ? result?.totalQuestions : 0) / pageSize,
+  );
 
   return (
     <>
