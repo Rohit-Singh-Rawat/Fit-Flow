@@ -387,3 +387,64 @@ export async function getUserAnswers(params: GetUserStatsParams) {
     throw error;
   }
 }
+export async function getToptags(params: { userId: string }) {
+  try {
+    const { userId } = params;
+    const user = await prisma.user.findUnique({ where: {id: userId } });
+
+    if (!user) {
+      throw new Error("user not found");
+    }
+
+    const userInteractions = await prisma.interaction.findMany({
+      where: { userId: user.id },
+      include: { tags: true },
+    });
+
+    const userTags: any = userInteractions.reduce<any[]>(
+      (tags, interaction) => {
+        if (interaction.tags) {
+          tags = tags.concat(interaction.tags);
+        }
+        return tags;
+      },
+      [],
+    );
+    console.log(userTags)
+    const distinctUserTagIds = [
+      // @ts-ignore
+      ...new Set(userTags.map((tag: any) => tag.id)),
+    ];
+    const tagCounts = await prisma.tag.findMany({
+      where: { id: { in: distinctUserTagIds } },
+      select: {
+        id: true,
+        name: true,
+        _count: {
+          select: {
+            Interaction: true,
+            questions: true,
+          },
+        },
+      },
+      orderBy: {
+        Interaction: {
+          _count: "desc",
+        },
+      },
+      take: 10,
+    });
+
+    // Map tag details to their counts
+    const topTags = tagCounts.map((tag) => ({
+      id: tag.id,
+      name: tag.name,
+      count: tag._count.questions,
+    }));
+    console.log(tagCounts);
+    return topTags;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

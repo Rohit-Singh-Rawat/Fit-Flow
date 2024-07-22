@@ -52,7 +52,7 @@ const QuestionCard = ({
             Asked {getTime(createdAt)}
           </span>
           <Link href={`/questions/${id}`}>
-            <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-2 flex-1 sm:line-clamp-3">
+            <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1 sm:line-clamp-2">
               {title}
             </h3>
           </Link>
@@ -68,7 +68,7 @@ const QuestionCard = ({
           <RenderTag _id={String(tag.id)} name={tag.name} key={tag.id} />
         ))}
       </div>
-      <div className="flex-between ga mt-6 flex w-full items-center">
+      <div className="flex-between gap-4 mt-6 flex w-full items-center flex-wrap">
         <div className="flex-between flex gap-2">
           <Avatar
             altText={author.name}

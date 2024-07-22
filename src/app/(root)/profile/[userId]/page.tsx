@@ -13,6 +13,7 @@ import { CalendarDays, Link2, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata, ResolvingMetadata } from "next";
+import TopTags from "@/components/shared/TopTags";
 type Props = {
   params: { userId: string };
   searchParams: { [key: string]: string | string[] | undefined };
@@ -163,6 +164,7 @@ const page = async ({
             />
           </TabsContent>
         </Tabs>
+        <TopTags userId={userInfo.id} />
       </div>
     </>
   );
