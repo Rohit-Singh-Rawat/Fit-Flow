@@ -62,7 +62,7 @@ export async function POST(req: Request) {
       const User = await createUser({
         clerkId: id,
         email: email_addresses[0].email_address,
-        name: `${first_name} ${last_name ? ` ${last_name}` : ""}`,
+        name: `${first_name} ${last_name ? last_name : ""}`,
         username: username!,
         picture: image_url,
       });
@@ -78,7 +78,7 @@ export async function POST(req: Request) {
         clerkId: id,
         updateData: {
           email: email_addresses[0].email_address,
-          name: `${first_name} ${last_name ? ` $last_name` : ""}`,
+          name: `${first_name} ${last_name ? last_name : ""}`,
           username: username!,
           picture: image_url,
         },
@@ -88,9 +88,8 @@ export async function POST(req: Request) {
     } catch (error) {}
   }
 
-  if(eventType==='user.deleted'){
-    const { id} =
-      evt.data;
+  if (eventType === "user.deleted") {
+    const { id } = evt.data;
 
     try {
       const deletedUser = await deleteUser({
