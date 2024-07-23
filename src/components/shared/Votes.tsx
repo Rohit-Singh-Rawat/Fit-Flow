@@ -10,6 +10,7 @@ import { downVoteAnswer, upVoteAnswer } from "@/lib/actions/answer.action";
 import { toggleSaveQuestion } from "@/lib/actions/user.action";
 import { toast } from "sonner";
 import { useOptimistic } from "react";
+import VoteArrow from "../Icons/VoteArrow";
 
 type Props = {
   type: "Question" | "Answer";
@@ -184,16 +185,20 @@ export default function Votes({
     <div className="flex gap-5">
       <div className="flex-center gap-2.5">
         <div className="flex-center gap-1.5">
-          <ArrowBigUpDash
+          <button
             onClick={handleUpVote}
-            size={25}
-            stroke="1"
-            className={`cursor-pointer ${
-              optimisticState.hasupVoted
-                ? "fill-red-800 stroke-red-800 dark:fill-red-600 dark:stroke-red-600"
-                : "stroke-dark-500 dark:stroke-slate-200"
-            }`}
-          />
+            className="flex size-7 items-center justify-center rounded-full bg-transparent text-black hover:bg-slate-200/30 hover:text-red-500 dark:text-white dark:hover:text-red-500"
+          >
+            {" "}
+            <VoteArrow
+              className={`size-5 cursor-pointer ${
+                optimisticState.hasupVoted
+                  ? "fill-red-800 stroke-red-800 dark:fill-red-600 dark:stroke-red-600"
+                  : "fill-none stroke-current"
+              }`}
+            />
+          </button>
+
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
             <p className="subtle-medium text-dark400_light900">
               {getCompactNumber(optimisticState.upvotes)}
@@ -201,15 +206,20 @@ export default function Votes({
           </div>
         </div>
         <div className="flex-center gap-1.5">
-          <ArrowBigDownDash
-            size={25}
+          {" "}
+          <button
             onClick={handleDownVote}
-            className={`cursor-pointer ${
-              optimisticState.hasdownVoted
-                ? "fill-red-800 stroke-red-800 dark:fill-red-600 dark:stroke-red-600"
-                : "stroke-dark-500 dark:stroke-slate-200"
-            }`}
-          />
+            className="flex size-7 items-center justify-center rounded-full bg-transparent text-black hover:bg-slate-200/30 hover:text-blue-500 dark:text-white dark:hover:text-blue-500"
+          >
+            {" "}
+            <VoteArrow
+              className={`size-5 rotate-180 cursor-pointer ${
+                optimisticState.hasdownVoted
+                  ? "fill-blue-800 stroke-blue-800 dark:fill-blue-600 dark:stroke-blue-600"
+                  : "fill-none stroke-current"
+              }`}
+            />
+          </button>
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
             <p className="subtle-medium text-dark400_light900">
               {getCompactNumber(optimisticState.downvotes)}

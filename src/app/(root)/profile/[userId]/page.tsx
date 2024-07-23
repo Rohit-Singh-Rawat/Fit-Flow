@@ -82,7 +82,7 @@ const page = async ({
 
           <div className="mt-3">
             <h2 className="h2-bold text-dark100_light900">{userInfo.name}</h2>
-            <p className="paragraph-regular text-dark200_light800">
+            <p className="paragraph-regular text-blue_light500">
               @{userInfo.username}
             </p>
 
@@ -138,7 +138,7 @@ const page = async ({
 
       <div className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="flex-1">
-          <TabsList className="background-light800_dark400 inline-flex min-h-[42px] rounded-lg p-1">
+          <TabsList className="inline-flex min-h-[42px] rounded-lg bg-light-900 p-1 dark:bg-dark-400">
             <TabsTrigger value="top-posts" className="tab rounded-lg px-4 py-1">
               Top Posts
             </TabsTrigger>

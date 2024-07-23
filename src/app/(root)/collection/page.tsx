@@ -77,8 +77,8 @@ const page = async ({ searchParams }: SearchParamsProps) => {
           <NoResult
             title="No Saved Questions"
             description="It looks like there are no saved questions to display right now. "
-            href="/questions/ask"
-            label="Ask a Question"
+            href="/"
+            label="Go check Questions"
           />
         )}
         <div className="mt-10">

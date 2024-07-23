@@ -86,6 +86,7 @@ export async function getAllUsers(params: GetAllUsersParams) {
         password: false,
         email: true,
         bio: true,
+        topTags:true
       },
     });
     const totalUsers = await prisma.user.count({
@@ -387,13 +388,14 @@ export async function getUserAnswers(params: GetUserStatsParams) {
     throw error;
   }
 }
+
 export async function getToptags(params: { userId: string }) {
   try {
     const { userId } = params;
-    const user = await prisma.user.findUnique({ where: {id: userId } });
+    const user = await prisma.user.findUnique({ where: { id: userId } });
 
     if (!user) {
-      throw new Error("user not found");
+      throw new Error("User not found");
     }
 
     const userInteractions = await prisma.interaction.findMany({
@@ -410,11 +412,12 @@ export async function getToptags(params: { userId: string }) {
       },
       [],
     );
-    console.log(userTags)
+
     const distinctUserTagIds = [
       // @ts-ignore
       ...new Set(userTags.map((tag: any) => tag.id)),
     ];
+
     const tagCounts = await prisma.tag.findMany({
       where: { id: { in: distinctUserTagIds } },
       select: {
@@ -435,12 +438,23 @@ export async function getToptags(params: { userId: string }) {
       take: 10,
     });
 
-    // Map tag details to their counts
     const topTags = tagCounts.map((tag) => ({
       id: tag.id,
       name: tag.name,
       count: tag._count.questions,
     }));
+
+    if (topTags.length > 0) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: {
+          topTags: {
+            connect: topTags.map((tag) => ({ id: tag.id })),
+          },
+        },
+      });
+    }
+
     console.log(tagCounts);
     return topTags;
   } catch (error) {

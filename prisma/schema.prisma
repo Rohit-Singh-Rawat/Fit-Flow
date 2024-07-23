@@ -35,6 +35,8 @@ model Tag {
   createdAt   DateTime      @default(now())
   Interaction Interaction[]
 
+  users       User[]  @relation("UserTopTags")
+
   @@index([name])
 }
 
@@ -60,6 +62,7 @@ model User {
   upvotedAnswers     Answer[]      @relation("AnswerUpvotes")
   downvotedAnswers   Answer[]      @relation("AnswerDownvotes")
   Interaction        Interaction[]
+  topTags  Tag[] @relation("UserTopTags")
 
   @@index([username])
   @@index([clerkId])

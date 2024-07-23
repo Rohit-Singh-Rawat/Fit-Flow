@@ -68,10 +68,10 @@ const page = async ({ params, searchParams }: Props) => {
           ))
         ) : (
           <NoResult
-            title="No Saved Questions"
-            description="It looks like there are no saved questions to display right now. "
-            href="/questions/ask"
-            label="Ask a Question"
+            title="No Tags Found"
+            description="It looks like there is no tag for this."
+            href="/tags"
+            label="checkout tags"
           />
         )}
         <Pagination

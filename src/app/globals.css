@@ -41,11 +41,11 @@ body {
   }
 
   .btn-secondary {
-    @apply bg-light-800 dark:bg-dark-400 !important;
+    @apply bg-light-500 dark:bg-dark-400 !important;
   }
 
   .btn-tertiary {
-    @apply bg-light-700 dark:bg-dark-300 !important;
+    @apply bg-light-400 dark:bg-dark-300 !important;
   }
 
   .markdown {
@@ -67,7 +67,7 @@ body {
   }
 
   .tab {
-    @apply min-h-full bg-light-800 text-light-500 data-[state=active]:bg-primary-100 data-[state=active]:text-primary-500 dark:bg-dark-400 dark:data-[state=active]:bg-dark-300 !important;
+    @apply min-h-full border-2 border-transparent bg-light-900 text-dark-200 data-[state=active]:border-2 data-[state=active]:border-blue-900 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-500 dark:border-transparent dark:bg-dark-400 dark:text-light-500 dark:data-[state=active]:border-transparent dark:data-[state=active]:bg-dark-300 !important;
   }
 }
 
@@ -192,7 +192,8 @@ code {
   scrollbar-width: none; /* Firefox */
 }
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -202,4 +203,14 @@ code {
 
 .animate-float {
   animation: float 3s ease-in-out infinite; /* Adjust duration and timing function as needed */
+}
+
+.custom-bg-gradient {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='20' height='20' fill='none' stroke='rgb(198 195 202 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e"),
+    radial-gradient(70% 70% at 50% 0%, #01110a 50%, #000001);
+}
+.cl-card{
+  background: #000;
+}.cl-footer{
+  background: #000;
 }

@@ -11,7 +11,7 @@ const Loading = () => {
             <Skeleton className="h-10 w-10 rounded-full" />
             <Skeleton className="h-7 w-28" />
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-6">
             <Skeleton className="size-8" />
             <Skeleton className="size-8" />
             <Skeleton className="size-8" />

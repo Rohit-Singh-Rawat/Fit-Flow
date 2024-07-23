@@ -9,7 +9,7 @@ export const POST = async (request: Request) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY2}`,
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",  stream: true,
@@ -28,7 +28,7 @@ export const POST = async (request: Request) => {
     });
    
 
-    console.log("object", response, `Bearer ${process.env.OPENAI_API_KEY2}`);
+    console.log("object", response, `Bearer ${process.env.OPENAI_API_KEY}`);
     const data = await response.json();
     const answer = data.choices[0].message.content.trim();
 
