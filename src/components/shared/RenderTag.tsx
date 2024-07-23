@@ -7,13 +7,19 @@ interface Props {
   name: string;
   totalQuestions?: number;
   showCount?: boolean;
+  maxWidthClass?:string
 }
 
-const RenderTag = ({ _id, name, totalQuestions, showCount }: Props) => {
+const RenderTag = ({ _id, name, totalQuestions, showCount ,maxWidthClass}: Props) => {
   return (
-    <Link href={`/tags/${_id}`} className="flex justify-between gap-2 items-baseline">
-      <Badge className="subtle-medium background-light400_dark300 text-blue_light500 rounded-md border-[#99B8FF] px-4 py-2 uppercase shadow-light-500 dark:border-light-500/20">
-        {name}
+    <Link
+      href={`/tags/${_id}`}
+      className="flex items-baseline justify-between gap-2 "
+    >
+      <Badge
+        className={`${maxWidthClass} subtle-medium background-light400_dark300 text-blue_light500 rounded-md border-[#99B8FF] px-4 py-2 uppercase shadow-light-500 dark:border-light-500/20`}
+      >
+        <p className='truncate'>{name}</p>
       </Badge>
 
       {showCount && (

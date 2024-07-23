@@ -13,7 +13,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 type Props = {};
 const Theme = (props: Props) => {
-  const [mounted, setMounted] = useState(false)
+  const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
   useEffect(() => {
     setMounted(true);
@@ -33,7 +33,7 @@ const Theme = (props: Props) => {
           )}
         </MenubarTrigger>
 
-        <MenubarContent className="absolute mt-3 min-w-[120px] rounded-md border py-2 dark:border-dark-400 dark:bg-dark-300 bg-light-900">
+        <MenubarContent className="absolute mt-3 min-w-[120px] rounded-md border bg-light-900 py-2 dark:border-dark-400 dark:bg-dark-300">
           {themes.map((the) => {
             return (
               <MenubarItem
@@ -44,11 +44,11 @@ const Theme = (props: Props) => {
                 }}
               >
                 <the.icon
-                  className={`size-4 stroke-black dark:fill-white dark:stroke-white`}
+                  className={`size-4 ${resolvedTheme == the.value ? "fill-light-500 stroke-light-500" : "stroke-black dark:fill-white dark:stroke-white"}`}
                 />
 
                 <p
-                  className={`body-semibold text-light-500 ${resolvedTheme == the.value ? "text-primary-500" : "text-dark100_light900"}`}
+                  className={`regular-medium ${resolvedTheme == the.value ? "text-light-500" : "text-dark100_light900"}`}
                 >
                   {the.label}
                 </p>

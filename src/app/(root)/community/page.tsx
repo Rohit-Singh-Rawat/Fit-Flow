@@ -52,7 +52,7 @@ const page = async ({ searchParams }: SearchParamsProps) => {
       </div>{" "}
       <section className="mt-12 flex flex-wrap gap-4">
         {result.users.length > 0 ? (
-          result.users.map((user) => <UserCard user={user} key={user.id} />)
+          result.users.map((user) => <UserCard user={user}  key={user.id} />)
         ) : (
           <NoResult
             description="No users found with these search"

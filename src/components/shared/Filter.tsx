@@ -39,7 +39,7 @@ export default function Filter({
       >
         <SelectTrigger
           className={cn(
-            "body-regular light-border background-light800_dark300 text-dark500_light700 border px-5 py-2.5",
+            "body-regular light-border background-light900_dark300 text-dark500_light700 border px-5 py-2.5",
             otherClasses,
           )}
         >
@@ -47,13 +47,13 @@ export default function Filter({
             <SelectValue placeholder="Select a Filter" />
           </div>
         </SelectTrigger>
-        <SelectContent className="light-border background-light800_dark300 text-dark500_light700">
+        <SelectContent className="light-border background-light900_dark300 text-dark500_light700">
           <SelectGroup>
             {filters.map((item) => (
               <SelectItem
                 key={item.value}
                 value={item.value}
-                className="rounded-md hover:bg-light-900 dark:hover:bg-dark-500"
+                className="rounded-md hover:bg-light-800 dark:hover:bg-dark-500"
               >
                 {item.name}
               </SelectItem>

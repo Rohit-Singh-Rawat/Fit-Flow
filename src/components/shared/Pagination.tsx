@@ -34,6 +34,7 @@ export function PaginationSection({
     });
     router.push(newUrl);
   };
+
   const handleNavigationByNumber = (pageNumber: number) => {
     const newUrl = formUrlQuery({
       params: searchParams.toString(),
@@ -70,7 +71,7 @@ export function PaginationSection({
       items.push(
         <PaginationItem key={1}>
           <PaginationLink
-            className="cursor-pointer rounded-full border px-3 py-1"
+            className={`md:text-md rounded-md text-xs hover:bg-slate-200/60 dark:hover:bg-gray-600/30 sm:text-sm ${pageNumber === 1 ? "border border-[#27272A]" : ""}`}
             onClick={() => {
               handleNavigationByNumber(1);
             }}
@@ -82,7 +83,7 @@ export function PaginationSection({
       if (startPage > 2) {
         items.push(
           <PaginationItem key="ellipsis-start">
-            <PaginationEllipsis className="cursor-pointer px-3 py-1" />
+            <PaginationEllipsis />
           </PaginationItem>,
         );
       }
@@ -92,10 +93,10 @@ export function PaginationSection({
       items.push(
         <PaginationItem key={i}>
           <PaginationLink
+            className={`md:text-md rounded-md text-xs hover:bg-slate-200/60 dark:hover:bg-gray-600/30 sm:text-sm ${i === pageNumber ? "border border-[#27272A]" : ""}`}
             onClick={() => {
               handleNavigationByNumber(i);
             }}
-            className={`cursor-pointer rounded-full border px-3 py-1 ${i === pageNumber ? "bg-blue-500 text-white" : "hover:bg-gray-200 dark:hover:bg-gray-700"}`}
           >
             {i}
           </PaginationLink>
@@ -107,14 +108,14 @@ export function PaginationSection({
       if (endPage < totalPages - 1) {
         items.push(
           <PaginationItem key="ellipsis-end">
-            <PaginationEllipsis className="cursor-pointer px-3 py-1" />
+            <PaginationEllipsis />
           </PaginationItem>,
         );
       }
       items.push(
         <PaginationItem key={totalPages}>
           <PaginationLink
-            className="cursor-pointer rounded-full border px-3 py-1"
+            className={`md:text-md rounded-md text-xs hover:bg-slate-200/60 dark:hover:bg-gray-600/30 sm:text-sm ${totalPages === pageNumber ? "border border-[#27272A]" : ""}`}
             onClick={() => {
               handleNavigationByNumber(totalPages);
             }}
@@ -130,12 +131,12 @@ export function PaginationSection({
 
   return totalPages > 1 ? (
     <Pagination className="flex cursor-pointer justify-center p-4">
-      <PaginationContent className="flex cursor-pointer flex-wrap items-center space-x-2">
+      <PaginationContent className="flex cursor-pointer flex-wrap items-center md:space-x-2">
         {pageNumber !== 1 && (
           <PaginationItem>
             <PaginationPrevious
+              className="md:text-md rounded-md text-xs hover:bg-slate-200/60 dark:hover:bg-gray-600/30 sm:text-sm"
               aria-disabled={true}
-              className="d cursor-pointer rounded-full border px-3 py-1"
               onClick={() => {
                 handleNavigation("prev");
               }}
@@ -146,7 +147,7 @@ export function PaginationSection({
         {pageNumber !== totalPages && (
           <PaginationItem>
             <PaginationNext
-              className="cursor-pointer rounded-full border px-3 py-1"
+              className="md:text-md rounded-md text-xs hover:bg-slate-200/60 dark:hover:bg-gray-600/30 sm:text-sm"
               onClick={() => {
                 handleNavigation("next");
               }}

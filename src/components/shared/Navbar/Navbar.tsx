@@ -25,7 +25,7 @@ const Navbar = (props: Props) => {
         <SignedOut>
           <SignInButton
             children={
-              <button className="hover:bg-primary-400 h4-bold hidden rounded-lg bg-primary-500 p-1 px-2 text-light-900 sm:block">
+              <button className="btn-tertiary rounded-lg border border-zinc-200 dark:border-zinc-800 px-6 py-2 font-semibold text-orange-400">
                 SignIn
               </button>
             }
