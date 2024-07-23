@@ -1,5 +1,5 @@
 "use client";
-import { KeyboardEvent, useRef } from "react";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -23,6 +23,7 @@ import { createQuestion, EditQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Question as QuestionDetailsProp } from "@/lib/actions/shared.types";
+import { useTheme } from "next-themes";
 
 type Props = {
   userId: string;
@@ -33,6 +34,11 @@ type Props = {
 const Question = ({ userId, questionDetails, type }: Props) => {
   const router = useRouter();
   const pathName = usePathname();
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const groupedTags = questionDetails?.tags.map((tag) => tag.name);
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
@@ -99,6 +105,14 @@ const Question = ({ userId, questionDetails, type }: Props) => {
     const newFields = field.value.filter((t: string) => t !== tag);
     form.setValue(field.name, newFields);
   };
+  if (!mounted) {
+    return (
+      <div className="flex h-[75vh] w-full items-center justify-center bg-transparent">
+        <Loader className="x size-20 animate-spin text-center" />
+      </div>
+    );
+  }
+
   return (
     <Form {...form}>
       <form
@@ -153,7 +167,6 @@ const Question = ({ userId, questionDetails, type }: Props) => {
                         "autolink",
                         "lists",
                         "link",
-                        "image",
                         "charmap",
                         "preview",
                         "anchor",
@@ -186,29 +199,13 @@ const Question = ({ userId, questionDetails, type }: Props) => {
                         "codesample image | bold italic forecolor | alignleft aligncenter " +
                         "alignright alignjustify | bullist numlist outdent indent | " +
                         "removeformat | help",
-                      file_picker_types: "image",
-                      file_picker_callback: (callback, value, meta) => {
-                        // Provide file and text for the link dialog
-                        if (meta.filetype == "file") {
-                          callback("mypage.html", { text: "My text" });
-                        }
-
-                        // Provide image and alt text for the image dialog
-                        if (meta.filetype == "image") {
-                          callback("myimage.jpg", { alt: "My alt text" });
-                        }
-
-                        // Provide alternative source and posted for the media dialog
-                        if (meta.filetype == "media") {
-                          callback("movie.mp4", {
-                            source2: "alt.ogg",
-                            poster: "image.jpg",
-                          });
-                        }
-                      },
-
                       content_style:
-                        "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
+                        resolvedTheme === "dark"
+                          ? "body { font-family:Helvetica,Arial,sans-serif; font-size:16px; background:black; }"
+                          : "body { font-family:Helvetica,Arial,sans-serif; font-size:16px; }",
+                      skin: resolvedTheme === "dark" ? "oxide-dark" : "oxide",
+                      content_css:
+                        resolvedTheme === "dark" ? "tinymce-5-dark" : "light",
                     }}
                   />
                 ) ?? (

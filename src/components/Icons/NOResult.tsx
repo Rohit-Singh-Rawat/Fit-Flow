@@ -9,7 +9,7 @@ const NOResult = ({ className }: Props) => {
       width="717"
       height="1013"
       preserveAspectRatio="xMidYMid meet"
-      className={cn("size-7 animate-float", className)}
+      className={cn("animate-float size-7", className)}
       style={{
         transform: "translate3d(0px, 0px, 0px)",
         contentVisibility: "visible",
@@ -37,9 +37,9 @@ const NOResult = ({ className }: Props) => {
             ></path>
             <path
               stroke-linecap="butt"
-              stroke-linejoin="miter"
+              strokeLinejoin="miter"
               fill-opacity="0"
-              stroke-miterlimit="1"
+              strokeMiterlimit="1"
               stroke="rgb(101,57,46)"
               stroke-opacity="1"
               stroke-width="0.4"
@@ -63,9 +63,9 @@ const NOResult = ({ className }: Props) => {
             ></path>
             <path
               stroke-linecap="butt"
-              stroke-linejoin="miter"
+              strokeLinejoin="miter"
               fill-opacity="0"
-              stroke-miterlimit="1"
+              strokeMiterlimit="1"
               stroke="rgb(182,144,108)"
               stroke-opacity="1"
               stroke-width="0.4"
@@ -89,9 +89,9 @@ const NOResult = ({ className }: Props) => {
             ></path>
             <path
               stroke-linecap="butt"
-              stroke-linejoin="miter"
+              strokeLinejoin="miter"
               fill-opacity="0"
-              stroke-miterlimit="1"
+              strokeMiterlimit="1"
               stroke="rgb(131,94,68)"
               stroke-opacity="1"
               stroke-width="0.4"
@@ -115,9 +115,9 @@ const NOResult = ({ className }: Props) => {
             ></path>
             <path
               stroke-linecap="butt"
-              stroke-linejoin="miter"
+              strokeLinejoin="miter"
               fill-opacity="0"
-              stroke-miterlimit="1"
+              strokeMiterlimit="1"
               stroke="rgb(153,117,86)"
               stroke-opacity="1"
               stroke-width="0.4"
@@ -141,9 +141,9 @@ const NOResult = ({ className }: Props) => {
             ></path>
             <path
               stroke-linecap="butt"
-              stroke-linejoin="miter"
+              strokeLinejoin="miter"
               fill-opacity="0"
-              stroke-miterlimit="1"
+              strokeMiterlimit="1"
               stroke="rgb(207,158,118)"
               stroke-opacity="1"
               stroke-width="0.4"
@@ -167,9 +167,9 @@ const NOResult = ({ className }: Props) => {
             ></path>
             <path
               stroke-linecap="butt"
-              stroke-linejoin="miter"
+              strokeLinejoin="miter"
               fill-opacity="0"
-              stroke-miterlimit="1"
+              strokeMiterlimit="1"
               stroke="rgb(182,134,89)"
               stroke-opacity="1"
               stroke-width="0.4"
@@ -193,9 +193,9 @@ const NOResult = ({ className }: Props) => {
             ></path>
             <path
               stroke-linecap="butt"
-              stroke-linejoin="miter"
+              strokeLinejoin="miter"
               fill-opacity="0"
-              stroke-miterlimit="1"
+              strokeMiterlimit="1"
               stroke="rgb(148,108,80)"
               stroke-opacity="1"
               stroke-width="0.4"
@@ -219,9 +219,9 @@ const NOResult = ({ className }: Props) => {
             ></path>
             <path
               stroke-linecap="butt"
-              stroke-linejoin="miter"
+              strokeLinejoin="miter"
               fill-opacity="0"
-              stroke-miterlimit="1"
+              strokeMiterlimit="1"
               stroke="rgb(171,120,90)"
               stroke-opacity="1"
               stroke-width="0.4"
@@ -242,9 +242,9 @@ const NOResult = ({ className }: Props) => {
             ></path>
             <path
               stroke-linecap="round"
-              stroke-linejoin="miter"
+              strokeLinejoin="miter"
               fill-opacity="0"
-              stroke-miterlimit="4"
+              strokeMiterlimit="4"
               stroke="rgb(0,0,0)"
               stroke-opacity="1"
               stroke-width="37"
@@ -265,9 +265,9 @@ const NOResult = ({ className }: Props) => {
             ></path>
             <path
               stroke-linecap="round"
-              stroke-linejoin="miter"
+              strokeLinejoin="miter"
               fill-opacity="0"
-              stroke-miterlimit="4"
+              strokeMiterlimit="4"
               stroke="rgb(0,0,0)"
               stroke-opacity="1"
               stroke-width="37"
@@ -283,9 +283,9 @@ const NOResult = ({ className }: Props) => {
           <g opacity="1" transform="matrix(1,0,0,1,0,0)">
             <path
               stroke-linecap="round"
-              stroke-linejoin="miter"
+              strokeLinejoin="miter"
               fill-opacity="0"
-              stroke-miterlimit="4"
+              strokeMiterlimit="4"
               stroke="rgb(0,0,0)"
               stroke-opacity="1"
               stroke-width="37"

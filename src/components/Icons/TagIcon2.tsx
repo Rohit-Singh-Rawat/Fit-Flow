@@ -16,9 +16,9 @@ const TagIcon2 = ({ className }: Props) => {
       />
       <path
         className="fill-[#9F9F9F] dark:fill-black"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="m7.515 13.682 2.828 2.828a1 1 0 0 0 1.414-1.414L8.93 12.268a1 1 0 0 0-1.414 1.414Z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       />
     </svg>
   );
